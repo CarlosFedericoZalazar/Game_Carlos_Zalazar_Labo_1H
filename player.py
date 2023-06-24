@@ -199,7 +199,7 @@ class Player:
         
         self.image = self.animation[self.frame]
         screen.blit(self.image,self.rect)
-        pygame.draw.rect(screen,'Blue', self.side['left'], 10)
+        
         
 
     def events(self,delta_ms,keys, plataform_list):

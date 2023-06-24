@@ -28,7 +28,6 @@ while True:
 
     keys = pygame.key.get_pressed()
     delta_ms = clock.tick(FPS)
-
     aux_form_active = Form.get_active()
     if(aux_form_active != None):
         aux_form_active.update(lista_eventos,keys,delta_ms)

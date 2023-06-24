@@ -69,11 +69,11 @@ class Enemy():
             else:
                 self.is_fall = False
                 self.change_x(self.move_x)
-                if self.contador <= 50:
+                if self.contador <= 10:
                     self.move_x = -self.speed_walk
                     self.animation = self.walk_l
                     self.contador += 1 
-                elif self.contador <= 100:
+                elif self.contador <= 20:
                     self.move_x = self.speed_walk
                     self.animation = self.walk_r
                     self.contador += 1
