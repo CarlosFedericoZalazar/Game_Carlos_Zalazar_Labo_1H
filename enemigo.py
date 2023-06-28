@@ -9,6 +9,7 @@ class Enemy():
         self.walk_l = Auxiliar.getSurfaceFromSeparateFiles("images/caracters/enemies/ork_sword/WALK/WALK_00{0}.png",0,7,flip=True,scale=p_scale)
         self.stay_r = Auxiliar.getSurfaceFromSeparateFiles("images/caracters/enemies/ork_sword/IDLE/IDLE_00{0}.png",0,7,scale=p_scale)
         self.stay_l = Auxiliar.getSurfaceFromSeparateFiles("images/caracters/enemies/ork_sword/IDLE/IDLE_00{0}.png",0,7,flip=True,scale=p_scale)
+        self.die_r = Auxiliar.getSurfaceFromSeparateFiles("images/caracters/enemies/ork_sword/DIE/DIE_00{0}.png",0,7,scale=p_scale)
 
         self.contador = 0
         self.frame = 0
@@ -21,6 +22,7 @@ class Enemy():
         self.gravity = gravity
         self.jump_power = jump_power
         self.animation = self.stay_r
+        self.alive = True
         self.direction = DIRECTION_R
         self.image = self.animation[self.frame]
         self.rect = self.image.get_rect()
@@ -69,11 +71,11 @@ class Enemy():
             else:
                 self.is_fall = False
                 self.change_x(self.move_x)
-                if self.contador <= 10:
+                if self.contador <= 200:
                     self.move_x = -self.speed_walk
                     self.animation = self.walk_l
                     self.contador += 1 
-                elif self.contador <= 20:
+                elif self.contador <= 400:
                     self.move_x = self.speed_walk
                     self.animation = self.walk_r
                     self.contador += 1
@@ -103,7 +105,10 @@ class Enemy():
                 self.frame = 0
 
     def update(self,delta_ms,plataform_list):
-        self.do_movement(delta_ms,plataform_list)
+        if self.alive:
+            self.do_movement(delta_ms,plataform_list)
+        else:
+            self.frame_rate_ms = 600
         self.do_animation(delta_ms) 
 
     def draw(self,screen):
@@ -115,5 +120,10 @@ class Enemy():
         self.image = self.animation[self.frame]
         screen.blit(self.image,self.rect)
 
-    def receive_shoot(self):
+    def receive_shoot(self, index_enemy_hurt):
+        self.animation = self.die_r
         self.lives -= 1
+        if self.lives == 0:
+            self.animation = self.die_r
+            self.alive = False
+            print('LA QUEDO EL MONSTRUO')

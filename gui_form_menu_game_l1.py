@@ -29,29 +29,29 @@ class FormGameLevel1(Form):
         self.player_1 = Player(x=0,y=400,speed_walk=6,speed_run=12,gravity=14,jump_power=30,frame_rate_ms=100,move_rate_ms=50,jump_height=140,p_scale=0.1,interval_time_jump=300)
 
         self.enemy_list = []
-        self.enemy_list.append (Enemy(x=450,y=400,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300))
+        self.enemy_list.append (Enemy(x=450,y=400,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300))
         #self.enemy_list.append (Enemy(x=900,y=400,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300))
 
         self.plataform_list = []
-        self.plataform_list.append(Plataform(x=400,y=500,width=50,height=50,type=0))
-        self.plataform_list.append(Plataform(x=450,y=500,width=50,height=50,type=1))
-        self.plataform_list.append(Plataform(x=500,y=500,width=50,height=50,type=2))
+        # self.plataform_list.append(Plataform(x=400,y=500,width=50,height=50,type=0))
+        # self.plataform_list.append(Plataform(x=450,y=500,width=50,height=50,type=1))
+        # self.plataform_list.append(Plataform(x=500,y=500,width=50,height=50,type=2))
 
-        self.plataform_list.append(Plataform(x=200,y=450,width=50,height=50,type=0))
-        self.plataform_list.append(Plataform(x=250,y=450,width=50,height=50,type=1))
-        self.plataform_list.append(Plataform(x=300,y=450,width=50,height=50,type=2)) 
+        # self.plataform_list.append(Plataform(x=200,y=450,width=50,height=50,type=0))
+        # self.plataform_list.append(Plataform(x=250,y=450,width=50,height=50,type=1))
+        # self.plataform_list.append(Plataform(x=300,y=450,width=50,height=50,type=2)) 
 
 
-        self.plataform_list.append(Plataform(x=600,y=430,width=50,height=50,type=12))
-        self.plataform_list.append(Plataform(x=650,y=430,width=50,height=50,type=14))
+        self.plataform_list.append(Plataform(x=100,y=450,width=50,height=50,type=12))
+        self.plataform_list.append(Plataform(x=150,y=450,width=50,height=50,type=14))
 
-        self.plataform_list.append(Plataform(x=400,y=400,width=50,height=50,type=12))
-        self.plataform_list.append(Plataform(x=450,y=400,width=50,height=50,type=14))
+        # self.plataform_list.append(Plataform(x=400,y=400,width=50,height=50,type=12))
+        # self.plataform_list.append(Plataform(x=450,y=400,width=50,height=50,type=14))
 
-        self.plataform_list.append(Plataform(x=750,y=360,width=50,height=50,type=12))
-        self.plataform_list.append(Plataform(x=800,y=360,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=850,y=360,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=900,y=360,width=50,height=50,type=14))
+        # self.plataform_list.append(Plataform(x=750,y=360,width=50,height=50,type=12))
+        # self.plataform_list.append(Plataform(x=800,y=360,width=50,height=50,type=13))
+        # self.plataform_list.append(Plataform(x=850,y=360,width=50,height=50,type=13))
+        # self.plataform_list.append(Plataform(x=900,y=360,width=50,height=50,type=14))
 
         self.bullet_list = []
 
@@ -97,7 +97,9 @@ class FormGameLevel1(Form):
             plataforma.draw(self.surface)
 
         for enemy_element in self.enemy_list:
-            enemy_element.draw(self.surface)
+            enemy_element.draw(self.surface)            
+            if not enemy_element.alive and enemy_element.frame == 0:               
+                self.enemy_list.pop(self.enemy_list.index(enemy_element))
         
         self.player_1.draw(self.surface)
         
