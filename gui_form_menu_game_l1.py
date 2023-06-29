@@ -26,32 +26,33 @@ class FormGameLevel1(Form):
         # --- GAME ELEMNTS --- 
         self.static_background = Background(x=0,y=0,width=w,height=h,path="images/locations/set_bg_01/forest/castillo.png")
 
-        self.player_1 = Player(x=0,y=400,speed_walk=6,speed_run=12,gravity=14,jump_power=30,frame_rate_ms=100,move_rate_ms=50,jump_height=140,p_scale=0.1,interval_time_jump=300)
+        self.player_1 = Player(x=10,y=400,speed_walk=8,speed_run=12,gravity=14,jump_power=30,frame_rate_ms=100,move_rate_ms=50,jump_height=140,p_scale=0.1,interval_time_jump=300)
 
         self.enemy_list = []
         self.enemy_list.append (Enemy(x=450,y=400,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300))
         #self.enemy_list.append (Enemy(x=900,y=400,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300))
 
         self.plataform_list = []
-        # self.plataform_list.append(Plataform(x=400,y=500,width=50,height=50,type=0))
-        # self.plataform_list.append(Plataform(x=450,y=500,width=50,height=50,type=1))
-        # self.plataform_list.append(Plataform(x=500,y=500,width=50,height=50,type=2))
+        self.plataform_list.append(Plataform(x=400,y=500,width=50,height=50,type=0))
+        self.plataform_list.append(Plataform(x=450,y=500,width=50,height=50,type=1))
+        self.plataform_list.append(Plataform(x=500,y=500,width=50,height=50,type=2))
 
-        # self.plataform_list.append(Plataform(x=200,y=450,width=50,height=50,type=0))
-        # self.plataform_list.append(Plataform(x=250,y=450,width=50,height=50,type=1))
-        # self.plataform_list.append(Plataform(x=300,y=450,width=50,height=50,type=2)) 
+        self.plataform_list.append(Plataform(x=0,y=450,width=50,height=50,type=0))
+        self.plataform_list.append(Plataform(x=50,y=450,width=50,height=50,type=1))
+        self.plataform_list.append(Plataform(x=100,y=450,width=50,height=50,type=14))
+        #self.plataform_list.append(Plataform(x=150,y=450,width=50,height=50,type=14))  
 
 
-        self.plataform_list.append(Plataform(x=100,y=450,width=50,height=50,type=12))
-        self.plataform_list.append(Plataform(x=150,y=450,width=50,height=50,type=14))
+        self.plataform_list.append(Plataform(x=800,y=450,width=50,height=50,type=12))
+        self.plataform_list.append(Plataform(x=850,y=450,width=50,height=50,type=14))
 
-        # self.plataform_list.append(Plataform(x=400,y=400,width=50,height=50,type=12))
-        # self.plataform_list.append(Plataform(x=450,y=400,width=50,height=50,type=14))
+        self.plataform_list.append(Plataform(x=400,y=400,width=50,height=50,type=12))
+        self.plataform_list.append(Plataform(x=450,y=400,width=50,height=50,type=14))
 
-        # self.plataform_list.append(Plataform(x=750,y=360,width=50,height=50,type=12))
-        # self.plataform_list.append(Plataform(x=800,y=360,width=50,height=50,type=13))
-        # self.plataform_list.append(Plataform(x=850,y=360,width=50,height=50,type=13))
-        # self.plataform_list.append(Plataform(x=900,y=360,width=50,height=50,type=14))
+        self.plataform_list.append(Plataform(x=750,y=360,width=50,height=50,type=12))
+        self.plataform_list.append(Plataform(x=800,y=360,width=50,height=50,type=13))
+        self.plataform_list.append(Plataform(x=850,y=360,width=50,height=50,type=13))
+        self.plataform_list.append(Plataform(x=900,y=360,width=50,height=50,type=14))
 
         self.bullet_list = []
 

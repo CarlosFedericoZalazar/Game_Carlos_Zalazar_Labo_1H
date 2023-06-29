@@ -25,8 +25,8 @@ class Player:
         self.move_y = 0
         self.speed_walk =  speed_walk
         self.speed_run =  speed_run
-        self.gravity = gravity
-        self.jump_power = jump_power
+        self.gravity = 20 #gravity
+        self.jump_power = 30 #jump_power
         self.animation = self.stay_r
         self.direction = DIRECTION_R
         self.image = self.animation[self.frame]
@@ -115,11 +115,11 @@ class Player:
         if(on_off and self.is_jump == False and self.is_fall == False):
             self.y_start_jump = self.rect.y
             if(self.direction == DIRECTION_R):
-                self.move_x = int(self.move_x / 2)
+                self.move_x = int(self.move_x + 5 / 2)
                 self.move_y = -self.jump_power
                 self.animation = self.jump_r
             else:
-                self.move_x = int(self.move_x / 2)
+                self.move_x = int(self.move_x - 5 / 2)
                 self.move_y = -self.jump_power
                 self.animation = self.jump_l
             self.frame = 0
@@ -142,15 +142,20 @@ class Player:
             self.frame = 0
 
     def change_x(self,delta_x):
-          
-        self.rect.x += delta_x
-        self.collition_rect.x += delta_x
-        self.ground_collition_rect.x += delta_x
+        print(self.rect.x)
+        if self.rect.x >= 0 and self.rect.x <= ANCHO_VENTANA - self.rect.width :
+            self.rect.x += delta_x
+            self.collition_rect.x += delta_x
+            self.ground_collition_rect.x += delta_x
 
-        self.collition_rect_left.x += delta_x
-        self.ground_collition_rect_left.x += delta_x
-        self.collition_rect_right.x += delta_x
-        self.ground_collition_rect_right.x += delta_x
+            self.collition_rect_left.x += delta_x
+            self.ground_collition_rect_left.x += delta_x
+            self.collition_rect_right.x += delta_x
+            self.ground_collition_rect_right.x += delta_x
+        elif self.rect.x < 0:
+            self.rect.x += 10
+        elif self.rect.x > ANCHO_VENTANA - self.rect.width:
+            self.rect.x -= 10
 
     def change_y(self,delta_y):
 

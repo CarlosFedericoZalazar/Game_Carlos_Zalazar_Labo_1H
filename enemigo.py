@@ -50,9 +50,12 @@ class Enemy():
         self.interval_time_jump = interval_time_jump
    
     def change_x(self,delta_x):
+        if not self.rect.x >= 20 and not self.rect.x <= ANCHO_VENTANA - self.rect.width :
+            delta_x *= -1
         self.rect.x += delta_x
         self.collition_rect.x += delta_x
         self.ground_collition_rect.x += delta_x
+
 
     def change_y(self,delta_y):
         self.rect.y += delta_y
@@ -71,11 +74,11 @@ class Enemy():
             else:
                 self.is_fall = False
                 self.change_x(self.move_x)
-                if self.contador <= 200:
+                if self.contador <= 40: # CANTIDAD DE PASOS DEL MONSTRUO
                     self.move_x = -self.speed_walk
                     self.animation = self.walk_l
                     self.contador += 1 
-                elif self.contador <= 400:
+                elif self.contador <= 80:
                     self.move_x = self.speed_walk
                     self.animation = self.walk_r
                     self.contador += 1
