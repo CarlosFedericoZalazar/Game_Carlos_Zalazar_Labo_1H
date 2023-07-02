@@ -1,12 +1,12 @@
 import pygame 
 from constantes import *
 from auxiliar import Auxiliar
+from gui_label import Label
 class Player:
-    def __init__(self,x,y,speed_walk,speed_run,gravity,jump_power,frame_rate_ms,move_rate_ms,jump_height,p_scale=1,interval_time_jump=100) -> None:
+    def __init__(self, master, x,y,speed_walk,speed_run,gravity,jump_power,frame_rate_ms,move_rate_ms,jump_height,p_scale=1,interval_time_jump=100) -> None:
         '''
         self.walk_r = Auxiliar.getSurfaceFromSpriteSheet("images/caracters/stink/walk.png",15,1,scale=p_scale)[:12]
         '''
-
         self.stay_r = Auxiliar.getSurfaceFromSeparateFiles(PATH_PLAYER+ 'IDLE\_IDLE_{0}.png',0,6,flip=False,scale=p_scale)
         self.stay_l = Auxiliar.getSurfaceFromSeparateFiles(PATH_PLAYER+ 'IDLE\_IDLE_{0}.png',0,6,flip=True,scale=p_scale)
         self.jump_r = Auxiliar.getSurfaceFromSeparateFiles(PATH_PLAYER+ 'JUMP\_JUMP_{0}.png',0,6,flip=False,scale=p_scale)
@@ -19,7 +19,7 @@ class Player:
         self.knife_l = Auxiliar.getSurfaceFromSeparateFiles(PATH_PLAYER+ 'ATTACK\_ATTACK_{0}.png',0,6,flip=True,scale=p_scale,repeat_frame=1)
         # MOVIMIENTO
         self.frame = 0
-        self.lives = 5
+        self.lives = 3
         self.score = 0
         self.move_x = 0
         self.move_y = 0
@@ -31,6 +31,7 @@ class Player:
         self.direction = DIRECTION_R
         self.image = self.animation[self.frame]
         self.alive = True
+        self.label_score = Label(master, x=1100, y=10, w=200, h=50,color_border=None, text=f"Score: {0}", font="Comic Sans MS", font_size=40, font_color=C_WHITE)
         # RECTANGULO PERSONAJE
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -54,8 +55,6 @@ class Player:
         self.ground_collition_rect_right = pygame.Rect(self.collition_rect_right)
         self.ground_collition_rect_right.y = y + 20 #+ self.rect.height - GROUND_COLLIDE_H
         self.ground_collition_rect_right.x = x +120
-        
-        
         
         
         self.is_jump = False
@@ -142,7 +141,7 @@ class Player:
             self.frame = 0
 
     def change_x(self,delta_x):
-        print(self.rect.x)
+        
         if self.rect.x >= 0 and self.rect.x <= ANCHO_VENTANA - self.rect.width :
             self.rect.x += delta_x
             self.collition_rect.x += delta_x
@@ -152,6 +151,7 @@ class Player:
             self.ground_collition_rect_left.x += delta_x
             self.collition_rect_right.x += delta_x
             self.ground_collition_rect_right.x += delta_x
+
         elif self.rect.x < 0:
             self.rect.x += 10
         elif self.rect.x > ANCHO_VENTANA - self.rect.width:
@@ -169,18 +169,20 @@ class Player:
         self.ground_collition_rect_right.y += delta_y
 
 
-    def do_movement(self,delta_ms,plataform_list):
+    def do_movement(self,delta_ms,plataform_list, coin_list):
         self.tiempo_transcurrido_move += delta_ms
         if(self.tiempo_transcurrido_move >= self.move_rate_ms):
             self.tiempo_transcurrido_move = 0
-
-            if(abs(self.y_start_jump - self.rect.y) > self.jump_height and self.is_jump):
+            if(abs(self.y_start_jump - self.rect.y) > self.jump_height and self.is_jump):                
                 self.move_y = 0
           
             self.change_x(self.move_x)
             self.change_y(self.move_y)
 
+            self.take_coin(coin_list)
+            
             if(not self.is_on_plataform(plataform_list)):
+
                 if(self.move_y == 0):
                     self.is_fall = True
                     self.change_y(self.gravity)
@@ -189,17 +191,28 @@ class Player:
                     self.jump(False)
                 self.is_fall = False            
 
+
     def is_on_plataform(self,plataform_list):
         retorno = False
         
-        if(self.ground_collition_rect.bottom >= GROUND_LEVEL):
+        if(self.rect.bottom >= GROUND_LEVEL):
             retorno = True     
         else:
             for plataforma in  plataform_list:
                 if(self.ground_collition_rect.colliderect(plataforma.ground_collition_rect)):
+                     # INGRESAR CODIGO DE MOVIMIENTO                        
+    
                     retorno = True
-                    break       
-        return retorno                 
+                    break                 
+        return retorno
+
+    def take_coin(self, coin_list):
+        for coin in coin_list:
+            if(self.rect.colliderect(coin.rect)):
+                self.score += coin.coin_value
+                print('AGARRASTE LA MONEDA!!!')
+                coin_list.pop(coin_list.index(coin))
+                         
 
     def do_animation(self,delta_ms):
         self.tiempo_transcurrido_animation += delta_ms
@@ -211,9 +224,10 @@ class Player:
             else: 
                 self.frame = 0
  
-    def update(self,delta_ms,plataform_list):
-        self.do_movement(delta_ms,plataform_list)
+    def update(self,delta_ms,plataform_list, coins_list):
+        self.do_movement(delta_ms,plataform_list, coins_list)
         self.do_animation(delta_ms)
+        self.label_score._text = str(self.score)
         
     
     def draw(self,screen):
@@ -226,12 +240,10 @@ class Player:
         
         self.image = self.animation[self.frame]
         screen.blit(self.image,self.rect)
-        
-        
+            
 
     def events(self,delta_ms,keys, plataform_list):
         self.tiempo_transcurrido += delta_ms
-
 
         if(keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]):
             self.walk(DIRECTION_L, plataform_list)

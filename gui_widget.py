@@ -2,6 +2,8 @@ import pygame
 from pygame.locals import *
 from constantes import *
 
+pygame.font.init()
+
 class Widget:
     def __init__(self,master_form,x,y,w,h,color_background,color_border,image_background,text,font,font_size,font_color):
         self.master_form = master_form

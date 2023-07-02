@@ -93,6 +93,7 @@ class Enemy():
         else:
             for plataforma in  plataform_list:
                 if(self.ground_collition_rect.colliderect(plataforma.ground_collition_rect)):
+                    #print('colision!!!')
                     retorno = True
                     break       
         return retorno          
@@ -123,7 +124,7 @@ class Enemy():
         self.image = self.animation[self.frame]
         screen.blit(self.image,self.rect)
 
-    def receive_shoot(self, index_enemy_hurt):
+    def receive_shoot(self):
         self.animation = self.die_r
         self.lives -= 1
         if self.lives == 0:

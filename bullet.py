@@ -63,7 +63,7 @@ class Bullet():
                     if(self.is_active and self.owner != aux_enemy and self.rect.colliderect(aux_enemy.rect)):
                         #print("IMPACTO ENEMY")
                         self.is_active = False
-                        aux_enemy.receive_shoot(enemy_list.index(aux_enemy))
+                        aux_enemy.receive_shoot()#enemy_list.index(aux_enemy))
                         print(enemy_list.index(aux_enemy))
                         #enemy_list.pop(enemy_list.index(aux_enemy))
                         

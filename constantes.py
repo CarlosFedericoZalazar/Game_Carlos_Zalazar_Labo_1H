@@ -7,7 +7,7 @@ FPS = 60
 DIRECTION_L = 0
 DIRECTION_R = 1
 GROUND_COLLIDE_H = 8 # Aprox Gravedad/2 + 1
-DEBUG = False
+DEBUG = True
 
 # COLOR CONSTANTS
 C_RED = (255,0,0)
@@ -30,3 +30,4 @@ M_BRIGHT_HOVER = (32,32,32)
 M_BRIGHT_CLICK = (32,32,32)
 
 PATH_PLAYER = 'images\caracters\players\caballero\\'
+PATH_COINS = 'images\coins\\'
