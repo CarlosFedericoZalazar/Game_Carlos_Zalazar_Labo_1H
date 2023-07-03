@@ -34,7 +34,7 @@ class FormGameLevel1(Form):
         # --- COINS ---
         self.coin_list = []
         self.coin_list.append(Coins(master=self, x=400, y=550,value=100,frame_rate_ms=150, p_scale=0.3))
-        
+        self.coin_list.append(Coins(master=self, x=600, y=550,value=150,frame_rate_ms=150, p_scale=0.3))
         # TIMER
         self.minuto_juego = 3
         self.segundos_juego = 0
@@ -111,6 +111,7 @@ class FormGameLevel1(Form):
         # IMPLEMENTAR COINS
         for coin_element in self.coin_list:
             coin_element.update(delta_ms)
+            coin_element.label_coin.update()
 
          
         

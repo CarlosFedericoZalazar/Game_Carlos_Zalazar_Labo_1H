@@ -44,18 +44,19 @@ class Coins:
             self.tiempo_transcurrido_value = 0
             self.coin_value -= 1
             #print(type(self.label_coin._text))
-            self.label_coin._text = str(self.coin_value)
-            
+            self.text_value = str(self.coin_value)
+        return self.text_value
     
     
-    def update(self,delta_ms):
-        self.change_value(delta_ms)
+    def update(self,delta_ms):       
         self.do_animation(delta_ms)
+        self.label_coin._text = self.change_value(delta_ms)
+        print(self.label_coin._text)
 
 
     def draw(self,screen):
 
-        
+        self.label_coin.draw()
         if(DEBUG):
             pygame.draw.rect(screen,color=(255,0 ,0),rect=self.rect)
 
