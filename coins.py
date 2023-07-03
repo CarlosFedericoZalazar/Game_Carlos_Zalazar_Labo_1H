@@ -11,7 +11,7 @@ class Coins:
         
         self.coin_value = value
         self.text_value = str(self.coin_value)
-        
+        self.tiempo_transcurrido_value = 0
         self.label_coin = Label(master, x - 12, y -8, w=50, h=50, color_background=None, color_border=None, text=self.text_value,font="Comic Sans MS", font_size=15, font_color=C_BLACK)
 
         #ANIMACION
@@ -38,11 +38,24 @@ class Coins:
             else: 
                 self.frame = 0
     
+    def change_value(self, delta_ms):
+        self.tiempo_transcurrido_value += delta_ms
+        if self.tiempo_transcurrido_value >= 1000:
+            self.tiempo_transcurrido_value = 0
+            self.coin_value -= 1
+            #print(type(self.label_coin._text))
+            self.label_coin._text = str(self.coin_value)
+            
+    
+    
     def update(self,delta_ms):
+        self.change_value(delta_ms)
         self.do_animation(delta_ms)
+
 
     def draw(self,screen):
 
+        
         if(DEBUG):
             pygame.draw.rect(screen,color=(255,0 ,0),rect=self.rect)
 

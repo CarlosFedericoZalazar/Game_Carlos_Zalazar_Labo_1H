@@ -15,7 +15,7 @@ from coins import Coins
 from timer import Timer_level
 
 
-class FormGameLevel1(Form):
+class FormGameLevel2(Form):
     def __init__(self,name,master_surface,x,y,w,h,color_background,color_border,active):
         super().__init__(name,master_surface,x,y,w,h,color_background,color_border,active)
 
@@ -30,16 +30,14 @@ class FormGameLevel1(Form):
         self.widget_list = [self.boton1,self.boton2,self.pb_lives,self.boton_shoot]
 
         # --- GAME ELEMNTS --- 
-        self.static_background = Background(x=0,y=0,width=w,height=h,path="images/locations/set_bg_01/forest/fondo_castillo.jpg")
+        self.static_background = Background(x=0,y=0,width=w,height=h,path="images/locations/set_bg_01/forest/castillo.png")
         # --- COINS ---
         self.coin_list = []
         self.coin_list.append(Coins(master=self, x=400, y=550,value=100,frame_rate_ms=150, p_scale=0.3))
         
         # TIMER
-        self.minuto_juego = 3
-        self.segundos_juego = 0
-        self.tiempo_juego = Timer_level(master=self, x=1000, y=10, w=200, h=50, font="Comic Sans MS", font_size=50, font_color=C_WHITE, minutes=self.minuto_juego, seconds=self.segundos_juego)
-        
+        self.tiempo_juego = Timer_level(master=self, x=1000, y=10, w=200, h=50, font="Comic Sans MS", font_size=50, font_color=C_WHITE, minutes=3, seconds=0)
+
 
         self.player_1 = Player(master=self, x=10,y=400,speed_walk=8,speed_run=12,gravity=14,jump_power=30,frame_rate_ms=100,move_rate_ms=50,jump_height=110,p_scale=0.1,interval_time_jump=300)
 
@@ -111,8 +109,6 @@ class FormGameLevel1(Form):
         # IMPLEMENTAR COINS
         for coin_element in self.coin_list:
             coin_element.update(delta_ms)
-
-         
         
         self.player_1.events(delta_ms,keys, self.plataform_list)
         self.player_1.update(delta_ms,self.plataform_list, self.coin_list)
@@ -120,9 +116,6 @@ class FormGameLevel1(Form):
         self.pb_lives.value = self.player_1.lives
 
         self.player_1.label_score.update()
-        if self.player_1.score >10:
-            #self.active = False
-            self.set_active('form_game_L2')
              
 
 

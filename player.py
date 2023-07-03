@@ -73,6 +73,7 @@ class Player:
         self.tiempo_last_jump = 0 # en base al tiempo transcurrido general
         self.interval_time_jump = interval_time_jump
 
+
     def walk(self,direction, plataform_list):
         if(self.is_jump == False and self.is_fall == False):
             if(self.direction != direction or (self.animation != self.walk_r and self.animation != self.walk_l)):
