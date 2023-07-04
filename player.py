@@ -45,8 +45,7 @@ class Player:
         self.collition_rect_left = pygame.Rect(self.rect.left-5, self.rect.top +60, 10, self.rect.height -60)
     
         #self.collition_rect_left = pygame.Rect(self.rect.left-5, self.rect.top, 20, self.rect.height)
-        self.ground_collition_rect_left = pygame.Rect(self.collition_rect_left)
-        
+        self.ground_collition_rect_left = pygame.Rect(self.collition_rect_left)        
         self.ground_collition_rect_left.y = y + 20 #+ self.rect.height - GROUND_COLLIDE_H
         self.ground_collition_rect_left.x = x - 5
 

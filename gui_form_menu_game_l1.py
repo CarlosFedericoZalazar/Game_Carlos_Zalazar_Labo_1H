@@ -33,8 +33,10 @@ class FormGameLevel1(Form):
         self.static_background = Background(x=0,y=0,width=w,height=h,path="images/locations/set_bg_01/forest/fondo_castillo.jpg")
         # --- COINS ---
         self.coin_list = []
-        self.coin_list.append(Coins(master=self, x=400, y=550,value=100,frame_rate_ms=150, p_scale=0.3))
-        self.coin_list.append(Coins(master=self, x=600, y=550,value=150,frame_rate_ms=150, p_scale=0.3))
+        self.coin_list.append(Coins(master=self, x=400, y=550,value=100,frame_rate_ms=150, p_scale=0.3, delay_time_coin = 30))
+        self.coin_list.append(Coins(master=self, x=600, y=550,value=150,frame_rate_ms=150, p_scale=0.3, delay_time_coin = 20))
+        self.coin_list.append(Coins(master=self, x=50, y=350,value=250,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 10))
+        
         # TIMER
         self.minuto_juego = 3
         self.segundos_juego = 0
@@ -45,25 +47,26 @@ class FormGameLevel1(Form):
 
         self.enemy_list = []
         self.enemy_list.append (Enemy(x=815,y=320,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300))
-        #self.enemy_list.append (Enemy(x=900,y=400,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300))
+        self.enemy_list.append (Enemy(x=150,y=400,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300))
 
         self.plataform_list = []
         self.plataform_list.append(Plataform(x=500,y=500,width=50,height=50,type=0))
         self.plataform_list.append(Plataform(x=550,y=500,width=50,height=50,type=1))
         self.plataform_list.append(Plataform(x=600,y=500,width=50,height=50,type=2))
 
-        self.plataform_list.append(Plataform(x=350,y=450,width=50,height=50,type=0))
-        self.plataform_list.append(Plataform(x=400,y=450,width=50,height=50,type=1))
-        self.plataform_list.append(Plataform(x=450,y=450,width=50,height=50,type=14))
+        self.plataform_list.append(Plataform(x=0,y=500,width=50,height=50,type=13))
+        self.plataform_list.append(Plataform(x=50,y=500,width=50,height=50,type=13))
+        self.plataform_list.append(Plataform(x=100,y=500,width=50,height=50,type=13))
+        self.plataform_list.append(Plataform(x=150,y=500,width=50,height=50,type=14))
 
         #self.plataform_list.append(Plataform(x=150,y=450,width=50,height=50,type=14))  
 
 
-        self.plataform_list.append(Plataform(x=800,y=600,width=50,height=50,type=12, motion=True, speed_move_x=1,speed_move_y=0, move_rate_ms=30))
-        self.plataform_list.append(Plataform(x=850,y=600,width=50,height=50,type=14, motion=True, speed_move_x=1,speed_move_y=0, move_rate_ms=30))
+        self.plataform_list.append(Plataform(x=400,y=500,width=50,height=50,type=12, motion=True, speed_move_x=1,speed_move_y=1, move_rate_ms=30))
+        self.plataform_list.append(Plataform(x=450,y=500,width=50,height=50,type=14, motion=True, speed_move_x=1,speed_move_y=1, move_rate_ms=30))
 
-        self.plataform_list.append(Plataform(x=0,y=400,width=50,height=50,type=12))
-        self.plataform_list.append(Plataform(x=50,y=400,width=50,height=50,type=14))
+        self.plataform_list.append(Plataform(x=750,y=550,width=50,height=50,type=12))
+        self.plataform_list.append(Plataform(x=800,y=550,width=50,height=50,type=14))
 
         self.plataform_list.append(Plataform(x=750,y=360,width=50,height=50,type=12))
         self.plataform_list.append(Plataform(x=800,y=360,width=50,height=50,type=13))
@@ -121,9 +124,9 @@ class FormGameLevel1(Form):
         self.pb_lives.value = self.player_1.lives
 
         self.player_1.label_score.update()
-        if self.player_1.score >10:
-            #self.active = False
-            self.set_active('form_game_L2')
+        # if self.player_1.score >10:
+        #     #self.active = False
+        #     self.set_active('form_game_L2')
              
 
 

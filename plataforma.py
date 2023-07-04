@@ -5,7 +5,7 @@ from auxiliar import Auxiliar
 class Plataform:
     def __init__(self, x, y,width, height,  type=1, motion = False, speed_move_x = 0, speed_move_y = 0, move_rate_ms=0):
         plataformas = {}
-        plat_bosque = self.image_list= Auxiliar.getSurfaceFromSeparateFiles("images/tileset/forest/Tiles/{0}.png",1,18,flip=False,w=width,h=height)
+        plat_bosque = self.image_list= Auxiliar.getSurfaceFromSeparateFiles("images/tileset/forest/Tiles/{0}.png",0,17,flip=False,w=width,h=height)
         plataformas['bosque'] = plat_bosque
 
 

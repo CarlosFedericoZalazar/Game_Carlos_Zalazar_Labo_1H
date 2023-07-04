@@ -4,7 +4,7 @@ from auxiliar import Auxiliar
 from gui_label import Label
 
 class Coins:
-    def __init__(self, master, x,y,value, frame_rate_ms,p_scale=1) -> None:
+    def __init__(self, master, x,y,value, frame_rate_ms,p_scale=1, delay_time_coin=0) -> None:
         
         
         self.coins = Auxiliar.getSurfaceFromSeparateFiles(PATH_COINS + '{0}.png',0,9,flip=False,scale=p_scale)
@@ -12,7 +12,11 @@ class Coins:
         self.coin_value = value
         self.text_value = str(self.coin_value)
         self.tiempo_transcurrido_value = 0
-        self.label_coin = Label(master, x - 12, y -8, w=50, h=50, color_background=None, color_border=None, text=self.text_value,font="Comic Sans MS", font_size=15, font_color=C_BLACK)
+        self.label_coin = Label(master, x - 10, y -8, w=50, h=50, color_background=None, color_border=None, text=self.text_value,font="Comic Sans MS", font_size=17, font_color=C_BLACK)
+
+        # TIEMPO
+        self.conteo_tiempo = 0
+        self.delay_time_coin = delay_time_coin
 
         #ANIMACION
         self.animation = self.coins
@@ -42,9 +46,11 @@ class Coins:
         self.tiempo_transcurrido_value += delta_ms
         if self.tiempo_transcurrido_value >= 1000:
             self.tiempo_transcurrido_value = 0
-            self.coin_value -= 1
-            #print(type(self.label_coin._text))
-            self.text_value = str(self.coin_value)
+            self.conteo_tiempo += 1
+            if self.conteo_tiempo >= self.delay_time_coin and self.coin_value > 10:
+                self.coin_value -= 1
+                #print(type(self.label_coin._text))
+                self.text_value = str(self.coin_value)
         return self.text_value
     
     
