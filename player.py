@@ -19,9 +19,12 @@ class Player:
         self.shoot_l = Auxiliar.getSurfaceFromSeparateFiles(PATH_PLAYER+ 'SHOOT\_SHOOT_{0}.png',0,3,flip=True,scale=p_scale,repeat_frame=2)
         self.knife_r = Auxiliar.getSurfaceFromSeparateFiles(PATH_PLAYER+ 'ATTACK\_ATTACK_{0}.png',0,6,flip=False,scale=p_scale,repeat_frame=1)
         self.knife_l = Auxiliar.getSurfaceFromSeparateFiles(PATH_PLAYER+ 'ATTACK\_ATTACK_{0}.png',0,6,flip=True,scale=p_scale,repeat_frame=1)
+        
+        #self.impacto = Auxiliar.getSurfaceFromSeparateFiles('images\gui\Gui\IMPACTO\\'+ '{0}.png',1,8,flip=False,scale=p_scale)
+        
         # MOVIMIENTO
         self.frame = 0
-        self.lives = 3
+        self.lives = 5
         self.score = 0
         self.move_x = 0
         self.move_y = 0
@@ -38,22 +41,7 @@ class Player:
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        # RECTANGULO INFERIOR
-        # self.collition_rect = pygame.Rect(x+self.rect.width/3,y,self.rect.width/3,self.rect.height)
-        # self.ground_collition_rect = pygame.Rect(self.collition_rect)
-        # self.ground_collition_rect.height = GROUND_COLLIDE_H
-        # self.ground_collition_rect.y = y + self.rect.height - GROUND_COLLIDE_H
-        # RECTANGULO LATERAL IZQUIERDO
-        # self.collition_rect_left = pygame.Rect(self.rect.left-5, self.rect.top +60, 10, self.rect.height -60)
-        # self.ground_collition_rect_left = pygame.Rect(self.collition_rect_left)        
-        # self.ground_collition_rect_left.y = y + 20 #+ self.rect.height - GROUND_COLLIDE_H
-        # self.ground_collition_rect_left.x = x - 5
-        # RECTANGULO LATERAL DERECHO 
-        # self.collition_rect_right = pygame.Rect(self.rect.right -2, self.rect.top +60, 10, self.rect.height -60)
-        # self.ground_collition_rect_right = pygame.Rect(self.collition_rect_right)
-        # self.ground_collition_rect_right.y = y + 20 #+ self.rect.height - GROUND_COLLIDE_H
-        # self.ground_collition_rect_right.x = x +120
-        # LADOS RECTANGULO
+
         self.sides = obtener_rectangulo(self.rect)
         self.sides['bottom'].y = y + self.rect.height - GROUND_COLLIDE_H
         self.sides['bottom'].height = GROUND_COLLIDE_H
@@ -115,17 +103,14 @@ class Player:
 
     def contact(self, enemy_list):
         for enemy_element in  enemy_list:
-                if(self.sides['right'].colliderect(enemy_element.sides['main'])):
-                    if self.animation == self.knife_r:
-                        print('ATACANDO POR LA IZQUIERDA')                        
-                        enemy_element.animation = enemy_element.hurt_l
-                        enemy_element.rebound('left',40)
-                    else:
-                        self.rebound('right',10)
-                if(self.sides['left'].colliderect(enemy_element.sides['main'])):
-                    self.rebound('left',10)
-                    # if self.animation == self.knife_r or self.animation == self.knife_l:
-                    #     print('PLAYER ATACANDO!!!!')
+            if(self.sides['right'].colliderect(enemy_element.sides['main'])):
+                self.lives -= 1
+                enemy_element.rebound('left',40)
+                print('CONTACTO')
+            if(self.sides['left'].colliderect(enemy_element.sides['main'])):
+                self.lives -= 1
+                enemy_element.rebound('right',40)
+            # HACER LA LOGICA DE ATAQUE DE CUCHILLO
 
 
     
