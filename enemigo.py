@@ -1,68 +1,37 @@
-from player import *
+from player import Player
 from constantes import *
 from auxiliar import Auxiliar
 
-class Enemy():
-    
-    def __init__(self,x,y,speed_walk,speed_run,gravity,jump_power,frame_rate_ms,move_rate_ms,jump_height,p_scale=1,interval_time_jump=100) -> None:
+class Enemy(Player):
+    def __init__(self, master, x, y, speed_walk, speed_run, gravity, jump_power, frame_rate_ms, move_rate_ms, jump_height, p_scale=1, interval_time_jump=100) -> None:
+        super().__init__(master, x, y, speed_walk, speed_run, gravity, jump_power, frame_rate_ms, move_rate_ms, jump_height, p_scale, interval_time_jump)
+        # ANIMACIONES
         self.walk_r = Auxiliar.getSurfaceFromSeparateFiles("images/caracters/enemies/ork_sword/WALK/WALK_00{0}.png",0,7,scale=p_scale)
         self.walk_l = Auxiliar.getSurfaceFromSeparateFiles("images/caracters/enemies/ork_sword/WALK/WALK_00{0}.png",0,7,flip=True,scale=p_scale)
         self.stay_r = Auxiliar.getSurfaceFromSeparateFiles("images/caracters/enemies/ork_sword/IDLE/IDLE_00{0}.png",0,7,scale=p_scale)
         self.stay_l = Auxiliar.getSurfaceFromSeparateFiles("images/caracters/enemies/ork_sword/IDLE/IDLE_00{0}.png",0,7,flip=True,scale=p_scale)
         self.die_r = Auxiliar.getSurfaceFromSeparateFiles("images/caracters/enemies/ork_sword/DIE/DIE_00{0}.png",0,7,scale=p_scale)
-
+        self.hurt_r = Auxiliar.getSurfaceFromSeparateFiles("images/caracters/enemies/ork_sword/HURT/HURT_00{0}.png",0,7,scale=p_scale)
+        self.hurt_l = Auxiliar.getSurfaceFromSeparateFiles("images/caracters/enemies/ork_sword/HURT/HURT_00{0}.png",0,7,flip=True,scale=p_scale)
+        # ATRIBUTOS PROPIOS DEL MONSTRUO
+        self.time_hurt = 0
         self.contador = 0
-        self.frame = 0
-        self.lives = 5
-        self.score = 0
-        self.move_x = 0
-        self.move_y = 0
-        self.speed_walk =  speed_walk
-        self.speed_run =  speed_run
-        self.gravity = gravity
-        self.jump_power = jump_power
-        self.animation = self.stay_r
-        self.alive = True
-        self.direction = DIRECTION_R
-        self.image = self.animation[self.frame]
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
-        self.collition_rect = pygame.Rect(x+self.rect.width/3,y,self.rect.width/3,self.rect.height)
-        self.ground_collition_rect = pygame.Rect(self.collition_rect)
-        self.ground_collition_rect.height = GROUND_COLLIDE_H
-        self.ground_collition_rect.y = y + self.rect.height - GROUND_COLLIDE_H
-
-        self.is_jump = False
-        self.is_fall = False
-        self.is_shoot = False
-        self.is_knife = False
-
-        self.tiempo_transcurrido_animation = 0
-        self.frame_rate_ms = frame_rate_ms 
-        self.tiempo_transcurrido_move = 0
-        self.move_rate_ms = move_rate_ms
-        self.y_start_jump = 0
-        self.jump_height = jump_height
-
-        self.tiempo_transcurrido = 0
-        self.tiempo_last_jump = 0 # en base al tiempo transcurrido general
-        self.interval_time_jump = interval_time_jump
-   
     def change_x(self,delta_x):
-        if not self.rect.x >= 20 and not self.rect.x <= ANCHO_VENTANA - self.rect.width :
-            delta_x *= -1
-        self.rect.x += delta_x
-        self.collition_rect.x += delta_x
-        self.ground_collition_rect.x += delta_x
+        
+        if self.rect.x >= 0 and self.rect.x <= ANCHO_VENTANA - self.rect.width :
+            for side in self.sides:
+                self.sides[side].x += delta_x
+        else:
+            if self.rect.x < 0:
+                for side in self.sides:
+                    self.sides[side].x += 10
+            elif self.rect.x > ANCHO_VENTANA - self.rect.width:
+                for side in self.sides:
+                    self.sides[side].x -= 10
 
-
-    def change_y(self,delta_y):
-        self.rect.y += delta_y
-        self.collition_rect.y += delta_y
-        self.ground_collition_rect.y += delta_y
 
     def do_movement(self,delta_ms,plataform_list):
+        #super().do_movement(self,delta_ms,plataform_list)
         self.tiempo_transcurrido_move += delta_ms
         if(self.tiempo_transcurrido_move >= self.move_rate_ms):
             self.tiempo_transcurrido_move = 0
@@ -87,12 +56,13 @@ class Enemy():
     
     def is_on_plataform(self,plataform_list):
         retorno = False
-        
-        if(self.ground_collition_rect.bottom >= GROUND_LEVEL):
+        if self.sides['bottom'].bottom >= GROUND_LEVEL:
+        #if(self.ground_collition_rect.bottom >= GROUND_LEVEL):
             retorno = True     
         else:
             for plataforma in  plataform_list:
-                if(self.ground_collition_rect.colliderect(plataforma.ground_collition_rect)):
+                if(self.sides['bottom'].colliderect(plataforma.ground_collition_rect)):
+                #if(self.ground_collition_rect.colliderect(plataforma.ground_collition_rect)):
                     #print('colision!!!')
                     retorno = True
                     break       
@@ -108,21 +78,23 @@ class Enemy():
             else: 
                 self.frame = 0
 
-    def update(self,delta_ms,plataform_list):
-        if self.alive:
-            self.do_movement(delta_ms,plataform_list)
-        else:
-            self.frame_rate_ms = 600
-        self.do_animation(delta_ms) 
+    def contact(self, player):
+        if(self.sides['right'].colliderect(player.sides['main'])):
+            self.rebound('right',10)
+        if(self.sides['left'].colliderect(player.sides['main'])):
+            self.rebound('left',10)
 
-    def draw(self,screen):
-        
-        if(DEBUG):
-            pygame.draw.rect(screen,color=(255,0 ,0),rect=self.collition_rect)
-            pygame.draw.rect(screen,color=(255,255,0),rect=self.ground_collition_rect)
-        
-        self.image = self.animation[self.frame]
-        screen.blit(self.image,self.rect)
+    def update(self,delta_ms,plataform_list, player):
+        if self.animation ==  self.hurt_r and self.time_hurt <= 400:
+            self.time_hurt += delta_ms
+        else:
+            if self.alive:
+                self.do_movement(delta_ms,plataform_list)
+            else:
+                self.frame_rate_ms = 600
+            self.do_animation(delta_ms)
+            self.contact(player) 
+            self.time_hurt = 0
 
     def receive_shoot(self):
         self.animation = self.die_r

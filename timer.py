@@ -26,7 +26,7 @@ class Timer_level():
                 if self.seconds == 0:
                     self.tiempo_cumplido = True
                     
-        print(self.seconds)
+        
         return self.tiempo_cumplido   
     
     def formato_texto(self):

@@ -2,6 +2,8 @@ import pygame
 from constantes import *
 from auxiliar import Auxiliar
 from gui_label import Label
+from auxiliar_player import obtener_rectangulo
+
 class Player:
     def __init__(self, master, x,y,speed_walk,speed_run,gravity,jump_power,frame_rate_ms,move_rate_ms,jump_height,p_scale=1,interval_time_jump=100) -> None:
         '''
@@ -37,23 +39,24 @@ class Player:
         self.rect.x = x
         self.rect.y = y
         # RECTANGULO INFERIOR
-        self.collition_rect = pygame.Rect(x+self.rect.width/3,y,self.rect.width/3,self.rect.height)
-        self.ground_collition_rect = pygame.Rect(self.collition_rect)
-        self.ground_collition_rect.height = GROUND_COLLIDE_H
-        self.ground_collition_rect.y = y + self.rect.height - GROUND_COLLIDE_H
+        # self.collition_rect = pygame.Rect(x+self.rect.width/3,y,self.rect.width/3,self.rect.height)
+        # self.ground_collition_rect = pygame.Rect(self.collition_rect)
+        # self.ground_collition_rect.height = GROUND_COLLIDE_H
+        # self.ground_collition_rect.y = y + self.rect.height - GROUND_COLLIDE_H
         # RECTANGULO LATERAL IZQUIERDO
-        self.collition_rect_left = pygame.Rect(self.rect.left-5, self.rect.top +60, 10, self.rect.height -60)
-    
-        #self.collition_rect_left = pygame.Rect(self.rect.left-5, self.rect.top, 20, self.rect.height)
-        self.ground_collition_rect_left = pygame.Rect(self.collition_rect_left)        
-        self.ground_collition_rect_left.y = y + 20 #+ self.rect.height - GROUND_COLLIDE_H
-        self.ground_collition_rect_left.x = x - 5
-
+        # self.collition_rect_left = pygame.Rect(self.rect.left-5, self.rect.top +60, 10, self.rect.height -60)
+        # self.ground_collition_rect_left = pygame.Rect(self.collition_rect_left)        
+        # self.ground_collition_rect_left.y = y + 20 #+ self.rect.height - GROUND_COLLIDE_H
+        # self.ground_collition_rect_left.x = x - 5
         # RECTANGULO LATERAL DERECHO 
-        self.collition_rect_right = pygame.Rect(self.rect.right -2, self.rect.top +60, 10, self.rect.height -60)
-        self.ground_collition_rect_right = pygame.Rect(self.collition_rect_right)
-        self.ground_collition_rect_right.y = y + 20 #+ self.rect.height - GROUND_COLLIDE_H
-        self.ground_collition_rect_right.x = x +120
+        # self.collition_rect_right = pygame.Rect(self.rect.right -2, self.rect.top +60, 10, self.rect.height -60)
+        # self.ground_collition_rect_right = pygame.Rect(self.collition_rect_right)
+        # self.ground_collition_rect_right.y = y + 20 #+ self.rect.height - GROUND_COLLIDE_H
+        # self.ground_collition_rect_right.x = x +120
+        # LADOS RECTANGULO
+        self.sides = obtener_rectangulo(self.rect)
+        self.sides['bottom'].y = y + self.rect.height - GROUND_COLLIDE_H
+        self.sides['bottom'].height = GROUND_COLLIDE_H
         
         
         self.is_jump = False
@@ -110,6 +113,22 @@ class Player:
                 else:
                     self.animation = self.knife_l      
 
+    def contact(self, enemy_list):
+        for enemy_element in  enemy_list:
+                if(self.sides['right'].colliderect(enemy_element.sides['main'])):
+                    if self.animation == self.knife_r:
+                        print('ATACANDO POR LA IZQUIERDA')                        
+                        enemy_element.animation = enemy_element.hurt_l
+                        enemy_element.rebound('left',40)
+                    else:
+                        self.rebound('right',10)
+                if(self.sides['left'].colliderect(enemy_element.sides['main'])):
+                    self.rebound('left',10)
+                    # if self.animation == self.knife_r or self.animation == self.knife_l:
+                    #     print('PLAYER ATACANDO!!!!')
+
+
+    
     def jump(self,on_off = True):
         if(on_off and self.is_jump == False and self.is_fall == False):
             self.y_start_jump = self.rect.y
@@ -141,32 +160,48 @@ class Player:
             self.frame = 0
 
     def change_x(self,delta_x):
-        
+                
         if self.rect.x >= 0 and self.rect.x <= ANCHO_VENTANA - self.rect.width :
-            self.rect.x += delta_x
-            self.collition_rect.x += delta_x
-            self.ground_collition_rect.x += delta_x
+        #     self.rect.x += delta_x
+        #     self.collition_rect.x += delta_x
+        #     self.ground_collition_rect.x += delta_x
 
-            self.collition_rect_left.x += delta_x
-            self.ground_collition_rect_left.x += delta_x
-            self.collition_rect_right.x += delta_x
-            self.ground_collition_rect_right.x += delta_x
+        #     self.collition_rect_left.x += delta_x
+        #     self.ground_collition_rect_left.x += delta_x
+        #     self.collition_rect_right.x += delta_x
+        #     self.ground_collition_rect_right.x += delta_x
+            for side in self.sides:
+                    self.sides[side].x += delta_x
+        else:
+            if self.rect.x < 0:
+                self.rebound('left',10)
+            elif self.rect.x > ANCHO_VENTANA - self.rect.width:
+                self.rebound('right',10)
 
-        elif self.rect.x < 0:
-            self.rect.x += 10
-        elif self.rect.x > ANCHO_VENTANA - self.rect.width:
-            self.rect.x -= 10
+    def rebound(self, direction, power_rebound):
+        """ Realiza un efecto rebote en el personaje y sus rectangulos dependiendo el parametro
+        recibido (left/right).
+        """ 
+        auxiliar = power_rebound
+        if direction == 'right':
+            auxiliar *= -1
+        for side in self.sides:
+            self.sides[side].x += auxiliar      
+
 
     def change_y(self,delta_y):
+        # self.rect.y += delta_y
+        # self.collition_rect.y += delta_y
+        # self.ground_collition_rect.y += delta_y
 
-        self.rect.y += delta_y
-        self.collition_rect.y += delta_y
-        self.ground_collition_rect.y += delta_y
+        # self.collition_rect_left.y += delta_y
+        # self.ground_collition_rect_left.y += delta_y
+        # self.collition_rect_right.y += delta_y
+        # self.ground_collition_rect_right.y += delta_y
 
-        self.collition_rect_left.y += delta_y
-        self.ground_collition_rect_left.y += delta_y
-        self.collition_rect_right.y += delta_y
-        self.ground_collition_rect_right.y += delta_y
+        #MOVEMOS RECTANGULOS
+        for side in self.sides:
+            self.sides[side].y += delta_y
 
 
     def do_movement(self,delta_ms,plataform_list, coin_list):
@@ -199,9 +234,8 @@ class Player:
             retorno = True     
         else:
             for plataforma in  plataform_list:
-                if(self.ground_collition_rect.colliderect(plataforma.ground_collition_rect)):
-                     # INGRESAR CODIGO DE MOVIMIENTO                        
-    
+                if(self.sides['bottom'].colliderect(plataforma.ground_collition_rect)):
+                    print('ARRIBA DE PLATAFORMA')
                     retorno = True
                     break                 
         return retorno
@@ -224,19 +258,29 @@ class Player:
             else: 
                 self.frame = 0
  
-    def update(self,delta_ms,plataform_list, coins_list):
+    def update(self,delta_ms,plataform_list, coins_list, enemy_list):
         self.do_movement(delta_ms,plataform_list, coins_list)
         self.do_animation(delta_ms)
         self.label_score._text = str(self.score)
+        self.contact(enemy_list)
         
     
     def draw(self,screen):
         
         if(DEBUG):
-            pygame.draw.rect(screen,color=(255,0 ,0),rect=self.collition_rect)
-            pygame.draw.rect(screen,color=(255,255,0),rect=self.ground_collition_rect)
-            pygame.draw.rect(screen,color=(0,0,255),rect=self.ground_collition_rect_left)
-            pygame.draw.rect(screen,color=(0,0,255),rect=self.ground_collition_rect_right)             
+            for side in self.sides:
+                if side == 'bottom':
+                    pygame.draw.rect(screen,color=(0,0 ,0),rect=self.sides[side])                
+                elif side == 'left' or side == 'right':
+                    pygame.draw.rect(screen,color=(255,0 ,0),rect=self.sides[side])
+                elif side == 'top':
+                    pygame.draw.rect(screen,color=(0,255 ,0),rect=self.sides[side])
+                else:
+                    pygame.draw.rect(screen,color=(255,255 ,0),rect=self.sides[side]) 
+            # pygame.draw.rect(screen,color=(255,0 ,0),rect=self.collition_rect)
+            # pygame.draw.rect(screen,color=(255,255,0),rect=self.ground_collition_rect)
+            # pygame.draw.rect(screen,color=(0,0,255),rect=self.ground_collition_rect_left)
+            # pygame.draw.rect(screen,color=(0,0,255),rect=self.ground_collition_rect_right)             
         
         self.image = self.animation[self.frame]
         screen.blit(self.image,self.rect)

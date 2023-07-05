@@ -57,7 +57,7 @@ class Coins:
     def update(self,delta_ms):       
         self.do_animation(delta_ms)
         self.label_coin._text = self.change_value(delta_ms)
-        print(self.label_coin._text)
+        
 
 
     def draw(self,screen):

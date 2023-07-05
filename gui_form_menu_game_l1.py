@@ -26,7 +26,7 @@ class FormGameLevel1(Form):
 
         #self.score_label = Label(master=self, x=1000, y=10, w=200, h=50, text=f"Score: {0}", font="Comic Sans MS", font_size=40, font_color=C_WHITE)
 
-        self.pb_lives = ProgressBar(master=self,x=100,y=60,w=240,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Bars/Bar_Background01.png",image_progress="images/gui/set_gui_01/Comic_Border/Bars/Bar_Segment05.png",value = 5, value_max=5)
+        self.pb_lives = ProgressBar(master=self,x=80,y=80,w=240,h=50,color_background=None,color_border=None,image_background=None,image_progress="images\gui\Gui\\vida.png",value = 5, value_max=5)
         self.widget_list = [self.boton1,self.boton2,self.pb_lives,self.boton_shoot]
 
         # --- GAME ELEMNTS --- 
@@ -46,8 +46,8 @@ class FormGameLevel1(Form):
         self.player_1 = Player(master=self, x=10,y=400,speed_walk=8,speed_run=12,gravity=14,jump_power=30,frame_rate_ms=100,move_rate_ms=50,jump_height=110,p_scale=0.1,interval_time_jump=300)
 
         self.enemy_list = []
-        self.enemy_list.append (Enemy(x=815,y=320,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300))
-        self.enemy_list.append (Enemy(x=150,y=400,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300))
+        self.enemy_list.append (Enemy(master=self,x=815,y=320,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300))
+        self.enemy_list.append (Enemy(master=self,x=150,y=400,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300))
 
         self.plataform_list = []
         self.plataform_list.append(Plataform(x=500,y=500,width=50,height=50,type=0))
@@ -62,8 +62,8 @@ class FormGameLevel1(Form):
         #self.plataform_list.append(Plataform(x=150,y=450,width=50,height=50,type=14))  
 
 
-        self.plataform_list.append(Plataform(x=400,y=500,width=50,height=50,type=12, motion=True, speed_move_x=1,speed_move_y=1, move_rate_ms=30))
-        self.plataform_list.append(Plataform(x=450,y=500,width=50,height=50,type=14, motion=True, speed_move_x=1,speed_move_y=1, move_rate_ms=30))
+        self.plataform_list.append(Plataform(x=400,y=500,width=50,height=50,type=12, motion=True, speed_move_x=1,speed_move_y=0, move_rate_ms=30))
+        self.plataform_list.append(Plataform(x=450,y=500,width=50,height=50,type=14, motion=True, speed_move_x=1,speed_move_y=0, move_rate_ms=30))
 
         self.plataform_list.append(Plataform(x=750,y=550,width=50,height=50,type=12))
         self.plataform_list.append(Plataform(x=800,y=550,width=50,height=50,type=14))
@@ -104,7 +104,7 @@ class FormGameLevel1(Form):
             bullet_element.update(delta_ms,self.plataform_list,self.enemy_list,self.player_1)
 
         for enemy_element in self.enemy_list:
-            enemy_element.update(delta_ms,self.plataform_list)
+            enemy_element.update(delta_ms,self.plataform_list, self.player_1)
 
         for plataform_element in self.plataform_list:
             if plataform_element.motion:
@@ -119,7 +119,7 @@ class FormGameLevel1(Form):
          
         
         self.player_1.events(delta_ms,keys, self.plataform_list)
-        self.player_1.update(delta_ms,self.plataform_list, self.coin_list)
+        self.player_1.update(delta_ms,self.plataform_list, self.coin_list, self.enemy_list)
         
         self.pb_lives.value = self.player_1.lives
 

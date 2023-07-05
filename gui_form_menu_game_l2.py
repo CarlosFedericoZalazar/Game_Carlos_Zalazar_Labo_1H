@@ -43,8 +43,8 @@ class FormGameLevel2(Form):
         self.player_1 = Player(master=self, x=10,y=400,speed_walk=8,speed_run=12,gravity=14,jump_power=30,frame_rate_ms=100,move_rate_ms=50,jump_height=110,p_scale=0.1,interval_time_jump=300)
 
         self.enemy_list = []
-        self.enemy_list.append (Enemy(x=815,y=320,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300))
-        self.enemy_list.append (Enemy(x=900,y=400,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300))
+        self.enemy_list.append (Enemy(master=self, x=815,y=320,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300))
+        self.enemy_list.append (Enemy(master=self, x=900,y=400,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300))
 
         self.plataform_list = []
         self.plataform_list.append(Plataform(x=500,y=500,width=50,height=50,type=0))
