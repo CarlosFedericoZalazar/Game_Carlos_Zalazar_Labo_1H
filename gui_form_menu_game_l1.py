@@ -24,7 +24,7 @@ class FormGameLevel1(Form):
         self.boton2 = Button(master=self,x=200,y=0,w=140,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Buttons/Button_M_02.png",on_click=self.on_click_boton1,on_click_param="form_menu_B",text="PAUSE",font="Verdana",font_size=30,font_color=C_WHITE)
         self.boton_shoot = Button(master=self,x=400,y=0,w=140,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Buttons/Button_M_02.png",on_click=self.on_click_shoot,on_click_param="form_menu_B",text="BALA",font="Verdana",font_size=30,font_color=C_WHITE)
 
-        self.pb_lives = ProgressBar(master=self,x=80,y=80,w=240,h=50,color_background=None,color_border=None,image_background=None,image_progress="images\gui\Gui\\vida.png",value = 5, value_max=8)
+        self.pb_lives = ProgressBar(master=self,x=80,y=80,w=240,h=50,color_background=None,color_border=None,image_background=None,image_progress="images\gui\Gui\\vida.png",value = 5, value_max=4)
         self.widget_list = [self.boton1,self.boton2,self.pb_lives,self.boton_shoot]
 
         # --- GAME ELEMNTS --- 
@@ -115,6 +115,12 @@ class FormGameLevel1(Form):
 
         for enemy_element in self.enemy_list:
             enemy_element.update(delta_ms,self.plataform_list, self.player_1)
+            enemy_element.energy_bar.update(lista_eventos)
+
+            if enemy_element.lives == 0:
+                enemy_element.animation = enemy_element.die_r
+                enemy_element.alive = False
+                print('LA QUEDO EL MONSTRUO')
 
         for plataform_element in self.plataform_list:
             if plataform_element.motion:
@@ -151,7 +157,8 @@ class FormGameLevel1(Form):
             plataforma.draw(self.surface)
 
         for enemy_element in self.enemy_list:
-            enemy_element.draw(self.surface)            
+            enemy_element.draw(self.surface)
+            enemy_element.energy_bar.draw()            
             if not enemy_element.alive and enemy_element.frame == 0:               
                 self.enemy_list.pop(self.enemy_list.index(enemy_element))
                 self.player_1.score += 100

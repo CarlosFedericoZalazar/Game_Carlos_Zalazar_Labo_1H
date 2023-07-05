@@ -1,6 +1,7 @@
 from player import Player
 from constantes import *
 from auxiliar import Auxiliar
+from gui_progressbar import ProgressBar
 
 class Enemy(Player):
     def __init__(self, master, x, y, speed_walk, speed_run, gravity, jump_power, frame_rate_ms, move_rate_ms, jump_height, p_scale=1, interval_time_jump=100) -> None:
@@ -15,7 +16,14 @@ class Enemy(Player):
         self.hurt_l = Auxiliar.getSurfaceFromSeparateFiles("images/caracters/enemies/ork_sword/HURT/HURT_00{0}.png",0,7,flip=True,scale=p_scale)
         # ATRIBUTOS PROPIOS DEL MONSTRUO
         self.time_hurt = 0
+        self.lives = 3        
+
         self.contador = 0
+
+        self.sides['bottom'].y = y + self.rect.height - GROUND_COLLIDE_H + 10
+        self.energy_bar = ProgressBar(master=master,x=x,y=y,w=35,h=20,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Bars/Bar_Background01.png",image_progress="images/gui/set_gui_01/Comic_Border/Bars/Bar_Segment05.png",value = 5, value_max=5)
+        self.energy_bar.value = self.lives
+
     def change_x(self,delta_x):
         
         if self.rect.x >= 0 and self.rect.x <= ANCHO_VENTANA - self.rect.width :
@@ -28,6 +36,13 @@ class Enemy(Player):
             elif self.rect.x > ANCHO_VENTANA - self.rect.width:
                 for side in self.sides:
                     self.sides[side].x -= 10
+        self.energy_bar.x =  self.sides['top'].x + 40
+    
+    def change_y(self,delta_y):
+        
+        for side in self.sides:
+            self.sides[side].y += delta_y
+        self.energy_bar.y =  self.sides['top'].y - 35  
 
 
     def do_movement(self,delta_ms,plataform_list):
@@ -85,6 +100,7 @@ class Enemy(Player):
             self.rebound('left',10)
 
     def update(self,delta_ms,plataform_list, player):
+        self.energy_bar.value = self.lives
         if self.animation ==  self.hurt_r and self.time_hurt <= 400:
             self.time_hurt += delta_ms
         else:
@@ -99,7 +115,4 @@ class Enemy(Player):
     def receive_shoot(self):
         self.animation = self.die_r
         self.lives -= 1
-        if self.lives == 0:
-            self.animation = self.die_r
-            self.alive = False
-            print('LA QUEDO EL MONSTRUO')
+        

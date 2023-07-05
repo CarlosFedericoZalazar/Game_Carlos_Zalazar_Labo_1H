@@ -36,7 +36,7 @@ class Player:
         self.direction = DIRECTION_R
         self.image = self.animation[self.frame]
         self.alive = True
-        self.label_score = Label(master, x=1100, y=10, w=200, h=50,color_border=None, text=f"Score: {0}", font="Comic Sans MS", font_size=40, font_color=C_WHITE)
+        self.label_score = Label(master, x=1100, y=10, w=300, h=150,color_border=None, text=f"Score: {0}", font="Comic Sans MS", font_size=35, font_color=C_WHITE, image_background='images\gui\Gui\\table_point_screen.png')
         # RECTANGULO PERSONAJE
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -51,6 +51,7 @@ class Player:
         self.is_fall = False
         self.is_shoot = False
         self.is_knife = False
+        self.atack = False
 
         self.tiempo_transcurrido_animation = 0
         self.frame_rate_ms = frame_rate_ms 
@@ -104,14 +105,34 @@ class Player:
     def contact(self, enemy_list):
         for enemy_element in  enemy_list:
             if(self.sides['right'].colliderect(enemy_element.sides['main'])):
-                self.lives -= 1
-                enemy_element.rebound('left',40)
-                print('CONTACTO')
+                if self.atack:
+                    enemy_element.lives -= 1
+                    #enemy_element.energy_bar.value = enemy_element.lives
+                    enemy_element.rebound('right',60)
+                    print('LO CORTASTE TODO AL MOSNTRUO')
+                else:
+                    self.lives -= 1
+                    enemy_element.rebound('right',40)
             if(self.sides['left'].colliderect(enemy_element.sides['main'])):
-                self.lives -= 1
-                enemy_element.rebound('right',40)
-            # HACER LA LOGICA DE ATAQUE DE CUCHILLO
+                if self.atack:
+                    enemy_element.lives -= 1
+                    #enemy_element.energy_bar.value = enemy_element.lives
+                    enemy_element.rebound('left',60)
+                    print('LO CORTASTE TODO AL MOSNTRUO')
+                else:
+                    self.lives -= 1
+                    enemy_element.rebound('left',40)
 
+            
+    def rebound(self, direction, power_rebound):
+        """ Realiza un efecto rebote en el personaje y sus rectangulos dependiendo el parametro
+        recibido (left/right).
+        """ 
+        auxiliar = power_rebound
+        if direction == 'left':
+            auxiliar *= -1
+        for side in self.sides:
+            self.sides[side].x += auxiliar  
 
     
     def jump(self,on_off = True):
@@ -147,14 +168,6 @@ class Player:
     def change_x(self,delta_x):
                 
         if self.rect.x >= 0 and self.rect.x <= ANCHO_VENTANA - self.rect.width :
-        #     self.rect.x += delta_x
-        #     self.collition_rect.x += delta_x
-        #     self.ground_collition_rect.x += delta_x
-
-        #     self.collition_rect_left.x += delta_x
-        #     self.ground_collition_rect_left.x += delta_x
-        #     self.collition_rect_right.x += delta_x
-        #     self.ground_collition_rect_right.x += delta_x
             for side in self.sides:
                     self.sides[side].x += delta_x
         else:
@@ -163,28 +176,8 @@ class Player:
             elif self.rect.x > ANCHO_VENTANA - self.rect.width:
                 self.rebound('right',10)
 
-    def rebound(self, direction, power_rebound):
-        """ Realiza un efecto rebote en el personaje y sus rectangulos dependiendo el parametro
-        recibido (left/right).
-        """ 
-        auxiliar = power_rebound
-        if direction == 'right':
-            auxiliar *= -1
-        for side in self.sides:
-            self.sides[side].x += auxiliar      
-
 
     def change_y(self,delta_y):
-        # self.rect.y += delta_y
-        # self.collition_rect.y += delta_y
-        # self.ground_collition_rect.y += delta_y
-
-        # self.collition_rect_left.y += delta_y
-        # self.ground_collition_rect_left.y += delta_y
-        # self.collition_rect_right.y += delta_y
-        # self.ground_collition_rect_right.y += delta_y
-
-        #MOVEMOS RECTANGULOS
         for side in self.sides:
             self.sides[side].y += delta_y
 
@@ -246,7 +239,7 @@ class Player:
     def update(self,delta_ms,plataform_list, coins_list, enemy_list):
         self.do_movement(delta_ms,plataform_list, coins_list)
         self.do_animation(delta_ms)
-        self.label_score._text = str(self.score)
+        self.label_score._text = 'Puntos: {0}'.format(str(self.score))
         self.contact(enemy_list)
         
     
@@ -262,10 +255,7 @@ class Player:
                     pygame.draw.rect(screen,color=(0,255 ,0),rect=self.sides[side])
                 else:
                     pygame.draw.rect(screen,color=(255,255 ,0),rect=self.sides[side]) 
-            # pygame.draw.rect(screen,color=(255,0 ,0),rect=self.collition_rect)
-            # pygame.draw.rect(screen,color=(255,255,0),rect=self.ground_collition_rect)
-            # pygame.draw.rect(screen,color=(0,0,255),rect=self.ground_collition_rect_left)
-            # pygame.draw.rect(screen,color=(0,0,255),rect=self.ground_collition_rect_right)             
+           
         
         self.image = self.animation[self.frame]
         screen.blit(self.image,self.rect)
@@ -294,10 +284,13 @@ class Player:
             self.shoot(False)  
 
         if(not keys[pygame.K_a]):
+            self.atack = False
             self.knife(False)  
 
         if(keys[pygame.K_s] and not keys[pygame.K_a]):
             self.shoot()   
         
         if(keys[pygame.K_a] and not keys[pygame.K_s]):
+            self.atack = True
+            print('ATACANDO...')
             self.knife()   
