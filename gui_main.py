@@ -8,6 +8,7 @@ from gui_form_menu_B import FormMenuB
 from gui_form_menu_C import FormMenuC
 from gui_form_menu_game_l1 import FormGameLevel1
 from gui_form_menu_game_l2 import FormGameLevel2
+from gui_form_game_over import FormGameOver
 
 flags = DOUBLEBUF 
 screen = pygame.display.set_mode((ANCHO_VENTANA,ALTO_VENTANA), flags, 16)
@@ -19,9 +20,12 @@ background_image = pygame.transform.scale(background_image,(ANCHO_VENTANA,ALTO_V
 screen.blit(background_image, (0,0))
 
 # FORMS
-form_menu_A = FormMenuA(name="form_menu_A",master_surface = screen,x=ANCHO_VENTANA / 2 - 100,y=ALTO_VENTANA / 2,w=400,h=200,color_background=None,color_border=None,active=True)
+form_menu_A = FormMenuA(name="form_menu_A",master_surface = screen,x=200 / 2 - 100,y=100 / 2,w=800,h=400,color_background=None,color_border=None,active=True)
 form_menu_B = FormMenuB(name="form_menu_B",master_surface = screen,x=300,y=200,w=500,h=400,color_background=(0,255,255),color_border=(255,0,255),active=False)
 form_menu_C = FormMenuC(name="form_menu_C",master_surface = screen,x=0,y=0,w=ANCHO_VENTANA,h=ALTO_VENTANA,color_background=(0,255,255),color_border=(255,0,255),active=False)
+
+# FORM GAME OVER
+form_game_over = FormGameOver(name="form_game_over",master_surface = screen,x=0,y=0,w=ANCHO_VENTANA,h=ALTO_VENTANA,color_background=(0,0,0),color_border=(255,0,255),active=False)
 
 form_game_L1 = FormGameLevel1(name="form_game_L1",master_surface = screen,x=0,y=0,w=ANCHO_VENTANA,h=ALTO_VENTANA,color_background=(0,255,255),color_border=(255,0,255),active=False)
 form_game_L2 = FormGameLevel2(name="form_game_L2",master_surface = screen,x=0,y=0,w=ANCHO_VENTANA,h=ALTO_VENTANA,color_background=(0,255,255),color_border=(255,0,255),active=False)

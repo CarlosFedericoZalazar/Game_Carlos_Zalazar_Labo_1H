@@ -19,7 +19,7 @@ class Player:
         self.shoot_l = Auxiliar.getSurfaceFromSeparateFiles(PATH_PLAYER+ 'SHOOT\_SHOOT_{0}.png',0,3,flip=True,scale=p_scale,repeat_frame=2)
         self.knife_r = Auxiliar.getSurfaceFromSeparateFiles(PATH_PLAYER+ 'ATTACK\_ATTACK_{0}.png',0,6,flip=False,scale=p_scale,repeat_frame=1)
         self.knife_l = Auxiliar.getSurfaceFromSeparateFiles(PATH_PLAYER+ 'ATTACK\_ATTACK_{0}.png',0,6,flip=True,scale=p_scale,repeat_frame=1)
-        
+        self.die_r = Auxiliar.getSurfaceFromSeparateFiles(PATH_PLAYER+ 'DIE\_DIE_{0}.png',0,6,flip=False,scale=p_scale,repeat_frame=1)
         #self.impacto = Auxiliar.getSurfaceFromSeparateFiles('images\gui\Gui\IMPACTO\\'+ '{0}.png',1,8,flip=False,scale=p_scale)
         
         # MOVIMIENTO
@@ -44,8 +44,7 @@ class Player:
 
         self.sides = obtener_rectangulo(self.rect)
         self.sides['bottom'].y = y + self.rect.height - GROUND_COLLIDE_H
-        self.sides['bottom'].height = GROUND_COLLIDE_H
-        
+        self.sides['bottom'].height = GROUND_COLLIDE_H        
         
         self.is_jump = False
         self.is_fall = False
@@ -104,25 +103,17 @@ class Player:
 
     def contact(self, enemy_list):
         for enemy_element in  enemy_list:
-            if(self.sides['right'].colliderect(enemy_element.sides['main'])):
+            if(self.sides['right'].colliderect(enemy_element.sides['main']) or
+                  self.sides['left'].colliderect(enemy_element.sides['main'])):
                 if self.atack:
                     enemy_element.lives -= 1
-                    #enemy_element.energy_bar.value = enemy_element.lives
+                    print('LO CORTASTE TODO AL MOSNTRUO')
+                else:
+                    self.lives -= 1
+                if self.direction == DIRECTION_R:
                     enemy_element.rebound('right',60)
-                    print('LO CORTASTE TODO AL MOSNTRUO')
                 else:
-                    self.lives -= 1
-                    enemy_element.rebound('right',40)
-            if(self.sides['left'].colliderect(enemy_element.sides['main'])):
-                if self.atack:
-                    enemy_element.lives -= 1
-                    #enemy_element.energy_bar.value = enemy_element.lives
                     enemy_element.rebound('left',60)
-                    print('LO CORTASTE TODO AL MOSNTRUO')
-                else:
-                    self.lives -= 1
-                    enemy_element.rebound('left',40)
-
             
     def rebound(self, direction, power_rebound):
         """ Realiza un efecto rebote en el personaje y sus rectangulos dependiendo el parametro
@@ -172,9 +163,9 @@ class Player:
                     self.sides[side].x += delta_x
         else:
             if self.rect.x < 0:
-                self.rebound('left',10)
-            elif self.rect.x > ANCHO_VENTANA - self.rect.width:
                 self.rebound('right',10)
+            elif self.rect.x > ANCHO_VENTANA - self.rect.width:
+                self.rebound('left',10)
 
 
     def change_y(self,delta_y):

@@ -24,6 +24,7 @@ class Enemy(Player):
         self.energy_bar = ProgressBar(master=master,x=x,y=y,w=35,h=20,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Bars/Bar_Background01.png",image_progress="images/gui/set_gui_01/Comic_Border/Bars/Bar_Segment05.png",value = 5, value_max=5)
         self.energy_bar.value = self.lives
 
+
     def change_x(self,delta_x):
         
         if self.rect.x >= 0 and self.rect.x <= ANCHO_VENTANA - self.rect.width :
@@ -101,6 +102,7 @@ class Enemy(Player):
 
     def update(self,delta_ms,plataform_list, player):
         self.energy_bar.value = self.lives
+        
         if self.animation ==  self.hurt_r and self.time_hurt <= 400:
             self.time_hurt += delta_ms
         else:

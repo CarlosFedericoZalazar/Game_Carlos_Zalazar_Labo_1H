@@ -143,6 +143,10 @@ class FormGameLevel1(Form):
         # if self.player_1.score >10:
         #     #self.active = False
         #     self.set_active('form_game_L2')
+        print(self.player_1.lives)
+        if self.player_1.lives == 0:
+            self.active = False
+            self.set_active('form_game_over')
              
 
 
