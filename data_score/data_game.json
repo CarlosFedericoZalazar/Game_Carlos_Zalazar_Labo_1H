@@ -1,0 +1,46 @@
+{
+    "players": [
+        {
+            "id": 1,
+            "name": "Diego",
+            "score": 0,
+            "hour": null
+        },
+        {
+            "id": 2,
+            "name": "carlitos",
+            "score": 0,
+            "hour": null
+        },
+        {
+            "id": 3,
+            "name": "Pedro",
+            "score": 0,
+            "hour": null
+        },
+        {
+            "id": 4,
+            "name": "Holis",
+            "score": 0,
+            "hour": null
+        },
+        {
+            "id": 5,
+            "name": "Silvia",
+            "score": 0,
+            "hour": null
+        },
+        {
+            "id": 6,
+            "name": "Cande",
+            "score": 0,
+            "hour": null
+        },
+        {
+            "id": 7,
+            "name": "Andrea",
+            "score": 0,
+            "hour": null
+        }
+    ]
+}

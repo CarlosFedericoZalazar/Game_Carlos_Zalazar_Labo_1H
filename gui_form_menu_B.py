@@ -19,7 +19,7 @@ class FormMenuB(Form):
        
         self.txt1 = TextBox(master=self,x=0,y=50,w=240,h=40,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Buttons/Button_XL_08.png",text="Text",font="Verdana",font_size=30,font_color=C_BLACK)
         self.txt2 = TextBox(master=self,x=0,y=100,w=240,h=40,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Buttons/Button_XL_08.png",text="Text",font="Verdana",font_size=30,font_color=C_BLACK)
-       
+        
         
         self.lista_widget = [self.boton1,self.boton2,self.boton3,self.boton4,self.txt1,self.txt2]
 
@@ -30,7 +30,7 @@ class FormMenuB(Form):
         import sqlite3
         with sqlite3.connect("db/db_score.db") as conexion:
             try:
-                conexion.execute("insert into score (nombre,value) values (?,?)", (self.txt1._text, self.txt2._text))
+                conexion.execute("insert into score (nombre,value) values (?,?,?)", (self.txt1._text, self.txt2._text))
                 conexion.commit()# Actualiza los datos realmente en la tabla
             except:
                 print("Error")
