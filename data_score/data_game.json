@@ -2,45 +2,24 @@
     "players": [
         {
             "id": 1,
-            "name": "Diego",
-            "score": 0,
-            "hour": null
+            "name": "Velero",
+            "score": 650,
+            "date": "14:53 (09/07/2023)",
+            "text": "    Velero         650    14:53 (09/07/2023)"
         },
         {
             "id": 2,
-            "name": "carlitos",
-            "score": 0,
-            "hour": null
+            "name": "Camila",
+            "score": 650,
+            "date": "14:54 (09/07/2023)",
+            "text": "    Camila         650    14:54 (09/07/2023)"
         },
         {
             "id": 3,
-            "name": "Pedro",
-            "score": 0,
-            "hour": null
-        },
-        {
-            "id": 4,
-            "name": "Holis",
-            "score": 0,
-            "hour": null
-        },
-        {
-            "id": 5,
-            "name": "Silvia",
-            "score": 0,
-            "hour": null
-        },
-        {
-            "id": 6,
-            "name": "Cande",
-            "score": 0,
-            "hour": null
-        },
-        {
-            "id": 7,
-            "name": "Andrea",
-            "score": 0,
-            "hour": null
+            "name": "Emiliano",
+            "score": 750,
+            "date": "14:55 (09/07/2023)",
+            "text": "   Emiliano        750    14:55 (09/07/2023)"
         }
     ]
 }

@@ -40,7 +40,8 @@ while True:
     lista_eventos = pygame.event.get()
     for event in lista_eventos:
         if event.type == pygame.QUIT:
-            file_game.delete_last_reg()
+            if form_game_over.active == False:
+                file_game.delete_last_reg()
             pygame.quit()
             sys.exit()
 

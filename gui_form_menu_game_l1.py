@@ -13,6 +13,8 @@ from background import Background
 from bullet import Bullet
 from coins import Coins
 from timer import Timer_level
+from class_file import File
+
 
 
 class FormGameLevel1(Form):
@@ -26,7 +28,8 @@ class FormGameLevel1(Form):
 
         self.pb_lives = ProgressBar(master=self,x=80,y=80,w=240,h=50,color_background=None,color_border=None,image_background=None,image_progress="images\gui\Gui\\vida.png",value = 5, value_max=4)
         self.widget_list = [self.boton1,self.boton2,self.pb_lives,self.boton_shoot]
-
+        # FILE GAME
+        self.file_game_score = File('data_game')
         # --- GAME ELEMNTS --- 
         self.static_background = Background(x=0,y=0,width=w,height=h,path="images/locations/set_bg_01/forest/fondo_castillo.jpg")
         # --- COINS ---
@@ -145,6 +148,7 @@ class FormGameLevel1(Form):
         #     self.set_active('form_game_L2')
         if self.player_1.lives == 0:
             self.active = False
+            self.file_game_score.add_data_reg(self.player_1.score)
             self.set_active('form_game_over')
             
              

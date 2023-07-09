@@ -1,15 +1,17 @@
 from constantes import *
 import json
+import datetime
 
 class File():
     def __init__(self, name='', score= 0) -> None:
         self.name = name
         self.score = score
         self.last_index = 0
+        self.read = False
         
         self.list_players = []
         self.dict_jason = DICT_FILE_JSON
-        self.file_sort = []
+        self.file_sort_players = []
            
     
     def read_file(self):
@@ -18,10 +20,13 @@ class File():
             with open(PATH_DATA_SCORE + '{0}.json'.format(self.name), 'r') as archivo:
                 aux_jason = json.load(archivo)
                 self.list_players = aux_jason[DICT_FILE_JSON]
-                self.last_index = self.list_players[-1]['id']
-
+                try:
+                    self.last_index = self.list_players[-1]['id']
+                    print(' INDICE: {0}'. format(self.last_index))
+                except IndexError:
+                    print('INDICE INEXISTENTE')
                 print('SE LEYO CORRECTAMENTE EL ARCHIVO')
-                print(' INDICE: {0}'. format(self.last_index))
+                
             file_exist = True
         except FileNotFoundError:
             print("El archivo JSON no existe.")
@@ -33,9 +38,20 @@ class File():
         player['id'] = self.last_index + 1
         player['name'] = value
         player['score'] = 0
-        player['hour'] = None        
+        player['date'] = None
+        player['text'] = ''        
         self.list_players.append(player)
         self.save_data()        
+    
+    def add_data_reg(self, score):
+        self.read_file()
+        self.list_players[-1]['score'] = score
+        self.list_players[-1]['date'] = self.take_date()
+        self.list_players[-1]['text'] = '{0:^15} {1:^9} {2:^18}'.format(self.list_players[-1]['name'],
+                                                                      self.list_players[-1]['score'],
+                                                                      self.list_players[-1]['date'])
+        self.save_data()
+    
 
     def delete_last_reg(self):
         self.read_file()
@@ -51,6 +67,10 @@ class File():
             print('SE CREO ARCHIVO JSON')
 
     # ORDENAMIENTO DE LA LISTA
+    def order_list_file(self):
+        self.read_file()
+        self.file_sort_players = self.sort_list(self.list_players)
+
     def sort_list(self, list_players):
         lista_de = []
         lista_iz = []
@@ -71,6 +91,15 @@ class File():
 
         return lista_iz
 
+    def take_date(self):
+        aux_text = ''
+        hora_actual = datetime.datetime.now().time()
+        hora = hora_actual.hour
+        minutos = str(hora_actual.minute).zfill(2)        
+        fecha_actual = datetime.date.today()
+        fecha_formateada = fecha_actual.strftime("%d/%m/%Y")
+        aux_text = '{0}:{1} ({2})'.format(hora, minutos, fecha_formateada)
+        return aux_text
 
 #########################################################################################
 'OBTENER LA HORA H:M:S'
@@ -90,7 +119,7 @@ class File():
 
 #-----------------------------------------------------------------------------------------
 ' SE ACCEDE A LOS CAMPOS DE LA HORA POR SEPARADO'
-# import datetime
+
 
 # hora_actual = datetime.datetime.now().time()
 
