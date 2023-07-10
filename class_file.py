@@ -25,7 +25,7 @@ class File():
                     print(' INDICE: {0}'. format(self.last_index))
                 except IndexError:
                     print('INDICE INEXISTENTE')
-                print('SE LEYO CORRECTAMENTE EL ARCHIVO')
+                #print('SE LEYO CORRECTAMENTE EL ARCHIVO')
                 
             file_exist = True
         except FileNotFoundError:

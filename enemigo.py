@@ -4,7 +4,7 @@ from auxiliar import Auxiliar
 from gui_progressbar import ProgressBar
 
 class Enemy(Player):
-    def __init__(self, master, x, y, speed_walk, speed_run, gravity, jump_power, frame_rate_ms, move_rate_ms, jump_height, p_scale=1, interval_time_jump=100) -> None:
+    def __init__(self, master, x, y, speed_walk, speed_run, gravity, jump_power, frame_rate_ms, move_rate_ms, jump_height, p_scale=1, interval_time_jump=100, shoot = False, steps = 20) -> None:
         super().__init__(master, x, y, speed_walk, speed_run, gravity, jump_power, frame_rate_ms, move_rate_ms, jump_height, p_scale, interval_time_jump)
         # ANIMACIONES
         self.walk_r = Auxiliar.getSurfaceFromSeparateFiles("images/caracters/enemies/ork_sword/WALK/WALK_00{0}.png",0,7,scale=p_scale)
@@ -16,7 +16,9 @@ class Enemy(Player):
         self.hurt_l = Auxiliar.getSurfaceFromSeparateFiles("images/caracters/enemies/ork_sword/HURT/HURT_00{0}.png",0,7,flip=True,scale=p_scale)
         # ATRIBUTOS PROPIOS DEL MONSTRUO
         self.time_hurt = 0
-        self.lives = 3        
+        self.lives = 3
+        self.can_shoot = shoot
+        self.steps = steps        
 
         self.contador = 0
 
@@ -59,11 +61,11 @@ class Enemy(Player):
             else:
                 self.is_fall = False
                 self.change_x(self.move_x)
-                if self.contador <= 40: # CANTIDAD DE PASOS DEL MONSTRUO
+                if self.contador <= self.steps: # CANTIDAD DE PASOS DEL MONSTRUO
                     self.move_x = -self.speed_walk
                     self.animation = self.walk_l
                     self.contador += 1 
-                elif self.contador <= 80:
+                elif self.contador <= self.steps * 2:
                     self.move_x = self.speed_walk
                     self.animation = self.walk_r
                     self.contador += 1

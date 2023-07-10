@@ -5,12 +5,14 @@ from auxiliar import Auxiliar
 class Plataform:
     def __init__(self, x, y,width, height,  type=1, motion = False, speed_move_x = 0, speed_move_y = 0, move_rate_ms=0):
         plataformas = {}
-        plat_bosque = self.image_list= Auxiliar.getSurfaceFromSeparateFiles("images/tileset/forest/Tiles/{0}.png",0,17,flip=False,w=width,h=height)
-        plataformas['bosque'] = plat_bosque
+        plat_bosque_verde = self.image_list= Auxiliar.getSurfaceFromSeparateFiles("images/tileset/forest/Tiles/{0}.png",0,17,flip=False,w=width,h=height)
+        plat_bosque_oscuro = self.image_list= Auxiliar.getSurfaceFromSeparateFiles("images/tileset/dark_forest/{0}.png",0,15,flip=False,w=width,h=height)
+        plataformas['bosque_verde'] = plat_bosque_verde
+        plataformas['bosque_ocuro'] = plat_bosque_oscuro
 
 
         #self.image_list= Auxiliar.getSurfaceFromSeparateFiles("images/tileset/forest/Tiles/{0}.png",1,18,flip=False,w=width,h=height)
-        self.image = plataformas['bosque'][type]
+        self.image = plataformas['bosque_ocuro'][type]
         #self.image = self.image_list[type]
         self.rect = self.image.get_rect()
         self.rect.x = x

@@ -14,6 +14,7 @@ from bullet import Bullet
 from coins import Coins
 from timer import Timer_level
 from class_file import File
+import random
 
 
 
@@ -31,58 +32,67 @@ class FormGameLevel1(Form):
         # FILE GAME
         self.file_game_score = File('data_game')
         # --- GAME ELEMNTS --- 
-        self.static_background = Background(x=0,y=0,width=w,height=h,path="images/locations/set_bg_01/forest/fondo_castillo.jpg")
+        self.static_background = Background(x=0,y=0,width=w,height=h,path="images/locations/set_bg_01/forest/bosque_tenebroso.png")
         # --- COINS ---
         self.coin_list = []
         self.coin_list.append(Coins(master=self, x=400, y=550,value=100,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 30))
         self.coin_list.append(Coins(master=self, x=600, y=550,value=150,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 20))
-        self.coin_list.append(Coins(master=self, x=50, y=350,value=250,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 10))
-        self.coin_list.append(Coins(master=self, x=50, y=500,value=400,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 10))
-        
+        self.coin_list.append(Coins(master=self, x=50, y=300,value=250,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 10))
+        self.coin_list.append(Coins(master=self, x=550, y=300,value=400,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 10))
+        self.coin_list.append(Coins(master=self, x=1250, y=400,value=800,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 0))
         # TIMER
-        self.minuto_juego = 3
+        self.minuto_juego = 5
         self.segundos_juego = 0
         self.tiempo_juego = Timer_level(master=self, x=1000, y=10, w=200, h=50, font="Comic Sans MS", font_size=50, font_color=C_WHITE, minutes=self.minuto_juego, seconds=self.segundos_juego)
-        
+        self.time_enemy_shoot = 0
 
-        self.player_1 = Player(master=self, x=10,y=400,speed_walk=8,speed_run=12,gravity=14,jump_power=30,frame_rate_ms=100,move_rate_ms=50,jump_height=110,p_scale=0.1,interval_time_jump=300)
+        self.player_1 = Player(master=self, x=10,y=500,speed_walk=8,speed_run=12,gravity=14,jump_power=30,frame_rate_ms=100,move_rate_ms=50,jump_height=110,p_scale=0.1,interval_time_jump=300)
         self.pb_lives.value = self.player_1.lives
         self.enemy_list = []
-        self.enemy_list.append (Enemy(master=self,x=815,y=320,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300))
-        self.enemy_list.append (Enemy(master=self,x=1000,y=400,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300))
+        self.enemy_list.append (Enemy(master=self,x=30,y=400,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=True, steps=40))
+        self.enemy_list.append (Enemy(master=self,x=500,y=300,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=True, steps=10))
+        # self.enemy_list.append (Enemy(master=self,x=500,y=300,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=True))
 
         self.plataform_list = []
-        self.plataform_list.append(Plataform(x=500,y=500,width=50,height=50,type=0))
-        self.plataform_list.append(Plataform(x=550,y=500,width=50,height=50,type=1))
-        self.plataform_list.append(Plataform(x=600,y=500,width=50,height=50,type=2))
+
+        for aux in range(0,1400,50):
+            self.plataform_list.append(Plataform(x=aux,y=650,width=50,height=50,type=1))
 
         self.plataform_list.append(Plataform(x=0,y=500,width=50,height=50,type=13))
         self.plataform_list.append(Plataform(x=50,y=500,width=50,height=50,type=13))
         self.plataform_list.append(Plataform(x=100,y=500,width=50,height=50,type=13))
         self.plataform_list.append(Plataform(x=150,y=500,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=200,y=500,width=50,height=50,type=14))
+        self.plataform_list.append(Plataform(x=200,y=500,width=50,height=50,type=13))
+        self.plataform_list.append(Plataform(x=250,y=500,width=50,height=50,type=14))
 
-        self.plataform_list.append(Plataform(x=0,y=350,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=50,y=350,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=100,y=350,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=150,y=350,width=50,height=50,type=14))
-
-        self.plataform_list.append(Plataform(x=280,y=400,width=50,height=50,type=12))
-        self.plataform_list.append(Plataform(x=330,y=400,width=50,height=50,type=14))
-
-        #self.plataform_list.append(Plataform(x=150,y=450,width=50,height=50,type=14))  
-
-
-        self.plataform_list.append(Plataform(x=400,y=500,width=50,height=50,type=12, motion=False, speed_move_x=1,speed_move_y=0, move_rate_ms=30))
-        self.plataform_list.append(Plataform(x=450,y=500,width=50,height=50,type=14, motion=False, speed_move_x=1,speed_move_y=0, move_rate_ms=30))
+        self.plataform_list.append(Plataform(x=1350,y=500,width=50,height=50,type=13))
+        self.plataform_list.append(Plataform(x=1300,y=500,width=50,height=50,type=13))
+        self.plataform_list.append(Plataform(x=1250,y=500,width=50,height=50,type=13))
+        self.plataform_list.append(Plataform(x=1200,y=500,width=50,height=50,type=13))
+        self.plataform_list.append(Plataform(x=1150,y=500,width=50,height=50,type=12))
 
         self.plataform_list.append(Plataform(x=750,y=550,width=50,height=50,type=12))
         self.plataform_list.append(Plataform(x=800,y=550,width=50,height=50,type=14))
 
-        self.plataform_list.append(Plataform(x=750,y=360,width=50,height=50,type=12))
-        self.plataform_list.append(Plataform(x=800,y=360,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=850,y=360,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=900,y=360,width=50,height=50,type=14))
+        self.plataform_list.append(Plataform(x=350,y=400,width=50,height=50,type=12))
+        self.plataform_list.append(Plataform(x=400,y=400,width=50,height=50,type=13))
+        self.plataform_list.append(Plataform(x=450,y=400,width=50,height=50,type=13))
+        self.plataform_list.append(Plataform(x=500,y=400,width=50,height=50,type=13))
+        self.plataform_list.append(Plataform(x=550,y=400,width=50,height=50,type=13))
+        self.plataform_list.append(Plataform(x=600,y=400,width=50,height=50,type=14))
+
+        #self.plataform_list.append(Plataform(x=150,y=450,width=50,height=50,type=14))  
+
+
+        # self.plataform_list.append(Plataform(x=400,y=500,width=50,height=50,type=12, motion=False, speed_move_x=1,speed_move_y=0, move_rate_ms=30))
+        # self.plataform_list.append(Plataform(x=450,y=500,width=50,height=50,type=14, motion=False, speed_move_x=1,speed_move_y=0, move_rate_ms=30))
+
+
+
+        # self.plataform_list.append(Plataform(x=750,y=360,width=50,height=50,type=12))
+        # self.plataform_list.append(Plataform(x=800,y=360,width=50,height=50,type=13))
+        # self.plataform_list.append(Plataform(x=850,y=360,width=50,height=50,type=13))
+        # self.plataform_list.append(Plataform(x=900,y=360,width=50,height=50,type=14))
 
         self.bullet_list = []
 
@@ -92,21 +102,37 @@ class FormGameLevel1(Form):
         self.set_active(parametro)
 
     def on_click_shoot(self, parametro):
-        # for enemy_element in self.enemy_list:
-        #     self.bullet_list.append(Bullet(enemy_element, enemy_element.rect.centerx, enemy_element.rect.centery,self.player_1.rect.centerx,self.player_1.rect.centery,20,path="images/gui/set_gui_01/Comic_Border/Bars/Bar_Segment06.png",frame_rate_ms=100,move_rate_ms=20,width=10,height=10))
-        pass
+        #for enemy_element in self.enemy_list:
+             #self.bullet_list.append(Bullet(enemy_element, enemy_element.rect.centerx, enemy_element.rect.centery,self.player_1.rect.centerx,self.player_1.rect.centery,20,path="images/gui/set_gui_01/Comic_Border/Bars/Bar_Segment06.png",frame_rate_ms=100,move_rate_ms=20,width=10,height=10))
+        #pass
         if(self.player_1.direction == DIRECTION_R):
+            print('DISPARO HACIA LA DERECHA')
             self.bullet_list.append(Bullet(self.player_1, self.player_1.rect.centerx, self.player_1.rect.centery, ANCHO_VENTANA , self.player_1.rect.centery,20,path="images\caracters\players\caballero\SHOOT\SHOOT.png",frame_rate_ms=100,move_rate_ms=20,width=20,height=20))
         else:
             # Corregir la municion para que sea unico sentido!
             self.bullet_list.append(Bullet(self.player_1, self.player_1.rect.centerx, self.player_1.rect.centery, 0 , self.player_1.rect.centery,20,path="images\caracters\players\caballero\SHOOT\SHOOT.png",frame_rate_ms=100,move_rate_ms=20,width=20,height=20))
     
-    
+    def enemy_shoot(self, indice):   
+        if self.enemy_list[indice].can_shoot and self.enemy_list[indice].alive:
+            print(self.player_1.direction)
+            #print('DISPARO DEL MOSNTRUO')
+            self.bullet_list.append(Bullet(self.enemy_list[indice], self.enemy_list[indice].rect.centerx, self.enemy_list[indice].rect.centery,self.player_1.rect.centerx,self.player_1.rect.centery,20,path="images/gui/set_gui_01/Comic_Border/Bars/Bar_Segment06.png",frame_rate_ms=200,move_rate_ms=20,width=10,height=10))
 
+    def player_shoot(self, delta_ms):
+        self.player_1.time_to_shoot += delta_ms
+        if self.player_1.time_to_shoot >= 250 or self.player_1.time_to_shoot == 0:
+            self.player_1.time_to_shoot = 0
+            if(self.player_1.direction == DIRECTION_R):
+                print('DISPARO HACIA LA DERECHA')
+                self.bullet_list.append(Bullet(self.player_1, self.player_1.rect.centerx, self.player_1.rect.centery, ANCHO_VENTANA , self.player_1.rect.centery,20,path="images\caracters\players\caballero\SHOOT\SHOOT.png",frame_rate_ms=100,move_rate_ms=20,width=20,height=20))
+            else:
+                # Corregir la municion para que sea unico sentido!
+                self.bullet_list.append(Bullet(self.player_1, self.player_1.rect.centerx, self.player_1.rect.centery, 0 , self.player_1.rect.centery,20,path="images\caracters\players\caballero\SHOOT\SHOOT.png",frame_rate_ms=100,move_rate_ms=20,width=20,height=20))
+    
     def update(self, lista_eventos,keys,delta_ms):
 
         self.tiempo_juego.update(delta_ms)  # Timer del Juego
-
+        
         self.pb_lives.value = self.player_1.lives
         
         for aux_widget in self.widget_list:
@@ -119,6 +145,14 @@ class FormGameLevel1(Form):
         for enemy_element in self.enemy_list:
             enemy_element.update(delta_ms,self.plataform_list, self.player_1)
             enemy_element.energy_bar.update(lista_eventos)
+            self.time_enemy_shoot += delta_ms
+            # LOGICA DE DISPARO ALEATORIO ENEMIGO
+            if self.time_enemy_shoot >= 2000:
+                self.time_enemy_shoot = 0
+                indice_enemigo = random.randint(0, len(self.enemy_list)-1)
+                if (self.enemy_list[indice_enemigo].direction == 1 and self.player_1.direction == 0) or\
+                       (self.enemy_list[indice_enemigo].direction == 0 and self.player_1.direction == 1):
+                    self.enemy_shoot(indice_enemigo)
 
             if enemy_element.lives == 0:
                 enemy_element.animation = enemy_element.die_r
@@ -140,17 +174,19 @@ class FormGameLevel1(Form):
         self.player_1.events(delta_ms,keys, self.plataform_list)
         self.player_1.update(delta_ms,self.plataform_list, self.coin_list, self.enemy_list)
         
+        if self.player_1.is_shoot:
+            self.player_shoot(delta_ms)
+
         self.pb_lives.value = self.player_1.lives
 
         self.player_1.label_score.update()
         # if self.player_1.score >10:
         #     #self.active = False
         #     self.set_active('form_game_L2')
-        if self.player_1.lives == 0:
+        if self.player_1.lives == 0 or self.tiempo_juego.lavel_timer._text == '0:00':
             self.active = False
             self.file_game_score.add_data_reg(self.player_1.score)
-            self.set_active('form_game_over')
-            
+            self.set_active('form_game_over')           
              
 
 

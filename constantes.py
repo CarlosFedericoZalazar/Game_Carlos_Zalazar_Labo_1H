@@ -36,5 +36,6 @@ M_BRIGHT_CLICK = (32,32,32)
 DICT_FILE_JSON = 'players'
 
 PATH_PLAYER = 'images\caracters\players\caballero\\'
+PATH_BOSSES = 'images\caracters\\bosses\\'
 PATH_COINS = 'images\coins\\'
 PATH_DATA_SCORE = 'data_score\\'

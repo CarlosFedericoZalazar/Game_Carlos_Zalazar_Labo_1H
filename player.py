@@ -3,6 +3,7 @@ from constantes import *
 from auxiliar import Auxiliar
 from gui_label import Label
 from auxiliar_player import obtener_rectangulo
+from bullet import Bullet
 
 class Player:
     def __init__(self, master, x,y,speed_walk,speed_run,gravity,jump_power,frame_rate_ms,move_rate_ms,jump_height,p_scale=1,interval_time_jump=100) -> None:
@@ -51,6 +52,7 @@ class Player:
         self.is_shoot = False
         self.is_knife = False
         self.atack = False
+        self.time_to_shoot = 0
 
         self.tiempo_transcurrido_animation = 0
         self.frame_rate_ms = frame_rate_ms 
@@ -62,6 +64,8 @@ class Player:
         self.tiempo_transcurrido = 0
         self.tiempo_last_jump = 0 # en base al tiempo transcurrido general
         self.interval_time_jump = interval_time_jump
+        # DISPARO
+        self.bullet_list = []
 
 
     def walk(self,direction, plataform_list):
@@ -83,13 +87,19 @@ class Player:
             if(self.animation != self.shoot_r and self.animation != self.shoot_l):
                 self.frame = 0
                 self.is_shoot = True
+                self.bullet_list.append(Bullet(self, self.rect.centerx, self.rect.centery, ANCHO_VENTANA , self.rect.centery,20,path="images\caracters\players\caballero\SHOOT\SHOOT.png",frame_rate_ms=100,move_rate_ms=20,width=20,height=20))
                 if(self.direction == DIRECTION_R):
                     self.animation = self.shoot_r
+
                 else:
                     self.animation = self.shoot_l       
 
     def receive_shoot(self):
-        self.lives -= 1
+        if not self.atack:            
+            self.lives -= 1
+        else:
+            print('ATAJASTE EL CUETASO')
+            self.score += 5
 
     def knife(self,on_off = True):
         self.is_knife = on_off
@@ -204,7 +214,7 @@ class Player:
         else:
             for plataforma in  plataform_list:
                 if(self.sides['bottom'].colliderect(plataforma.ground_collition_rect)):
-                    print('ARRIBA DE PLATAFORMA')
+                    #print('ARRIBA DE PLATAFORMA')
                     retorno = True
                     break                 
         return retorno
@@ -232,6 +242,8 @@ class Player:
         self.do_animation(delta_ms)
         self.label_score._text = 'Puntos: {0}'.format(str(self.score))
         self.contact(enemy_list)
+        for bullet_element in self.bullet_list:
+            bullet_element.update(delta_ms,plataform_list,enemy_list,self)
         
     
     def draw(self,screen):
@@ -279,7 +291,8 @@ class Player:
             self.knife(False)  
 
         if(keys[pygame.K_s] and not keys[pygame.K_a]):
-            self.shoot()   
+            self.is_shoot = True
+            #self.shoot()   
         
         if(keys[pygame.K_a] and not keys[pygame.K_s]):
             self.atack = True

@@ -12,7 +12,7 @@ class Coins:
         self.coin_value = value
         self.text_value = str(self.coin_value)
         self.tiempo_transcurrido_value = 0
-        self.label_coin = Label(master, x - 10, y -8, w=50, h=50, color_background=None, color_border=None, text=self.text_value,font="Comic Sans MS", font_size=17, font_color=C_BLACK)
+        self.label_coin = Label(master, x - 10, y -8, w=50, h=50, color_background=None, color_border=None, text=self.text_value,font="Comic Sans MS", font_size=17, font_color=C_WHITE)
 
         # TIEMPO
         self.conteo_tiempo = 0

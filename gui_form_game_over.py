@@ -30,6 +30,7 @@ class FormGameOver(Form):
         self.last_label_score = Label(master = self, x=200, y=20, w=600, h=150,color_border=None, text=f"", font="Comic Sans MS", font_size=30, font_color=C_WHITE, image_background=None)
         self.list_labels_score = [self.label_score_1,self.label_score_2,self.label_score_3,self.label_score_4,self.label_score_5]
         self.file_score = File('data_game')
+        self.time_to_refresh = 0
         
     def update(self, lista_eventos,keys,delta_ms):          
 
@@ -56,6 +57,11 @@ class FormGameOver(Form):
             self.personaje.do_animation(delta_ms)
         else: 
             self.end_animation = True
+
+        self.time_to_refresh += delta_ms
+        if self.time_to_refresh >= 1000 * 5:
+            self.active = False
+            self.set_active('form_game_L1')
         
         
     def draw(self): 

@@ -2,24 +2,206 @@
     "players": [
         {
             "id": 1,
-            "name": "Velero",
-            "score": 650,
-            "date": "14:53 (09/07/2023)",
-            "text": "    Velero         650    14:53 (09/07/2023)"
+            "name": "Carlos Zalazar",
+            "score": 290,
+            "date": "0:07 (10/07/2023)",
+            "text": "Carlos Zalazar     290    0:07 (10/07/2023) "
         },
         {
             "id": 2,
-            "name": "Camila",
-            "score": 650,
-            "date": "14:54 (09/07/2023)",
-            "text": "    Camila         650    14:54 (09/07/2023)"
+            "name": "Diego Ramos",
+            "score": 1107,
+            "date": "0:22 (10/07/2023)",
+            "text": "  Diego Ramos     1107    0:22 (10/07/2023) "
         },
         {
             "id": 3,
-            "name": "Emiliano",
-            "score": 750,
-            "date": "14:55 (09/07/2023)",
-            "text": "   Emiliano        750    14:55 (09/07/2023)"
+            "name": "Jazmin",
+            "score": 100,
+            "date": "0:24 (10/07/2023)",
+            "text": "    Jazmin         100    0:24 (10/07/2023) "
+        },
+        {
+            "id": 4,
+            "name": "Micaela",
+            "score": 250,
+            "date": "0:26 (10/07/2023)",
+            "text": "    Micaela        250    0:26 (10/07/2023) "
+        },
+        {
+            "id": 5,
+            "name": "Rafael",
+            "score": 250,
+            "date": "0:27 (10/07/2023)",
+            "text": "    Rafael         250    0:27 (10/07/2023) "
+        },
+        {
+            "id": 6,
+            "name": "Rafael",
+            "score": 250,
+            "date": "0:27 (10/07/2023)",
+            "text": "    Rafael         250    0:27 (10/07/2023) "
+        },
+        {
+            "id": 7,
+            "name": "Rafael",
+            "score": 250,
+            "date": "0:27 (10/07/2023)",
+            "text": "    Rafael         250    0:27 (10/07/2023) "
+        },
+        {
+            "id": 8,
+            "name": "Rafael",
+            "score": 250,
+            "date": "0:27 (10/07/2023)",
+            "text": "    Rafael         250    0:27 (10/07/2023) "
+        },
+        {
+            "id": 9,
+            "name": "Juan",
+            "score": 0,
+            "date": "0:31 (10/07/2023)",
+            "text": "     Juan           0     0:31 (10/07/2023) "
+        },
+        {
+            "id": 10,
+            "name": "Carlos",
+            "score": 0,
+            "date": "0:31 (10/07/2023)",
+            "text": "    Carlos          0     0:31 (10/07/2023) "
+        },
+        {
+            "id": 11,
+            "name": "Carlos",
+            "score": 0,
+            "date": "0:31 (10/07/2023)",
+            "text": "    Carlos          0     0:31 (10/07/2023) "
+        },
+        {
+            "id": 12,
+            "name": "Carlos",
+            "score": 0,
+            "date": "0:31 (10/07/2023)",
+            "text": "    Carlos          0     0:31 (10/07/2023) "
+        },
+        {
+            "id": 13,
+            "name": "Carlos",
+            "score": 0,
+            "date": "0:31 (10/07/2023)",
+            "text": "    Carlos          0     0:31 (10/07/2023) "
+        },
+        {
+            "id": 14,
+            "name": "Carlos",
+            "score": 0,
+            "date": "0:31 (10/07/2023)",
+            "text": "    Carlos          0     0:31 (10/07/2023) "
+        },
+        {
+            "id": 15,
+            "name": "Carlos",
+            "score": 0,
+            "date": "0:31 (10/07/2023)",
+            "text": "    Carlos          0     0:31 (10/07/2023) "
+        },
+        {
+            "id": 16,
+            "name": "Carlos",
+            "score": 0,
+            "date": "0:31 (10/07/2023)",
+            "text": "    Carlos          0     0:31 (10/07/2023) "
+        },
+        {
+            "id": 17,
+            "name": "Carlos",
+            "score": 0,
+            "date": "0:31 (10/07/2023)",
+            "text": "    Carlos          0     0:31 (10/07/2023) "
+        },
+        {
+            "id": 18,
+            "name": "Carlos",
+            "score": 0,
+            "date": "0:31 (10/07/2023)",
+            "text": "    Carlos          0     0:31 (10/07/2023) "
+        },
+        {
+            "id": 19,
+            "name": "Carlos",
+            "score": 0,
+            "date": "0:31 (10/07/2023)",
+            "text": "    Carlos          0     0:31 (10/07/2023) "
+        },
+        {
+            "id": 20,
+            "name": "Carlos",
+            "score": 0,
+            "date": "0:31 (10/07/2023)",
+            "text": "    Carlos          0     0:31 (10/07/2023) "
+        },
+        {
+            "id": 21,
+            "name": "Carlos",
+            "score": 0,
+            "date": "0:31 (10/07/2023)",
+            "text": "    Carlos          0     0:31 (10/07/2023) "
+        },
+        {
+            "id": 22,
+            "name": "Carlos",
+            "score": 0,
+            "date": "0:31 (10/07/2023)",
+            "text": "    Carlos          0     0:31 (10/07/2023) "
+        },
+        {
+            "id": 23,
+            "name": "Carlos",
+            "score": 0,
+            "date": "0:31 (10/07/2023)",
+            "text": "    Carlos          0     0:31 (10/07/2023) "
+        },
+        {
+            "id": 24,
+            "name": "Carlos",
+            "score": 0,
+            "date": "0:31 (10/07/2023)",
+            "text": "    Carlos          0     0:31 (10/07/2023) "
+        },
+        {
+            "id": 25,
+            "name": "Carlos",
+            "score": 0,
+            "date": "0:31 (10/07/2023)",
+            "text": "    Carlos          0     0:31 (10/07/2023) "
+        },
+        {
+            "id": 26,
+            "name": "Carlos",
+            "score": 0,
+            "date": "0:31 (10/07/2023)",
+            "text": "    Carlos          0     0:31 (10/07/2023) "
+        },
+        {
+            "id": 27,
+            "name": "Carlos",
+            "score": 0,
+            "date": "0:31 (10/07/2023)",
+            "text": "    Carlos          0     0:31 (10/07/2023) "
+        },
+        {
+            "id": 28,
+            "name": "Carlos",
+            "score": 0,
+            "date": "0:31 (10/07/2023)",
+            "text": "    Carlos          0     0:31 (10/07/2023) "
+        },
+        {
+            "id": 29,
+            "name": "Miguelito",
+            "score": 0,
+            "date": null,
+            "text": ""
         }
     ]
 }
