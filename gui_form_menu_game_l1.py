@@ -14,6 +14,7 @@ from bullet import Bullet
 from coins import Coins
 from timer import Timer_level
 from class_file import File
+from class_life import Life
 import random
 
 
@@ -26,7 +27,7 @@ class FormGameLevel1(Form):
         self.boton1 = Button(master=self,x=0,y=0,w=140,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Buttons/Button_M_02.png",on_click=self.on_click_boton1,on_click_param="form_menu_B",text="BACK",font="Verdana",font_size=30,font_color=C_WHITE)
         self.boton2 = Button(master=self,x=200,y=0,w=140,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Buttons/Button_M_02.png",on_click=self.on_click_boton1,on_click_param="form_menu_B",text="PAUSE",font="Verdana",font_size=30,font_color=C_WHITE)
         self.boton_shoot = Button(master=self,x=400,y=0,w=140,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Buttons/Button_M_02.png",on_click=self.on_click_shoot,on_click_param="form_menu_B",text="BALA",font="Verdana",font_size=30,font_color=C_WHITE)
-
+        self.restart = True
         self.pb_lives = ProgressBar(master=self,x=80,y=80,w=240,h=50,color_background=None,color_border=None,image_background=None,image_progress="images\gui\Gui\\vida.png",value = 5, value_max=4)
         self.widget_list = [self.boton1,self.boton2,self.pb_lives,self.boton_shoot]
         # FILE GAME
@@ -39,19 +40,24 @@ class FormGameLevel1(Form):
         self.coin_list.append(Coins(master=self, x=600, y=550,value=150,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 20))
         self.coin_list.append(Coins(master=self, x=50, y=300,value=250,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 10))
         self.coin_list.append(Coins(master=self, x=550, y=300,value=400,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 10))
-        self.coin_list.append(Coins(master=self, x=1250, y=400,value=800,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 0))
+        self.coin_list.append(Coins(master=self, x=950, y=350,value=200,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 0))
+        self.coin_list.append(Coins(master=self, x=750, y=350,value=200,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 0))
+        self.coin_list.append(Coins(master=self, x=200, y=250,value=200,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 0))
         # TIMER
         self.minuto_juego = 5
         self.segundos_juego = 0
         self.tiempo_juego = Timer_level(master=self, x=1000, y=10, w=200, h=50, font="Comic Sans MS", font_size=50, font_color=C_WHITE, minutes=self.minuto_juego, seconds=self.segundos_juego)
         self.time_enemy_shoot = 0
-
-        self.player_1 = Player(master=self, x=10,y=500,speed_walk=8,speed_run=12,gravity=14,jump_power=30,frame_rate_ms=100,move_rate_ms=50,jump_height=110,p_scale=0.1,interval_time_jump=300)
+        # LIFES
+        self.list_lifes = []
+        self.list_lifes.append(Life(x=200,y=550))
+        self.list_lifes.append(Life(x=600,y=400))
+        self.player_1 = Player(master=self, x=INIT_POSITION_PLAYER_X,y=INIT_POSITION_PLAYER_Y,speed_walk=8,speed_run=12,gravity=14,jump_power=30,frame_rate_ms=100,move_rate_ms=50,jump_height=110,p_scale=0.1,interval_time_jump=300)
         self.pb_lives.value = self.player_1.lives
         self.enemy_list = []
-        self.enemy_list.append (Enemy(master=self,x=30,y=400,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=True, steps=40))
-        self.enemy_list.append (Enemy(master=self,x=500,y=300,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=True, steps=10))
-        # self.enemy_list.append (Enemy(master=self,x=500,y=300,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=True))
+        self.enemy_list.append (Enemy(master=self,x=30,y=400,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=40))
+        self.enemy_list.append (Enemy(master=self,x=500,y=500,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=10))
+        self.enemy_list.append (Enemy(master=self,x=800,y=300,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=True))
 
         self.plataform_list = []
 
@@ -65,14 +71,31 @@ class FormGameLevel1(Form):
         self.plataform_list.append(Plataform(x=200,y=500,width=50,height=50,type=13))
         self.plataform_list.append(Plataform(x=250,y=500,width=50,height=50,type=14))
 
+        self.plataform_list.append(Plataform(x=0,y=350,width=50,height=50,type=13))
+        self.plataform_list.append(Plataform(x=50,y=350,width=50,height=50,type=13))
+        self.plataform_list.append(Plataform(x=100,y=350,width=50,height=50,type=14))
+
+        self.plataform_list.append(Plataform(x=200,y=350,width=50,height=50,type=12))
+        self.plataform_list.append(Plataform(x=250,y=350,width=50,height=50,type=13))
+        self.plataform_list.append(Plataform(x=300,y=350,width=50,height=50,type=14))
+
         self.plataform_list.append(Plataform(x=1350,y=500,width=50,height=50,type=13))
         self.plataform_list.append(Plataform(x=1300,y=500,width=50,height=50,type=13))
         self.plataform_list.append(Plataform(x=1250,y=500,width=50,height=50,type=13))
         self.plataform_list.append(Plataform(x=1200,y=500,width=50,height=50,type=13))
         self.plataform_list.append(Plataform(x=1150,y=500,width=50,height=50,type=12))
 
-        self.plataform_list.append(Plataform(x=750,y=550,width=50,height=50,type=12))
-        self.plataform_list.append(Plataform(x=800,y=550,width=50,height=50,type=14))
+        self.plataform_list.append(Plataform(x=1000,y=550,width=50,height=50,type=12))
+        self.plataform_list.append(Plataform(x=1050,y=550,width=50,height=50,type=14))
+
+        self.plataform_list.append(Plataform(x=700,y=500,width=50,height=50,type=12))
+        self.plataform_list.append(Plataform(x=750,y=500,width=50,height=50,type=13))
+        self.plataform_list.append(Plataform(x=800,y=500,width=50,height=50,type=13))
+        self.plataform_list.append(Plataform(x=850,y=500,width=50,height=50,type=14))        
+        
+        self.plataform_list.append(Plataform(x=350,y=550,width=50,height=50,type=12))
+        self.plataform_list.append(Plataform(x=400,y=550,width=50,height=50,type=14))
+
 
         self.plataform_list.append(Plataform(x=350,y=400,width=50,height=50,type=12))
         self.plataform_list.append(Plataform(x=400,y=400,width=50,height=50,type=13))
@@ -129,6 +152,36 @@ class FormGameLevel1(Form):
                 # Corregir la municion para que sea unico sentido!
                 self.bullet_list.append(Bullet(self.player_1, self.player_1.rect.centerx, self.player_1.rect.centery, 0 , self.player_1.rect.centery,20,path="images\caracters\players\caballero\SHOOT\SHOOT.png",frame_rate_ms=100,move_rate_ms=20,width=20,height=20))
     
+    def restart_game(self):
+        if self.restart:
+            #REINICIAMOS ENEMIGOS:
+            #self.enemy_list = []            
+            #self.enemy_list.append (Enemy(master=self,x=30,y=400,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=40))
+            #self.enemy_list.append (Enemy(master=self,x=500,y=500,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=10))
+            #REINICIAMOS TIEMPO DE PARTIDA
+            self.tiempo_juego.minutes = TIME_GAME_MINUTES
+            self.tiempo_juego.seconds = TIME_GAME_SECONDS
+            #REINICIAMOS AL PLAYER
+            self.pb_lives.value = self.player_1.lives
+            self.player_1.lives = 5
+            self.player_1.score = 0
+            self.player_1.rect.x = INIT_POSITION_PLAYER_X
+            self.player_1.rect.y = INIT_POSITION_PLAYER_Y
+            for side in self.player_1.sides:
+                self.player_1.sides[side].x = INIT_POSITION_PLAYER_X
+                self.player_1.sides[side].y = INIT_POSITION_PLAYER_Y
+            self.player_1.sides['left'].x += 20
+            self.player_1.sides['right'].x += 100 
+            self.player_1.sides['bottom'].y = INIT_POSITION_PLAYER_Y + self.player_1.rect.height - GROUND_COLLIDE_H
+            self.player_1.sides['bottom'].height = GROUND_COLLIDE_H
+            
+            
+            #self.enemy_list = []
+            self.enemy_list.append (Enemy(master=self,x=30,y=400,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=True, steps=40))
+            #self.enemy_list.append (Enemy(master=self,x=500,y=300,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=True, steps=10))
+            self.restart = False    
+    
+    
     def update(self, lista_eventos,keys,delta_ms):
 
         self.tiempo_juego.update(delta_ms)  # Timer del Juego
@@ -167,12 +220,10 @@ class FormGameLevel1(Form):
         # IMPLEMENTAR COINS
         for coin_element in self.coin_list:
             coin_element.update(delta_ms)
-            coin_element.label_coin.update()
-
-         
+            coin_element.label_coin.update()         
         
         self.player_1.events(delta_ms,keys, self.plataform_list)
-        self.player_1.update(delta_ms,self.plataform_list, self.coin_list, self.enemy_list)
+        self.player_1.update(delta_ms,self.plataform_list, self.coin_list, self.list_lifes, self.enemy_list)
         
         if self.player_1.is_shoot:
             self.player_shoot(delta_ms)
@@ -186,9 +237,11 @@ class FormGameLevel1(Form):
         if self.player_1.lives == 0 or self.tiempo_juego.lavel_timer._text == '0:00':
             self.active = False
             self.file_game_score.add_data_reg(self.player_1.score)
-            self.set_active('form_game_over')           
-             
-
+            self.restart = True
+            #del self.enemy_list
+            self.enemy_list.clear()
+            self.restart_game()
+            self.set_active('form_game_over')
 
     def draw(self): 
         super().draw()
@@ -218,6 +271,9 @@ class FormGameLevel1(Form):
             coin_element.label_coin.draw()
         
         self.player_1.label_score.draw()
+
+        for life in self.list_lifes:
+            life.draw(self.surface)
 
         self.tiempo_juego.lavel_timer.draw() # Timer del Juego
 

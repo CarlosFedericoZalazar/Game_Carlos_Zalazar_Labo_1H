@@ -25,7 +25,7 @@ background_image = pygame.transform.scale(background_image,(ANCHO_VENTANA,ALTO_V
 screen.blit(background_image, (0,0))
 
 # FORMS
-form_menu_A = FormMenuA(name="form_menu_A",master_surface = screen,x=200 / 2 - 100,y=100 / 2,w=800,h=400,color_background=None,color_border=None,active=True)
+form_menu_A = FormMenuA(name="form_menu_A",master_surface = screen,x=0,y=0 / 2,w=ANCHO_VENTANA,h=ALTO_VENTANA,color_background=None,color_border=None,active=True)
 form_menu_B = FormMenuB(name="form_menu_B",master_surface = screen,x=300,y=200,w=500,h=400,color_background=(0,255,255),color_border=(255,0,255),active=False)
 form_menu_C = FormMenuC(name="form_menu_C",master_surface = screen,x=0,y=0,w=ANCHO_VENTANA,h=ALTO_VENTANA,color_background=(0,255,255),color_border=(255,0,255),active=False)
 

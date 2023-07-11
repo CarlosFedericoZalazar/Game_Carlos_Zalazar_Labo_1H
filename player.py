@@ -225,7 +225,12 @@ class Player:
                 self.score += coin.coin_value
                 print('AGARRASTE LA MONEDA!!!')
                 coin_list.pop(coin_list.index(coin))
-                         
+
+    def take_life(self, life_list):
+        for life in life_list:
+            if(self.rect.colliderect(life.rect)):
+                self.lives += life.value
+                life_list.pop(life_list.index(life))
 
     def do_animation(self,delta_ms):
         self.tiempo_transcurrido_animation += delta_ms
@@ -237,14 +242,15 @@ class Player:
             else: 
                 self.frame = 0
  
-    def update(self,delta_ms,plataform_list, coins_list, enemy_list):
+    def update(self,delta_ms,plataform_list, coins_list,life_list, enemy_list):
+
         self.do_movement(delta_ms,plataform_list, coins_list)
         self.do_animation(delta_ms)
         self.label_score._text = 'Puntos: {0}'.format(str(self.score))
         self.contact(enemy_list)
         for bullet_element in self.bullet_list:
             bullet_element.update(delta_ms,plataform_list,enemy_list,self)
-        
+        self.take_life(life_list)
     
     def draw(self,screen):
         

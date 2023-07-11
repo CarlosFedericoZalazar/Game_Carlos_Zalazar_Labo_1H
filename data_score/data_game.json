@@ -2,206 +2,360 @@
     "players": [
         {
             "id": 1,
-            "name": "Carlos Zalazar",
-            "score": 290,
-            "date": "0:07 (10/07/2023)",
-            "text": "Carlos Zalazar     290    0:07 (10/07/2023) "
+            "name": "CARLOS",
+            "score": 250,
+            "date": "19:32 (10/07/2023)",
+            "text": "    CARLOS         250    19:32 (10/07/2023)"
         },
         {
             "id": 2,
-            "name": "Diego Ramos",
-            "score": 1107,
-            "date": "0:22 (10/07/2023)",
-            "text": "  Diego Ramos     1107    0:22 (10/07/2023) "
+            "name": "MIGUEL",
+            "score": 0,
+            "date": "19:33 (10/07/2023)",
+            "text": "    MIGUEL          0     19:33 (10/07/2023)"
         },
         {
             "id": 3,
-            "name": "Jazmin",
+            "name": "MARTIN",
             "score": 100,
-            "date": "0:24 (10/07/2023)",
-            "text": "    Jazmin         100    0:24 (10/07/2023) "
+            "date": "19:34 (10/07/2023)",
+            "text": "    MARTIN         100    19:34 (10/07/2023)"
         },
         {
             "id": 4,
-            "name": "Micaela",
-            "score": 250,
-            "date": "0:26 (10/07/2023)",
-            "text": "    Micaela        250    0:26 (10/07/2023) "
+            "name": "MARCELO",
+            "score": 350,
+            "date": "19:36 (10/07/2023)",
+            "text": "    MARCELO        350    19:36 (10/07/2023)"
         },
         {
             "id": 5,
-            "name": "Rafael",
-            "score": 250,
-            "date": "0:27 (10/07/2023)",
-            "text": "    Rafael         250    0:27 (10/07/2023) "
+            "name": "JUAN BAUTISTA",
+            "score": 0,
+            "date": "19:36 (10/07/2023)",
+            "text": " JUAN BAUTISTA      0     19:36 (10/07/2023)"
         },
         {
             "id": 6,
-            "name": "Rafael",
+            "name": "MARCELO",
             "score": 250,
-            "date": "0:27 (10/07/2023)",
-            "text": "    Rafael         250    0:27 (10/07/2023) "
+            "date": "19:47 (10/07/2023)",
+            "text": "    MARCELO        250    19:47 (10/07/2023)"
         },
         {
             "id": 7,
-            "name": "Rafael",
-            "score": 250,
-            "date": "0:27 (10/07/2023)",
-            "text": "    Rafael         250    0:27 (10/07/2023) "
+            "name": "CARLOS",
+            "score": 100,
+            "date": "19:47 (10/07/2023)",
+            "text": "    CARLOS         100    19:47 (10/07/2023)"
         },
         {
             "id": 8,
-            "name": "Rafael",
-            "score": 250,
-            "date": "0:27 (10/07/2023)",
-            "text": "    Rafael         250    0:27 (10/07/2023) "
+            "name": "DARIO",
+            "score": 0,
+            "date": "19:48 (10/07/2023)",
+            "text": "     DARIO          0     19:48 (10/07/2023)"
         },
         {
             "id": 9,
-            "name": "Juan",
-            "score": 0,
-            "date": "0:31 (10/07/2023)",
-            "text": "     Juan           0     0:31 (10/07/2023) "
+            "name": "HOLA",
+            "score": 250,
+            "date": "19:55 (10/07/2023)",
+            "text": "     HOLA          250    19:55 (10/07/2023)"
         },
         {
             "id": 10,
-            "name": "Carlos",
+            "name": "MARTIN",
             "score": 0,
-            "date": "0:31 (10/07/2023)",
-            "text": "    Carlos          0     0:31 (10/07/2023) "
+            "date": "19:56 (10/07/2023)",
+            "text": "    MARTIN          0     19:56 (10/07/2023)"
         },
         {
             "id": 11,
-            "name": "Carlos",
-            "score": 0,
-            "date": "0:31 (10/07/2023)",
-            "text": "    Carlos          0     0:31 (10/07/2023) "
-        },
-        {
-            "id": 12,
-            "name": "Carlos",
-            "score": 0,
-            "date": "0:31 (10/07/2023)",
-            "text": "    Carlos          0     0:31 (10/07/2023) "
-        },
-        {
-            "id": 13,
-            "name": "Carlos",
-            "score": 0,
-            "date": "0:31 (10/07/2023)",
-            "text": "    Carlos          0     0:31 (10/07/2023) "
-        },
-        {
-            "id": 14,
-            "name": "Carlos",
-            "score": 0,
-            "date": "0:31 (10/07/2023)",
-            "text": "    Carlos          0     0:31 (10/07/2023) "
-        },
-        {
-            "id": 15,
-            "name": "Carlos",
-            "score": 0,
-            "date": "0:31 (10/07/2023)",
-            "text": "    Carlos          0     0:31 (10/07/2023) "
-        },
-        {
-            "id": 16,
-            "name": "Carlos",
-            "score": 0,
-            "date": "0:31 (10/07/2023)",
-            "text": "    Carlos          0     0:31 (10/07/2023) "
-        },
-        {
-            "id": 17,
-            "name": "Carlos",
-            "score": 0,
-            "date": "0:31 (10/07/2023)",
-            "text": "    Carlos          0     0:31 (10/07/2023) "
-        },
-        {
-            "id": 18,
-            "name": "Carlos",
-            "score": 0,
-            "date": "0:31 (10/07/2023)",
-            "text": "    Carlos          0     0:31 (10/07/2023) "
-        },
-        {
-            "id": 19,
-            "name": "Carlos",
-            "score": 0,
-            "date": "0:31 (10/07/2023)",
-            "text": "    Carlos          0     0:31 (10/07/2023) "
-        },
-        {
-            "id": 20,
-            "name": "Carlos",
-            "score": 0,
-            "date": "0:31 (10/07/2023)",
-            "text": "    Carlos          0     0:31 (10/07/2023) "
-        },
-        {
-            "id": 21,
-            "name": "Carlos",
-            "score": 0,
-            "date": "0:31 (10/07/2023)",
-            "text": "    Carlos          0     0:31 (10/07/2023) "
-        },
-        {
-            "id": 22,
-            "name": "Carlos",
-            "score": 0,
-            "date": "0:31 (10/07/2023)",
-            "text": "    Carlos          0     0:31 (10/07/2023) "
-        },
-        {
-            "id": 23,
-            "name": "Carlos",
-            "score": 0,
-            "date": "0:31 (10/07/2023)",
-            "text": "    Carlos          0     0:31 (10/07/2023) "
-        },
-        {
-            "id": 24,
-            "name": "Carlos",
-            "score": 0,
-            "date": "0:31 (10/07/2023)",
-            "text": "    Carlos          0     0:31 (10/07/2023) "
-        },
-        {
-            "id": 25,
-            "name": "Carlos",
-            "score": 0,
-            "date": "0:31 (10/07/2023)",
-            "text": "    Carlos          0     0:31 (10/07/2023) "
-        },
-        {
-            "id": 26,
-            "name": "Carlos",
-            "score": 0,
-            "date": "0:31 (10/07/2023)",
-            "text": "    Carlos          0     0:31 (10/07/2023) "
-        },
-        {
-            "id": 27,
-            "name": "Carlos",
-            "score": 0,
-            "date": "0:31 (10/07/2023)",
-            "text": "    Carlos          0     0:31 (10/07/2023) "
-        },
-        {
-            "id": 28,
-            "name": "Carlos",
-            "score": 0,
-            "date": "0:31 (10/07/2023)",
-            "text": "    Carlos          0     0:31 (10/07/2023) "
-        },
-        {
-            "id": 29,
-            "name": "Miguelito",
+            "name": "BLUMBERG",
             "score": 0,
             "date": null,
             "text": ""
+        },
+        {
+            "id": 12,
+            "name": "MARCELO",
+            "score": 350,
+            "date": "20:04 (10/07/2023)",
+            "text": "    MARCELO        350    20:04 (10/07/2023)"
+        },
+        {
+            "id": 13,
+            "name": "CARLOS",
+            "score": 250,
+            "date": "20:12 (10/07/2023)",
+            "text": "    CARLOS         250    20:12 (10/07/2023)"
+        },
+        {
+            "id": 14,
+            "name": "DARIO",
+            "score": 0,
+            "date": null,
+            "text": ""
+        },
+        {
+            "id": 15,
+            "name": "ANDREA",
+            "score": 0,
+            "date": null,
+            "text": ""
+        },
+        {
+            "id": 16,
+            "name": "AMRIANO",
+            "score": 250,
+            "date": "20:21 (10/07/2023)",
+            "text": "    AMRIANO        250    20:21 (10/07/2023)"
+        },
+        {
+            "id": 17,
+            "name": "CARLOS",
+            "score": 250,
+            "date": "20:52 (10/07/2023)",
+            "text": "    CARLOS         250    20:52 (10/07/2023)"
+        },
+        {
+            "id": 18,
+            "name": "MARTIN",
+            "score": 0,
+            "date": "20:53 (10/07/2023)",
+            "text": "    MARTIN          0     20:53 (10/07/2023)"
+        },
+        {
+            "id": 19,
+            "name": "CARLOS",
+            "score": 0,
+            "date": null,
+            "text": ""
+        },
+        {
+            "id": 20,
+            "name": "EXEQUIEL",
+            "score": 250,
+            "date": "22:30 (10/07/2023)",
+            "text": "   EXEQUIEL        250    22:30 (10/07/2023)"
+        },
+        {
+            "id": 21,
+            "name": "PEDRO",
+            "score": 350,
+            "date": "22:33 (10/07/2023)",
+            "text": "     PEDRO         350    22:33 (10/07/2023)"
+        },
+        {
+            "id": 22,
+            "name": "DARIO",
+            "score": 100,
+            "date": "22:45 (10/07/2023)",
+            "text": "     DARIO         100    22:45 (10/07/2023)"
+        },
+        {
+            "id": 23,
+            "name": "MIGUEL",
+            "score": 480,
+            "date": "22:46 (10/07/2023)",
+            "text": "    MIGUEL         480    22:46 (10/07/2023)"
+        },
+        {
+            "id": 24,
+            "name": "ADRIAN",
+            "score": 250,
+            "date": "22:54 (10/07/2023)",
+            "text": "    ADRIAN         250    22:54 (10/07/2023)"
+        },
+        {
+            "id": 25,
+            "name": "PEDRO",
+            "score": 491,
+            "date": "22:54 (10/07/2023)",
+            "text": "     PEDRO         491    22:54 (10/07/2023)"
+        },
+        {
+            "id": 26,
+            "name": "NICOLAS",
+            "score": 1173,
+            "date": "23:00 (10/07/2023)",
+            "text": "    NICOLAS       1173    23:00 (10/07/2023)"
+        },
+        {
+            "id": 27,
+            "name": "ANDRES",
+            "score": 0,
+            "date": null,
+            "text": ""
+        },
+        {
+            "id": 28,
+            "name": "ALEJANDRO",
+            "score": 941,
+            "date": "23:15 (10/07/2023)",
+            "text": "   ALEJANDRO       941    23:15 (10/07/2023)"
+        },
+        {
+            "id": 29,
+            "name": "CHARLY",
+            "score": 0,
+            "date": "23:16 (10/07/2023)",
+            "text": "    CHARLY          0     23:16 (10/07/2023)"
+        },
+        {
+            "id": 30,
+            "name": "NACHO",
+            "score": 0,
+            "date": "23:16 (10/07/2023)",
+            "text": "     NACHO          0     23:16 (10/07/2023)"
+        },
+        {
+            "id": 31,
+            "name": "MARCELO",
+            "score": 528,
+            "date": "23:19 (10/07/2023)",
+            "text": "    MARCELO        528    23:19 (10/07/2023)"
+        },
+        {
+            "id": 32,
+            "name": "OLGA",
+            "score": 0,
+            "date": "23:20 (10/07/2023)",
+            "text": "     OLGA           0     23:20 (10/07/2023)"
+        },
+        {
+            "id": 33,
+            "name": "NACHO",
+            "score": 522,
+            "date": "23:24 (10/07/2023)",
+            "text": "     NACHO         522    23:24 (10/07/2023)"
+        },
+        {
+            "id": 34,
+            "name": "ALFREDO",
+            "score": 0,
+            "date": null,
+            "text": ""
+        },
+        {
+            "id": 35,
+            "name": "NICOLAS",
+            "score": 536,
+            "date": "23:27 (10/07/2023)",
+            "text": "    NICOLAS        536    23:27 (10/07/2023)"
+        },
+        {
+            "id": 36,
+            "name": "PICANTE",
+            "score": 961,
+            "date": "23:28 (10/07/2023)",
+            "text": "    PICANTE        961    23:28 (10/07/2023)"
+        },
+        {
+            "id": 37,
+            "name": "GOLDEN",
+            "score": 355,
+            "date": "23:33 (10/07/2023)",
+            "text": "    GOLDEN         355    23:33 (10/07/2023)"
+        },
+        {
+            "id": 38,
+            "name": "JAZMIN",
+            "score": 0,
+            "date": null,
+            "text": ""
+        },
+        {
+            "id": 39,
+            "name": "NICOLAS",
+            "score": 0,
+            "date": null,
+            "text": ""
+        },
+        {
+            "id": 40,
+            "name": "JAZMIN",
+            "score": 250,
+            "date": "23:59 (10/07/2023)",
+            "text": "    JAZMIN         250    23:59 (10/07/2023)"
+        },
+        {
+            "id": 41,
+            "name": "J",
+            "score": 5,
+            "date": "23:59 (10/07/2023)",
+            "text": "       J            5     23:59 (10/07/2023)"
+        },
+        {
+            "id": 42,
+            "name": "CHARLY",
+            "score": 682,
+            "date": "0:00 (11/07/2023)",
+            "text": "    CHARLY         682    0:00 (11/07/2023) "
+        },
+        {
+            "id": 43,
+            "name": "ADRIAN",
+            "score": 1218,
+            "date": "0:04 (11/07/2023)",
+            "text": "    ADRIAN        1218    0:04 (11/07/2023) "
+        },
+        {
+            "id": 44,
+            "name": "CARLOS",
+            "score": 0,
+            "date": null,
+            "text": ""
+        },
+        {
+            "id": 45,
+            "name": "EDUARDO",
+            "score": 1432,
+            "date": "0:16 (11/07/2023)",
+            "text": "    EDUARDO       1432    0:16 (11/07/2023) "
+        },
+        {
+            "id": 46,
+            "name": "CARLOS",
+            "score": 0,
+            "date": null,
+            "text": ""
+        },
+        {
+            "id": 47,
+            "name": "PELADO",
+            "score": 0,
+            "date": null,
+            "text": ""
+        },
+        {
+            "id": 48,
+            "name": "PEDRO",
+            "score": 0,
+            "date": null,
+            "text": ""
+        },
+        {
+            "id": 49,
+            "name": "DARIO",
+            "score": 647,
+            "date": "0:33 (11/07/2023)",
+            "text": "     DARIO         647    0:33 (11/07/2023) "
+        },
+        {
+            "id": 50,
+            "name": "GATICO",
+            "score": 241,
+            "date": "0:36 (11/07/2023)",
+            "text": "    GATICO         241    0:36 (11/07/2023) "
+        },
+        {
+            "id": 51,
+            "name": "FEDERICO",
+            "score": 250,
+            "date": "0:38 (11/07/2023)",
+            "text": "   FEDERICO        250    0:38 (11/07/2023) "
         }
     ]
 }

@@ -16,21 +16,25 @@ class FormGameOver(Form):
         
         #self.master_surface = master_surface
         #self.tiempo_juego = Timer_level(master=self, x=1000, y=10, w=200, h=50, font="Comic Sans MS", font_size=50, font_color=C_WHITE, minutes=self.minuto_juego, seconds=self.segundos_juego)
-        self.label_game_over = Label(master = self, x=ANCHO_VENTANA/2, y=80, w=400, h=150,color_border=None, text=f"GAME OVER", font="Comic Sans MS", font_size=35, font_color=C_WHITE, image_background=None)
+        self.label_game_over = Label(master = self, x=ANCHO_VENTANA/2, y=20, w=400, h=150,color_border=None, text=f"GAME OVER", font="Comic Sans MS", font_size=35, font_color=C_WHITE, image_background=None)
         self.personaje = Player(master=self, x=150,y=20,speed_walk=8,speed_run=12,gravity=14,jump_power=30,frame_rate_ms=80,move_rate_ms=50,jump_height=110,p_scale=0.5,interval_time_jump=300)
         self.personaje.animation = self.personaje.die_r
         self.personaje.frame_rate_ms = 1000
         self.end_animation = False
 
-        self.label_score_1 = Label(master = self, x=ANCHO_VENTANA/2, y=200, w=600, h=150,color_border=None, text=f"", font="Comic Sans MS", font_size=20, font_color=C_WHITE, image_background=None)
-        self.label_score_2 = Label(master = self, x=ANCHO_VENTANA/2, y=220, w=600, h=150,color_border=None, text=f"", font="Comic Sans MS", font_size=20, font_color=C_WHITE, image_background=None)
-        self.label_score_3 = Label(master = self, x=ANCHO_VENTANA/2, y=240, w=600, h=150,color_border=None, text=f"", font="Comic Sans MS", font_size=20, font_color=C_WHITE, image_background=None)
-        self.label_score_4 = Label(master = self, x=ANCHO_VENTANA/2, y=260, w=600, h=150,color_border=None, text=f"", font="Comic Sans MS", font_size=20, font_color=C_WHITE, image_background=None)
-        self.label_score_5 = Label(master = self, x=ANCHO_VENTANA/2, y=280, w=600, h=150,color_border=None, text=f"", font="Comic Sans MS", font_size=20, font_color=C_WHITE, image_background=None)
-        self.last_label_score = Label(master = self, x=200, y=20, w=600, h=150,color_border=None, text=f"", font="Comic Sans MS", font_size=30, font_color=C_WHITE, image_background=None)
+        self.label_score_1 = Label(master = self, x=780, y=125, w=600, h=100,color_border=None, text=f"EMPTY", font="Comic Sans MS", font_size=25, font_color=C_WHITE, image_background=None)
+        self.label_score_2 = Label(master = self, x=780, y=180, w=600, h=100,color_border=None, text=f"EMPTY", font="Comic Sans MS", font_size=25, font_color=C_WHITE, image_background=None)
+        self.label_score_3 = Label(master = self, x=780, y=230, w=600, h=100,color_border=None, text=f"EMPTY", font="Comic Sans MS", font_size=25, font_color=C_WHITE, image_background=None)
+        self.label_score_4 = Label(master = self, x=780, y=285, w=600, h=100,color_border=None, text=f"EMPTY", font="Comic Sans MS", font_size=25, font_color=C_WHITE, image_background=None)
+        self.label_score_5 = Label(master = self, x=780, y=340, w=600, h=100,color_border=None, text=f"EMPTY", font="Comic Sans MS", font_size=25, font_color=C_WHITE, image_background=None)
+        self.last_label_score = Label(master = self, x=200, y=20, w=600, h=120,color_border=None, text=f"", font="Comic Sans MS", font_size=25, font_color=C_WHITE, image_background=None)
         self.list_labels_score = [self.label_score_1,self.label_score_2,self.label_score_3,self.label_score_4,self.label_score_5]
         self.file_score = File('data_game')
         self.time_to_refresh = 0
+        self.numbers = []
+        for number in range(4):
+            self.numbers.append(pygame.image.load('images\gui\Gui\\numbers\{0}.png'.format(number)))
+        
         
     def update(self, lista_eventos,keys,delta_ms):          
 
@@ -42,7 +46,7 @@ class FormGameOver(Form):
         self.file_score.order_list_file()
         try:
             for label_score in self.list_labels_score:
-                label_score._text = '{0}) - {1}'.format(index + 1, self.file_score.file_sort_players[index]['text'])
+                label_score._text = '{0}'.format(self.file_score.file_sort_players[index]['text'])
                 index += 1
 
         except IndexError:
@@ -55,13 +59,15 @@ class FormGameOver(Form):
 
         if(self.personaje.frame < len(self.personaje.animation) - 1 and not self.end_animation):
             self.personaje.do_animation(delta_ms)
+            print(self.personaje.frame)
         else: 
-            self.end_animation = True
+            self.end_animation = True            
 
-        self.time_to_refresh += delta_ms
-        if self.time_to_refresh >= 1000 * 5:
+        if(keys[pygame.K_SPACE]):
             self.active = False
-            self.set_active('form_game_L1')
+            self.end_animation = False
+            self.personaje.frame = 0
+            self.set_active('form_menu_A')
         
         
     def draw(self): 
