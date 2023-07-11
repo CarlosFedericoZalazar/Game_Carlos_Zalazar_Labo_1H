@@ -27,6 +27,7 @@ class Player:
         self.frame = 0
         self.lives = 5
         self.score = 0
+        self.coins = 0
         self.move_x = 0
         self.move_y = 0
         self.speed_walk =  speed_walk
@@ -38,6 +39,7 @@ class Player:
         self.image = self.animation[self.frame]
         self.alive = True
         self.label_score = Label(master, x=1100, y=10, w=300, h=150,color_border=None, text=f"Score: {0}", font="Comic Sans MS", font_size=35, font_color=C_WHITE, image_background='images\gui\Gui\\table_point_screen.png')
+        self.label_coins = Label(master, x=1100, y=60, w=300, h=120,color_border=None, text=f"Coins: {0}", font="Comic Sans MS", font_size=35, font_color=C_WHITE, color_background=None)
         # RECTANGULO PERSONAJE
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -203,8 +205,29 @@ class Player:
             else:
                 if (self.is_jump): 
                     self.jump(False)
-                self.is_fall = False            
+                self.is_fall = False
 
+    def contact_trap(self, list_trap):
+        for trap in  list_trap:
+            if self.sides['right'].colliderect(trap.rect) or  \
+                  self.sides['left'].colliderect(trap.rect):
+                if self.atack:
+                    list_trap.pop(list_trap.index(trap))
+                    print('ELIMINASTE LA TRAMPA')
+                else:
+                    self.lives -= 1
+                if self.direction == DIRECTION_R:
+                    self.rebound('left',40)
+                else:
+                    self.rebound('right',40)
+            elif self.sides['bottom'].colliderect(trap.rect):
+                print('PISASTE AL BICHO')
+                list_trap.pop(list_trap.index(trap))
+                print('ELIMINASTE LA TRAMPA')               
+                if self.direction == DIRECTION_R:
+                    self.rebound('right',60)
+                else:
+                    self.rebound('left',60)
 
     def is_on_plataform(self,plataform_list):
         retorno = False
@@ -223,7 +246,9 @@ class Player:
         for coin in coin_list:
             if(self.rect.colliderect(coin.rect)):
                 self.score += coin.coin_value
+                self.coins += 1
                 print('AGARRASTE LA MONEDA!!!')
+                print('CANTIDAD DE MONEDAS OBTENIDAS AL MOMENTO:{0}'.format(self.coins))
                 coin_list.pop(coin_list.index(coin))
 
     def take_life(self, life_list):
@@ -242,12 +267,14 @@ class Player:
             else: 
                 self.frame = 0
  
-    def update(self,delta_ms,plataform_list, coins_list,life_list, enemy_list):
+    def update(self,delta_ms,plataform_list, coins_list,life_list, enemy_list, list_trap):
 
         self.do_movement(delta_ms,plataform_list, coins_list)
         self.do_animation(delta_ms)
         self.label_score._text = 'Puntos: {0}'.format(str(self.score))
+        self.label_coins._text = 'Stars: {0}'.format(str(self.coins))
         self.contact(enemy_list)
+        self.contact_trap(list_trap)
         for bullet_element in self.bullet_list:
             bullet_element.update(delta_ms,plataform_list,enemy_list,self)
         self.take_life(life_list)
