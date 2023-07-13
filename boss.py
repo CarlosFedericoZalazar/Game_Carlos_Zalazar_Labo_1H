@@ -85,11 +85,11 @@ class Boss(Player):
                     self.move_x = -self.speed_walk
                     self.animation = self.walk_l
                     self.contador += 1
-                    print('CAMINA IZQUIERDA') 
+                    
                 elif self.contador <= self.steps * 2 and self.rect.x < ANCHO_VENTANA - self.rect.width:
                     self.move_x = self.speed_walk
                     self.animation = self.walk_r
-                    print('CAMINA DERECHA') 
+                    
                     self.contador += 1
                 else:
                     self.contador = 0

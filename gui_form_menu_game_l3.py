@@ -24,18 +24,15 @@ from auxiliar_player import delete_file_auxiliar_player, read_auxiliar_file_play
 class FormGameLevel3(Form):
     def __init__(self,name,master_surface,x,y,w,h,color_background,color_border,active):
         super().__init__(name,master_surface,x,y,w,h,color_background,color_border,active)
-        # CARGA ARCHIVO PLAYER
-        archivo_player = {}
-        archivo_player =  read_auxiliar_file_player()
-        score_player = archivo_player['score']
-        life_player = archivo_player['lifes']
+
+        self.archivo_player_sin_cargar_cargar = True
 
         # --- GUI WIDGET ---         
         self.boton1 = Button(master=self,x=0,y=0,w=140,h=50,color_background=None,color_border=None,image_background="images\gui\Gui\Buttom.png",on_click=self.on_click_boton1,on_click_param="form_menu_B",text="RESET",font="Verdana",font_size=30,font_color=C_WHITE)
         self.boton2 = Button(master=self,x=200,y=0,w=140,h=50,color_background=None,color_border=None,image_background="images\gui\Gui\Buttom.png",on_click=self.on_click_boton1,on_click_param="form_menu_B",text="PAUSE",font="Verdana",font_size=30,font_color=C_WHITE)
         self.boton_shoot = Button(master=self,x=400,y=0,w=140,h=50,color_background=None,color_border=None,image_background="images\gui\Gui\Buttom.png",on_click=self.on_click_shoot,on_click_param="form_menu_B",text="",font="Verdana",font_size=30,font_color=C_WHITE)
         self.restart = True
-        self.pb_lives = ProgressBar(master=self,x=1100,y=80,w=240,h=50,color_background=None,color_border=None,image_background=None,image_progress="images\gui\Gui\\vida.png",value = 5, value_max=5)
+        self.pb_lives = ProgressBar(master=self,x=50,y=80,w=240,h=50,color_background=None,color_border=None,image_background=None,image_progress="images\gui\Gui\\vida.png",value = 5, value_max=5)
         self.widget_list = [self.boton1,self.boton2,self.pb_lives,self.boton_shoot]
         # FILE GAME
         self.file_game_score = File('data_game')
@@ -55,9 +52,8 @@ class FormGameLevel3(Form):
         self.list_lifes.append(Life(x=200,y=400))
         self.list_lifes.append(Life(x=1250,y=350))
         self.player_1 = Player(master=self, x=700, y=400,speed_walk=8,speed_run=12,gravity=14,jump_power=30,frame_rate_ms=100,move_rate_ms=50,jump_height=110,p_scale=0.08,interval_time_jump=300)
-        # MODIFICAMOS PARAMETROS PLAYER (VALORES NIVEL ANTERIOR)
-        self.player_1.score = score_player
-        self.player_1.lives = life_player
+        self.player_1.score = 0
+        self.player_1.lives = PLAYER_LIFE
         self.pb_lives.value = self.player_1.lives
         # TRAMPAS
         self.tiempo_caida_trap = 0
@@ -66,6 +62,9 @@ class FormGameLevel3(Form):
         self.list_trap.append(Trap(x=600,y=600,p_scale=1, frame_rate_ms=200))
         # ENEMIGOS
         self.enemy_list = []
+        self.enemy_list.append (Enemy(master=self,x=50,y=400,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=10))
+        self.enemy_list.append (Enemy(master=self,x=600,y=500,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=True, steps=10))
+        self.enemy_list.append (Enemy(master=self,x=859,y=200,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=30))
 
         # BOSS
         self.boss = Boss(master=self,x=1100,y=200,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300)
@@ -133,6 +132,7 @@ class FormGameLevel3(Form):
         self.plataform_list.append(Plataform(x=500,y=250,width=50,height=50,type=14))
 
         self.bullet_list = []
+        self.sound_triunfo = pygame.mixer.Sound('audio\\triunfo.mp3')
 
 
     def on_click_boton1(self, parametro):
@@ -200,6 +200,15 @@ class FormGameLevel3(Form):
     
     
     def update(self, lista_eventos,keys,delta_ms):
+
+        # CARGA ARCHIVO PLAYER
+        if self.active and self.archivo_player_sin_cargar_cargar:
+            archivo_player = {}
+            archivo_player = read_auxiliar_file_player()
+            print(archivo_player)
+            self.player_1.score = archivo_player['score']
+            self.player_1.lives = archivo_player['lifes']
+            self.archivo_player_sin_cargar_cargar = False
 
         # CHEQUEO PROXIMIDAD DE PERSONAJES
         if abs(self.player_1.rect.x - self.boss.rect.x) < 300 and abs(self.player_1.rect.y - self.boss.rect.y) < 20:
@@ -273,13 +282,17 @@ class FormGameLevel3(Form):
         self.player_1.label_coins.update()
         # CAMBIO DE NIVEL
         if self.player_1.coins == self.number_of_stars:
+            self.sound_triunfo.play()
+            self.file_game_score.add_data_reg(self.player_1.score)
+            print(f'GANASTE EL JUEGO CON {self.player_1.score} PUNTOS')
             self.active = False
+            delete_file_auxiliar_player()
             self.set_active('form_game_win')
         # CAMBIO A GAME OVER
         if self.player_1.lives == 0 or self.tiempo_juego.lavel_timer._text == '0:00':
             self.active = False
             self.file_game_score.add_data_reg(self.player_1.score)
-            print('SE AGREFO SCORE DEL PLAYER A LA TABLA SCORE')
+            print('SE AGREGO SCORE DEL PLAYER A LA TABLA SCORE')
             delete_file_auxiliar_player()
             print('SE ELIMINO ARCHIVO AUXILIAR PLAYER')
             self.restart = True

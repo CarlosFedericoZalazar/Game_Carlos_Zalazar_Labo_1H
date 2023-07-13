@@ -16,11 +16,14 @@ def read_auxiliar_file_player():
     aux_jason = {}
     aux_jason['score'] = 0
     aux_jason['lifes'] = PLAYER_LIFE
+    print('VINE A TRATAR DE LEER EL ARCHIVO')
     try:
         with open('auxiliar_file_player.json', 'r') as archivo:
             aux_jason = json.load(archivo)
+            print('SE LEYO CORRECTAMENTE EL ARCHIVO AUXILIAR_PLAYER! EL QUE VAAAA!!!')
     except FileNotFoundError:
             print("El archivo JSON no existe.")
+    print(f'ESTO ES LO QUE LEI --> {aux_jason}')
     return aux_jason
 
 def save_file_auxiliar_player(dict_player):
@@ -30,6 +33,7 @@ def save_file_auxiliar_player(dict_player):
 
 def save_data_player(score, lifes):
     info_player = {}
+    print('SE INGRESARON VALORES SCORE Y LIFES')
     info_player['score'] = score
     info_player['lifes'] = lifes
     save_file_auxiliar_player(info_player)

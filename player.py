@@ -41,8 +41,8 @@ class Player:
         self.direction = DIRECTION_R
         self.image = self.animation[self.frame]
         self.alive = True
-        self.label_score = Label(master, x=1100, y=10, w=300, h=100,color_border=None, text=f"Score: {0}", font="Comic Sans MS", font_size=30, font_color=C_WHITE, image_background='images\gui\Gui\\table_point_screen.png')
-        self.label_coins = Label(master, x=1100, y=60, w=300, h=120,color_border=None, text=f"Coins: {0}", font="Comic Sans MS", font_size=35, font_color=C_WHITE, color_background=None)
+        self.label_score = Label(master, x=1100, y=10, w=300, h=100,color_border=None, text=f"Score: {0}", font="Comic Sans MS", font_size=30, font_color=C_RED, image_background=None)
+        self.label_coins = Label(master, x=1100, y=60, w=300, h=120,color_border=None, text=f"Coins: {0}", font="Comic Sans MS", font_size=35, font_color=C_RED, color_background=None)
         # RECTANGULO PERSONAJE
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -67,7 +67,7 @@ class Player:
         self.jump_height = jump_height
 
         self.tiempo_transcurrido = 0
-        self.tiempo_last_jump = 0 # en base al tiempo transcurrido general
+        self.tiempo_last_jump = 0
         self.interval_time_jump = interval_time_jump
         # DISPARO
         self.bullet_list = []
@@ -76,8 +76,8 @@ class Player:
         #SONIDO
         self.sound_jump = pygame.mixer.Sound('audio\jump.wav')
         self.sound_take_star = pygame.mixer.Sound('audio\Coin.wav')
-        self.sound_take_life = pygame.mixer.Sound('audio\sound_life.mp3')
-        self.sound_golpe_player = pygame.mixer.Sound('audio\pisoton.wav')
+        self.sound_take_life = pygame.mixer.Sound('audio\sound_life.wav')
+        self.sound_golpe_player = pygame.mixer.Sound('audio\pisoton.wav')        
 
 
     def walk(self,direction, plataform_list):
@@ -299,7 +299,7 @@ class Player:
 
         self.do_movement(delta_ms,plataform_list, coins_list)
         self.do_animation(delta_ms)
-        self.label_score._text = 'Puntos: {0}'.format(str(self.score))
+        self.label_score._text = 'Puntos: {0}'.format(self.score)
         self.label_coins._text = 'Stars: {0}/{1}'.format(self.coins, number_of_stars)
         self.contact(enemy_list, boss)
         self.contact_trap(list_trap)

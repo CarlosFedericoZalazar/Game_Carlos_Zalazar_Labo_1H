@@ -45,7 +45,7 @@ class Trap():
                 elif self.change_move >= 500 or self.rect.x > 1370:
                     self.change_move = 0
                 self.rect.x += var_aux        
-                self.rect.y += 3
+                self.rect.y += 4
 
     def update(self, delta_ms):
         self.do_animation(delta_ms)
