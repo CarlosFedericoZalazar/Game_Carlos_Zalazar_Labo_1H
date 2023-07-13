@@ -101,41 +101,5 @@ class File():
         aux_text = '{0}:{1} ({2})'.format(hora, minutos, fecha_formateada)
         return aux_text
 
-#########################################################################################
-'OBTENER LA HORA H:M:S'
-# import datetime
-
-# # Obtener la hora actual del sistema
-# hora_actual = datetime.datetime.now().time()
-
-# # Imprimir la hora actual
-# print("Hora actual:", hora_actual)
-
-# # Guardar la hora actual en una variable
-# mi_variable = hora_actual
-
-# # Imprimir la variable
-# print("Mi variable:", mi_variable)
-
-#-----------------------------------------------------------------------------------------
-' SE ACCEDE A LOS CAMPOS DE LA HORA POR SEPARADO'
-
-
-# hora_actual = datetime.datetime.now().time()
-
-# # Acceder a los componentes de la hora
-# hora = hora_actual.hour
-# minuto = hora_actual.minute
-# segundo = hora_actual.second
-# microsegundo = hora_actual.microsecond
-
-# # Imprimir los componentes individuales
-# print("Hora:", hora)
-# print("Minuto:", minuto)
-# print("Segundo:", segundo)
-# print("Microsegundo:", microsegundo)
-
-#-------------------------------------------------------------------------------------------
-
 
         

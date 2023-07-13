@@ -211,3 +211,6 @@ def level_2(self):
     dict_level['player'] = player
     
     return dict_level
+
+def level_3(self):
+     pass
