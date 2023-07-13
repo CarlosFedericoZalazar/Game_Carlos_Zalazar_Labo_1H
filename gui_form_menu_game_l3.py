@@ -164,40 +164,8 @@ class FormGameLevel3(Form):
                 self.bullet_list.append(Bullet(self.player_1, self.player_1.rect.centerx, self.player_1.rect.centery, ANCHO_VENTANA , self.player_1.rect.centery,20,path="images\caracters\players\caballero\SHOOT\SHOOT.png",frame_rate_ms=100,move_rate_ms=20,width=20,height=20))
             else:
                 self.bullet_list.append(Bullet(self.player_1, self.player_1.rect.centerx, self.player_1.rect.centery, 0 , self.player_1.rect.centery,20,path="images\caracters\players\caballero\SHOOT\SHOOT.png",frame_rate_ms=100,move_rate_ms=20,width=20,height=20))
-    # REINICIAMOS TODAS LAS VARIABLES
-    def restart_all_list(self):
-        self.enemy_list.clear()
-        self.coin_list.clear()
-        self.list_lifes.clear()
-        print('SE VACIARON TODAS LAS LISTAS PARA REINICIAR NIVEL')
 
-    
-    def restart_game(self):
-        if self.restart:
-            #REINICIAMOS ENEMIGOS:
-            #self.enemy_list = []            
-            #self.enemy_list.append (Enemy(master=self,x=30,y=400,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=40))
-            #self.enemy_list.append (Enemy(master=self,x=500,y=500,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=10))
-            #REINICIAMOS TIEMPO DE PARTIDA
-            self.tiempo_juego.minutes = TIME_GAME_MINUTES
-            self.tiempo_juego.seconds = TIME_GAME_SECONDS
-            #REINICIAMOS AL PLAYER
-            self.pb_lives.value = self.player_1.lives
-            self.player_1.lives = PLAYER_LIFE
-            self.player_1.score = 0
-            self.player_1.rect.x = INIT_POSITION_PLAYER_X
-            self.player_1.rect.y = INIT_POSITION_PLAYER_Y
-            for side in self.player_1.sides:
-                self.player_1.sides[side].x = INIT_POSITION_PLAYER_X
-                self.player_1.sides[side].y = INIT_POSITION_PLAYER_Y
-            self.player_1.sides['left'].x += 20
-            self.player_1.sides['right'].x += 100 
-            self.player_1.sides['bottom'].y = INIT_POSITION_PLAYER_Y + self.player_1.rect.height - GROUND_COLLIDE_H
-            self.player_1.sides['bottom'].height = GROUND_COLLIDE_H
-            
-            self.enemy_list.append (Enemy(master=self,x=30,y=400,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=True, steps=10))
-            self.restart = False    
-    
+   
     
     def update(self, lista_eventos,keys,delta_ms):
 
@@ -295,11 +263,6 @@ class FormGameLevel3(Form):
             print('SE AGREGO SCORE DEL PLAYER A LA TABLA SCORE')
             delete_file_auxiliar_player()
             print('SE ELIMINO ARCHIVO AUXILIAR PLAYER')
-            self.restart = True
-            #del self.enemy_list
-            #self.enemy_list.clear()
-            self.restart_all_list()
-            self.restart_game()
             self.set_active('form_game_over')
 
     def draw(self): 

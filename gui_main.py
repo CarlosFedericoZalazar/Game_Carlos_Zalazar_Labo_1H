@@ -20,7 +20,9 @@ clock = pygame.time.Clock()
 
 file_game = File('data_game')
 
-
+pygame.display.set_caption('Golden Warrior')
+icono = pygame.image.load("images\caracters\players\caballero\IDLE\_IDLE_0.png")
+pygame.display.set_icon(icono)
 background_image = pygame.image.load('images\locations\set_bg_01\\forest\\all.png')
 background_image = pygame.transform.scale(background_image,(ANCHO_VENTANA,ALTO_VENTANA))
 screen.blit(background_image, (0,0))
