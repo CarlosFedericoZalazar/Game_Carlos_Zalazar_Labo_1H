@@ -5,8 +5,8 @@ FPS = 60
 
 # TIEMPO DE JUEGO
 TIME_GAME = 180
-TIME_GAME_MINUTES = 5
-TIME_GAME_SECONDS = 0
+TIME_GAME_MINUTES = 1
+TIME_GAME_SECONDS = 30
 
 
 DIRECTION_L = 0
@@ -15,8 +15,12 @@ GROUND_COLLIDE_H = 8 # Aprox Gravedad/2 + 1
 DEBUG = False
 
 # PLAYER
+PLAYER_LIFE = 5
 INIT_POSITION_PLAYER_X = 10
 INIT_POSITION_PLAYER_Y = 500
+
+# BOSS
+BOSS_LIFE = 8
 
 # COLOR CONSTANTS
 C_RED = (255,0,0)
@@ -45,3 +49,6 @@ PATH_PLAYER = 'images\caracters\players\caballero\\'
 PATH_BOSSES = 'images\caracters\\bosses\\'
 PATH_COINS = 'images\coins\\'
 PATH_DATA_SCORE = 'data_score\\'
+
+# PUNTAJES
+ELIMINAR_TRAMPA = 20

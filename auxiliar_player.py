@@ -1,4 +1,7 @@
 import pygame
+import json
+import os
+from constantes import PLAYER_LIFE
 
 def obtener_rectangulo(principal)->dict:
     diccionario = {}
@@ -8,3 +11,37 @@ def obtener_rectangulo(principal)->dict:
     diccionario['left'] = pygame.Rect(principal.left +20, principal.top+30, 10, 40)
     diccionario['top'] = pygame.Rect(principal.left, principal.top + 5, principal.width, 10)
     return diccionario
+
+def read_auxiliar_file_player():
+    aux_jason = {}
+    aux_jason['score'] = 0
+    aux_jason['lifes'] = PLAYER_LIFE
+    try:
+        with open('auxiliar_file_player.json', 'r') as archivo:
+            aux_jason = json.load(archivo)
+    except FileNotFoundError:
+            print("El archivo JSON no existe.")
+    return aux_jason
+
+def save_file_auxiliar_player(dict_player):
+    with open('auxiliar_file_player.json', 'w') as file:
+        json.dump(dict_player, file, indent=4)
+        print('SE CREO ARCHIVO JSON AUXILIAR_PLAYER')
+
+def save_data_player(score, lifes):
+    info_player = {}
+    info_player['score'] = score
+    info_player['lifes'] = lifes
+    save_file_auxiliar_player(info_player)
+
+
+
+def delete_file_auxiliar_player():
+    nombre_archivo = "auxiliar_file_player.json"
+
+    # Comprobamos si el archivo existe antes de eliminarlo
+    if os.path.exists(nombre_archivo):
+        os.remove(nombre_archivo)
+        print(f"El archivo {nombre_archivo} ha sido eliminado.")
+    else:
+        print(f"El archivo {nombre_archivo} no existe.")

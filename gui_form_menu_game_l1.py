@@ -17,8 +17,7 @@ from class_file import File
 from class_life import Life
 from class_trap import Trap
 import random
-
-
+from auxiliar_player import save_data_player
 
 class FormGameLevel1(Form):
     def __init__(self,name,master_surface,x,y,w,h,color_background,color_border,active):
@@ -29,7 +28,7 @@ class FormGameLevel1(Form):
         self.boton2 = Button(master=self,x=200,y=0,w=140,h=50,color_background=None,color_border=None,image_background="images\gui\Gui\Buttom.png",on_click=self.on_click_boton1,on_click_param="form_menu_B",text="PAUSE",font="Verdana",font_size=30,font_color=C_WHITE)
         self.boton_shoot = Button(master=self,x=400,y=0,w=140,h=50,color_background=None,color_border=None,image_background="images\gui\Gui\Buttom.png",on_click=self.on_click_shoot,on_click_param="form_menu_B",text="",font="Verdana",font_size=30,font_color=C_WHITE)
         self.restart = True
-        self.pb_lives = ProgressBar(master=self,x=80,y=80,w=240,h=50,color_background=None,color_border=None,image_background=None,image_progress="images\gui\Gui\\vida.png",value = 5, value_max=5)
+        self.pb_lives = ProgressBar(master=self,x=1100,y=80,w=240,h=50,color_background=None,color_border=None,image_background=None,image_progress="images\gui\Gui\\vida.png",value = 5, value_max=5)
         self.widget_list = [self.boton1,self.boton2,self.pb_lives,self.boton_shoot]
         # FILE GAME
         self.file_game_score = File('data_game')
@@ -46,8 +45,8 @@ class FormGameLevel1(Form):
         self.coin_list.append(Coins(master=self, x=300, y=250,value=200,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 0))
         self.number_of_stars = len(self.coin_list)
         # TIMER
-        self.minuto_juego = 5
-        self.segundos_juego = 0
+        self.minuto_juego = TIME_GAME_MINUTES
+        self.segundos_juego = TIME_GAME_SECONDS
         self.tiempo_juego = Timer_level(master=self, x=1000, y=10, w=200, h=50, font="Comic Sans MS", font_size=50, font_color=C_WHITE, minutes=self.minuto_juego, seconds=self.segundos_juego)
         self.time_enemy_shoot = 0
         # LIFES
@@ -62,16 +61,17 @@ class FormGameLevel1(Form):
         self.list_trap.append(Trap(x=600,y=600,p_scale=1, frame_rate_ms=200))
         # ENEMIGOS
         self.enemy_list = []
-        self.enemy_list.append (Enemy(master=self,x=30,y=400,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=40))
+        self.enemy_list.append (Enemy(master=self,x=30,y=400,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=20))
         self.enemy_list.append (Enemy(master=self,x=1250,y=500,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=True, steps=10))
-        self.enemy_list.append (Enemy(master=self,x=800,y=100,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=10))
+        self.enemy_list.append (Enemy(master=self,x=700,y=100,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=50))
         self.enemy_list.append (Enemy(master=self,x=859,y=200,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=30))
         
         self.plataform_list = []
 
-        for aux in range(0,1400,50):
-            self.plataform_list.append(Plataform(x=aux,y=650,width=50,height=50,type=1))
         # PLATAFORMAS
+        # PLATAFORMA SUELO
+        for aux in range(0,1400,50):
+            self.plataform_list.append(Plataform(x=aux,y=650,width=50,height=50,type=1))        
         # PLATAFORMA 1
         self.plataform_list.append(Plataform(x=0,y=500,width=50,height=50,type=13))
         self.plataform_list.append(Plataform(x=50,y=500,width=50,height=50,type=13))
@@ -124,8 +124,8 @@ class FormGameLevel1(Form):
         self.plataform_list.append(Plataform(x=450,y=250,width=50,height=50,type=13))
         self.plataform_list.append(Plataform(x=500,y=250,width=50,height=50,type=14))
 
-        self.bullet_list = []
 
+        self.bullet_list = []
 
 
     def on_click_boton1(self, parametro):
@@ -144,9 +144,8 @@ class FormGameLevel1(Form):
     
     def enemy_shoot(self, indice):   
         if self.enemy_list[indice].can_shoot and self.enemy_list[indice].alive:
-            print(self.player_1.direction)
-            #print('DISPARO DEL MOSNTRUO')
-            self.bullet_list.append(Bullet(self.enemy_list[indice], self.enemy_list[indice].rect.centerx, self.enemy_list[indice].rect.centery,self.player_1.rect.centerx,self.player_1.rect.centery,20,path="images/gui/set_gui_01/Comic_Border/Bars/Bar_Segment06.png",frame_rate_ms=200,move_rate_ms=20,width=10,height=10))
+            print('DISPARO DEL MONSTRUO')
+            self.bullet_list.append(Bullet(self.enemy_list[indice], self.enemy_list[indice].rect.centerx, self.enemy_list[indice].rect.centery,self.player_1.rect.centerx,self.player_1.rect.centery,20,path="images\gui\Gui\Bar_Segment02.png",frame_rate_ms=200,move_rate_ms=20,width=10,height=10))
 
     def player_shoot(self, delta_ms):
         self.player_1.time_to_shoot += delta_ms
@@ -156,7 +155,6 @@ class FormGameLevel1(Form):
                 print('DISPARO HACIA LA DERECHA')
                 self.bullet_list.append(Bullet(self.player_1, self.player_1.rect.centerx, self.player_1.rect.centery, ANCHO_VENTANA , self.player_1.rect.centery,20,path="images\caracters\players\caballero\SHOOT\SHOOT.png",frame_rate_ms=100,move_rate_ms=20,width=20,height=20))
             else:
-                # Corregir la municion para que sea unico sentido!
                 self.bullet_list.append(Bullet(self.player_1, self.player_1.rect.centerx, self.player_1.rect.centery, 0 , self.player_1.rect.centery,20,path="images\caracters\players\caballero\SHOOT\SHOOT.png",frame_rate_ms=100,move_rate_ms=20,width=20,height=20))
     
     def restart_all_list(self):
@@ -176,7 +174,7 @@ class FormGameLevel1(Form):
             self.tiempo_juego.seconds = TIME_GAME_SECONDS
             #REINICIAMOS AL PLAYER
             self.pb_lives.value = self.player_1.lives
-            self.player_1.lives = 5
+            self.player_1.lives = PLAYER_LIFE
             self.player_1.score = 0
             self.player_1.rect.x = INIT_POSITION_PLAYER_X
             self.player_1.rect.y = INIT_POSITION_PLAYER_Y
@@ -188,23 +186,31 @@ class FormGameLevel1(Form):
             self.player_1.sides['bottom'].y = INIT_POSITION_PLAYER_Y + self.player_1.rect.height - GROUND_COLLIDE_H
             self.player_1.sides['bottom'].height = GROUND_COLLIDE_H
             
-            
-            #self.enemy_list = []
-            self.enemy_list.append (Enemy(master=self,x=30,y=400,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=True, steps=40))
-            #self.enemy_list.append (Enemy(master=self,x=500,y=300,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=True, steps=10))
+            self.enemy_list.append (Enemy(master=self,x=30,y=400,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=20))
+            self.enemy_list.append (Enemy(master=self,x=1250,y=500,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.3,interval_time_jump=300, shoot=True, steps=10))
+            self.enemy_list.append (Enemy(master=self,x=700,y=100,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=50))
+            self.enemy_list.append (Enemy(master=self,x=859,y=200,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=30))
+        
             self.restart = False    
     
     
     def update(self, lista_eventos,keys,delta_ms):
 
-        self.tiempo_juego.update(delta_ms)  # Timer del Juego
+        self.tiempo_juego.update(delta_ms)  # Timer del Juego        
         for trap in self.list_trap:
             trap.update(delta_ms)
         self.pb_lives.value = self.player_1.lives
         
+        for coin_element in self.coin_list:
+            coin_element.update(delta_ms)
+            coin_element.label_coin.update()
+
+        self.pb_lives.value = self.player_1.lives
+        self.player_1.label_score.update()
+        self.player_1.label_coins.update() 
+
         for aux_widget in self.widget_list:
-            aux_widget.update(lista_eventos)
-        
+            aux_widget.update(lista_eventos)        
 
         for bullet_element in self.bullet_list:
             bullet_element.update(delta_ms,self.plataform_list,self.enemy_list,self.player_1)
@@ -232,23 +238,17 @@ class FormGameLevel1(Form):
                
         
         # IMPLEMENTAR COINS
-        for coin_element in self.coin_list:
-            coin_element.update(delta_ms)
-            coin_element.label_coin.update()         
         
         self.player_1.events(delta_ms,keys, self.plataform_list)
-        self.player_1.update(delta_ms,self.plataform_list, self.coin_list, self.list_lifes, self.enemy_list, self.list_trap)
+        self.player_1.update(delta_ms,self.plataform_list, self.coin_list, self.list_lifes, self.enemy_list, self.list_trap, self.number_of_stars)
         
         if self.player_1.is_shoot:
             self.player_shoot(delta_ms)
 
-        self.pb_lives.value = self.player_1.lives
-        print(type(self.player_1.coins))
-        print(type(self.number_of_stars))
-        self.player_1.label_score.update()
-        self.player_1.label_coins.update()
+
         # CAMBIO DE NIVEL
         if self.player_1.coins == self.number_of_stars:
+            save_data_player(self.player_1.score, self.player_1.lives)
             self.active = False
             self.set_active('form_game_L2')
         # CAMBIO A GAME OVER
@@ -256,10 +256,11 @@ class FormGameLevel1(Form):
             self.active = False
             self.file_game_score.add_data_reg(self.player_1.score)
             self.restart = True
-            #del self.enemy_list
-            #self.enemy_list.clear()
-            self.restart_all_list()
-            self.restart_game()
+            self.pb_lives.value = self.player_1.lives
+            self.player_1.lives = PLAYER_LIFE
+            
+            #self.restart_all_list()
+            #self.restart_game()
             self.set_active('form_game_over')
 
     def draw(self): 
@@ -280,12 +281,11 @@ class FormGameLevel1(Form):
             if not enemy_element.alive and enemy_element.frame == 0:               
                 self.enemy_list.pop(self.enemy_list.index(enemy_element))
                 self.player_1.score += 100
-                
-        self.player_1.draw(self.surface)
-        
-        
+
         for bullet_element in self.bullet_list:
             bullet_element.draw(self.surface)
+        
+        self.player_1.draw(self.surface)
         
         for coin_element in self.coin_list:
             coin_element.draw(self.surface)

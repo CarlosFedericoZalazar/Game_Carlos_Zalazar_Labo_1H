@@ -22,7 +22,7 @@ class File():
                 self.list_players = aux_jason[DICT_FILE_JSON]
                 try:
                     self.last_index = self.list_players[-1]['id']
-                    print(' INDICE: {0}'. format(self.last_index))
+                    #print(' INDICE: {0}'. format(self.last_index))
                 except IndexError:
                     print('INDICE INEXISTENTE')
                 #print('SE LEYO CORRECTAMENTE EL ARCHIVO')

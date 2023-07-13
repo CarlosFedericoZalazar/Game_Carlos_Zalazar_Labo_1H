@@ -17,8 +17,8 @@ class FormMenuB(Form):
         self.boton3 = Button(master=self,x=0,y=250,w=200,h=40,color_background=C_PINK,color_border=C_RED,on_click=self.on_click_boton3,on_click_param="",text="CREAR",font="Verdana",font_size=30,font_color=C_BLACK)
         self.boton4 = Button(master=self,x=0,y=300,w=200,h=40,color_background=C_PINK,color_border=C_RED,on_click=self.on_click_boton4,on_click_param="",text="MOSTRAR",font="Verdana",font_size=30,font_color=C_BLACK)
        
-        self.txt1 = TextBox(master=self,x=0,y=50,w=240,h=40,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Buttons/Button_XL_08.png",text="Text",font="Verdana",font_size=30,font_color=C_BLACK)
-        self.txt2 = TextBox(master=self,x=0,y=100,w=240,h=40,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Buttons/Button_XL_08.png",text="Text",font="Verdana",font_size=30,font_color=C_BLACK)
+        self.txt1 = TextBox(master=self,x=0,y=50,w=240,h=40,color_background=None,color_border=None,image_background="images\gui\Gui\Button_XL_08.png",text="Text",font="Verdana",font_size=30,font_color=C_BLACK)
+        self.txt2 = TextBox(master=self,x=0,y=100,w=240,h=40,color_background=None,color_border=None,image_background="images\gui\Gui\Button_XL_08.png",text="Text",font="Verdana",font_size=30,font_color=C_BLACK)
         
         
         self.lista_widget = [self.boton1,self.boton2,self.boton3,self.boton4,self.txt1,self.txt2]

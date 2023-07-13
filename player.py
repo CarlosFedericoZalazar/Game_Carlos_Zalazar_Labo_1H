@@ -16,6 +16,8 @@ class Player:
         self.jump_l = Auxiliar.getSurfaceFromSeparateFiles(PATH_PLAYER+ 'JUMP\_JUMP_{0}.png',0,6,flip=True,scale=p_scale)
         self.walk_r = Auxiliar.getSurfaceFromSeparateFiles(PATH_PLAYER+ 'WALK\_WALK_{0}.png',0,6,flip=False,scale=p_scale)
         self.walk_l = Auxiliar.getSurfaceFromSeparateFiles(PATH_PLAYER+ 'WALK\_WALK_{0}.png',0,6,flip=True,scale=p_scale)
+        self.hurt_l = Auxiliar.getSurfaceFromSeparateFiles(PATH_PLAYER+ 'HURT\_HURT_{0}.png',0,6,flip=False,scale=p_scale)
+        self.hurt_r = Auxiliar.getSurfaceFromSeparateFiles(PATH_PLAYER+ 'HURT\_HURT_{0}.png',0,6,flip=True,scale=p_scale)
         self.shoot_r = Auxiliar.getSurfaceFromSeparateFiles(PATH_PLAYER+ 'SHOOT\_SHOOT_{0}.png',0,3,flip=False,scale=p_scale,repeat_frame=2)
         self.shoot_l = Auxiliar.getSurfaceFromSeparateFiles(PATH_PLAYER+ 'SHOOT\_SHOOT_{0}.png',0,3,flip=True,scale=p_scale,repeat_frame=2)
         self.knife_r = Auxiliar.getSurfaceFromSeparateFiles(PATH_PLAYER+ 'ATTACK\_ATTACK_{0}.png',0,6,flip=False,scale=p_scale,repeat_frame=1)
@@ -25,7 +27,7 @@ class Player:
         
         # MOVIMIENTO
         self.frame = 0
-        self.lives = 5
+        self.lives = PLAYER_LIFE
         self.score = 0
         self.coins = 0
         self.move_x = 0
@@ -38,7 +40,7 @@ class Player:
         self.direction = DIRECTION_R
         self.image = self.animation[self.frame]
         self.alive = True
-        self.label_score = Label(master, x=1100, y=10, w=300, h=150,color_border=None, text=f"Score: {0}", font="Comic Sans MS", font_size=35, font_color=C_WHITE, image_background='images\gui\Gui\\table_point_screen.png')
+        self.label_score = Label(master, x=1100, y=10, w=300, h=100,color_border=None, text=f"Score: {0}", font="Comic Sans MS", font_size=30, font_color=C_WHITE, image_background='images\gui\Gui\\table_point_screen.png')
         self.label_coins = Label(master, x=1100, y=60, w=300, h=120,color_border=None, text=f"Coins: {0}", font="Comic Sans MS", font_size=35, font_color=C_WHITE, color_background=None)
         # RECTANGULO PERSONAJE
         self.rect = self.image.get_rect()
@@ -113,20 +115,42 @@ class Player:
                 else:
                     self.animation = self.knife_l      
 
-    def contact(self, enemy_list):
-        for enemy_element in  enemy_list:
-            if(self.sides['right'].colliderect(enemy_element.sides['main']) or
-                  self.sides['left'].colliderect(enemy_element.sides['main'])):
-                if self.atack:
-                    enemy_element.lives -= 1
-                    print('LO CORTASTE TODO AL MOSNTRUO')
-                else:
-                    self.lives -= 1
+    def verify_collide(self, some_enemy, power_rebound):
+        if(self.sides['right'].colliderect(some_enemy.sides['main']) or 
+                self.sides['left'].colliderect(some_enemy.sides['main'])):
+            if self.atack:
+                some_enemy.lives -= 1
+                print('LO CORTASTE TODO AL MOSNTRUO')
+            else:
+                self.lives -= 1
                 if self.direction == DIRECTION_R:
-                    enemy_element.rebound('right',60)
+                    self.rebound('left',power_rebound)
                 else:
-                    enemy_element.rebound('left',60)
-            
+                    self.rebound('right',power_rebound)
+
+            if self.direction == DIRECTION_R:
+                some_enemy.rebound('right',power_rebound)
+            else:
+                some_enemy.rebound('left',power_rebound)
+    
+    def contact(self, enemy_list, boss):
+        for enemy_element in  enemy_list:
+            self.verify_collide(enemy_element, 60)
+            # if(self.sides['right'].colliderect(enemy_element.sides['main']) or
+            #       self.sides['left'].colliderect(enemy_element.sides['main'])):
+            #     if self.atack:
+            #         enemy_element.lives -= 1
+            #         print('LO CORTASTE TODO AL MOSNTRUO')
+            #     else:
+            #         self.lives -= 1
+            #     if self.direction == DIRECTION_R:
+            #         enemy_element.rebound('right',60)
+            #     else:
+            #         enemy_element.rebound('left',60)
+        self.verify_collide(boss, 60)
+
+
+
     def rebound(self, direction, power_rebound):
         """ Realiza un efecto rebote en el personaje y sus rectangulos dependiendo el parametro
         recibido (left/right).
@@ -212,6 +236,7 @@ class Player:
             if self.sides['right'].colliderect(trap.rect) or  \
                   self.sides['left'].colliderect(trap.rect):
                 if self.atack:
+                    self.score += ELIMINAR_TRAMPA 
                     list_trap.pop(list_trap.index(trap))
                     print('ELIMINASTE LA TRAMPA')
                 else:
@@ -223,7 +248,8 @@ class Player:
             elif self.sides['bottom'].colliderect(trap.rect):
                 print('PISASTE AL BICHO')
                 list_trap.pop(list_trap.index(trap))
-                print('ELIMINASTE LA TRAMPA')               
+                print('ELIMINASTE LA TRAMPA')
+                self.score += ELIMINAR_TRAMPA               
                 if self.direction == DIRECTION_R:
                     self.rebound('right',60)
                 else:
@@ -267,13 +293,13 @@ class Player:
             else: 
                 self.frame = 0
  
-    def update(self,delta_ms,plataform_list, coins_list,life_list, enemy_list, list_trap):
+    def update(self,delta_ms,plataform_list, coins_list,life_list, enemy_list, list_trap, number_of_stars, boss):
 
         self.do_movement(delta_ms,plataform_list, coins_list)
         self.do_animation(delta_ms)
         self.label_score._text = 'Puntos: {0}'.format(str(self.score))
-        self.label_coins._text = 'Stars: {0}'.format(str(self.coins))
-        self.contact(enemy_list)
+        self.label_coins._text = 'Stars: {0}/{1}'.format(self.coins, number_of_stars)
+        self.contact(enemy_list, boss)
         self.contact_trap(list_trap)
         for bullet_element in self.bullet_list:
             bullet_element.update(delta_ms,plataform_list,enemy_list,self)

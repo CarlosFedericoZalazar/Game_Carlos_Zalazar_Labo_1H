@@ -3,7 +3,7 @@ from auxiliar import Auxiliar
 from constantes import *
 
 class Trap():
-    def __init__(self, x, y, frame_rate_ms=100, p_scale=1.2) -> None:
+    def __init__(self, x, y, frame_rate_ms=100, p_scale=1.2, trap_drope = False) -> None:
         self.stay_trap = Auxiliar.getSurfaceFromSeparateFiles("images\gui\Gui\TRAMPAS\{0}.png",0,7,scale=p_scale)
 
         self.frame = 0
@@ -14,6 +14,9 @@ class Trap():
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.change_move = 60
+        self.trap_drope = trap_drope
+        self.tiempo_drop = 0
 
 
     def do_animation(self,delta_ms):
@@ -24,6 +27,40 @@ class Trap():
                 self.frame += 1 
             else: 
                 self.frame = 0
+
+    def drop(self,delta_ms, plataforma_list):
+        var_aux = 2
+        for plataforma in plataforma_list:
+            if self.rect.colliderect(plataforma.rect) or self.rect.y == GROUND_COLLIDE_H - self.rect.height:
+                self.rect.y = plataforma.rect.y - self.rect.height
+                print('PERSONAJE POSADO EN PLATAFORMA')
+                break
+        else:
+            self.tiempo_drop += delta_ms
+            if self.tiempo_drop >= 100:
+                self.tiempo_drop = 0
+                self.change_move += 2
+                if self.change_move >= 6:
+                    self.change_move = 0
+                    var_aux *= -1
+                self.rect.x += var_aux        
+                self.rect.y += 1
+
+
+        # for plataforma in plataforma_list:
+        #     if not self.rect.colliderect(plataforma.rect) or self.rect.y == GROUND_COLLIDE_H - self.rect.height:
+        #         var_aux = 2
+        #         self.tiempo_drop += delta_ms
+        #         if self.tiempo_drop >= 1000:
+        #             self.tiempo_drop = 0
+        #             self.change_move += 2
+        #             if self.change_move >= 6:
+        #                 self.change_move = 0
+        #                 var_aux *= -1
+        #             self.rect.x += var_aux        
+        #             self.rect.y += 1
+        #     else:
+        #         print('TRAMPA POSADA EN PLATAFORMA')
 
     def update(self, delta_ms):
         self.do_animation(delta_ms)

@@ -9,21 +9,32 @@ class Boss(Player):
         super().__init__(master, x, y, speed_walk, speed_run, gravity, jump_power, frame_rate_ms, move_rate_ms, jump_height, p_scale, interval_time_jump)
         
         # ANIMACIONES
-        self.walk_r = Auxiliar.getSurfaceFromSeparateFiles( PATH_BOSSES + "ork_1\WALK\WALK_00{0}.png",0,7,scale=p_scale)
-        self.walk_l = Auxiliar.getSurfaceFromSeparateFiles( PATH_BOSSES + "ork_1\WALK\WALK_00{0}.png",0,7,flip=True,scale=p_scale)
-        self.stay_r = Auxiliar.getSurfaceFromSeparateFiles(PATH_BOSSES + "ork_1\IDLE/Idle_00{0}.png",0,7,scale=p_scale)
-        self.stay_l = Auxiliar.getSurfaceFromSeparateFiles(PATH_BOSSES + "ork_1\IDLE/Idle_00{0}.png",0,7,flip=True,scale=p_scale)
-        self.die_r = Auxiliar.getSurfaceFromSeparateFiles(PATH_BOSSES + "ork_1\DIE/DIE_00{0}.png",0,7,scale=p_scale)
-        self.hurt_r = Auxiliar.getSurfaceFromSeparateFiles(PATH_BOSSES + "ork_1\HURT/Hurt_00{0}.png",0,7,scale=p_scale)
-        self.hurt_l = Auxiliar.getSurfaceFromSeparateFiles(PATH_BOSSES + "ork_1\HURT/Hurt_00{0}.png",0,7,flip=True,scale=p_scale)
+        self.walk_r = Auxiliar.getSurfaceFromSeparateFiles( PATH_BOSSES + "WALK\WALK_00{0}.png",0,6,scale=0.3)
+        self.walk_l = Auxiliar.getSurfaceFromSeparateFiles( PATH_BOSSES + "WALK\WALK_00{0}.png",0,6,flip=True,scale=0.3)
+        self.stay_r = Auxiliar.getSurfaceFromSeparateFiles(PATH_BOSSES + "IDLE/IDLE_00{0}.png",0,6,scale=0.3)
+        self.stay_l = Auxiliar.getSurfaceFromSeparateFiles(PATH_BOSSES + "IDLE/IDLE_00{0}.png",0,6,flip=True,scale=0.3)
+        self.die_r = Auxiliar.getSurfaceFromSeparateFiles(PATH_BOSSES + "DIE/DIE_00{0}.png",0,6,scale=0.3)
+        self.hurt_r = Auxiliar.getSurfaceFromSeparateFiles(PATH_BOSSES + "HURT/HURT_00{0}.png",0,6,scale=0.3)
+        self.hurt_l = Auxiliar.getSurfaceFromSeparateFiles(PATH_BOSSES + "HURT/HURT_00{0}.png",0,6,flip=True,scale=0.3)
+        self.jump_l = Auxiliar.getSurfaceFromSeparateFiles(PATH_BOSSES + "JUMP/JUMP_00{0}.png",0,6,flip=True,scale=0.3)
         # ATRIBUTOS PROPIOS DEL BOSS
         self.time_hurt = 0
-        self.lives = 5        
+        self.lives = 10
+        self.coraza = 0
+
+        # RECTANGULO PERSONAJE
+        # self.rect = self.image.get_rect()
+        # self.rect.x = x
+        # self.rect.y = y        
 
         self.contador = 0
-
-        self.sides['bottom'].y = y + self.rect.height - GROUND_COLLIDE_H + 10
-        self.energy_bar = ProgressBar(master=master,x=x,y=y,w=35,h=20,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Bars/Bar_Background01.png",image_progress="images/gui/set_gui_01/Comic_Border/Bars/Bar_Segment05.png",value = 5, value_max=5)
+        self.sides['bottom'].y += 60
+        self.sides['right'].y += 20
+        self.sides['left'].y += 20
+        #self.sides['bottom'].y = y + self.rect.height - GROUND_COLLIDE_H + 20
+        self.energy_bar = ProgressBar(master=master,x=x,y=y,w=40,h=25,color_background=None,color_border=None,image_background="images\gui\Gui\Bar_Background01.png",image_progress="images\gui\Gui\Bar_Segment05.png",value = 8, value_max=10)
+        # self.sides['bottom'].y = y + self.rect.height - GROUND_COLLIDE_H
+        # self.sides['bottom'].height = GROUND_COLLIDE_H   
         self.energy_bar.value = self.lives
     
     def change_x(self,delta_x):
@@ -103,6 +114,7 @@ class Boss(Player):
 
 
     def update(self,delta_ms,plataform_list, player):
+
         self.energy_bar.value = self.lives
         
         if self.animation ==  self.hurt_r and self.time_hurt <= 400:
@@ -117,5 +129,12 @@ class Boss(Player):
             self.time_hurt = 0
 
     def receive_shoot(self):
-        self.animation = self.die_r
-        self.lives -= 1
+        if self.direction == DIRECTION_L:
+            self.animation = self.hurt_r
+        else:
+            self.animation = self.hurt_r
+        self.coraza += 1
+        if self.coraza == 3:
+            self.coraza = 0
+            self.lives -= 1
+
