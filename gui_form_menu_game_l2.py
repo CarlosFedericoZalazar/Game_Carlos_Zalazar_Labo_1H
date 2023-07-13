@@ -22,7 +22,6 @@ from auxiliar_player import save_data_player, read_auxiliar_file_player
 #from auxiliar_plataforma import pltaforma_level_1
 
 
-
 class FormGameLevel2(Form):
     def __init__(self,name,master_surface,x,y,w,h,color_background,color_border,active):
         super().__init__(name,master_surface,x,y,w,h,color_background,color_border,active)
@@ -46,12 +45,12 @@ class FormGameLevel2(Form):
         # --- COINS ---
         self.coin_list = []
         self.coin_list.append(Coins(master=self, x=400, y=450,value=100,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 30))
-        # self.coin_list.append(Coins(master=self, x=1050, y=450,value=150,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 20))
-        # self.coin_list.append(Coins(master=self, x=50, y=250,value=250,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 10))
-        # self.coin_list.append(Coins(master=self, x=550, y=300,value=400,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 10))
-        # self.coin_list.append(Coins(master=self, x=950, y=350,value=200,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 0))
-        # self.coin_list.append(Coins(master=self, x=750, y=350,value=200,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 0))
-        # self.coin_list.append(Coins(master=self, x=300, y=250,value=200,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 0))
+        self.coin_list.append(Coins(master=self, x=1050, y=450,value=150,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 20))
+        self.coin_list.append(Coins(master=self, x=50, y=250,value=250,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 10))
+        self.coin_list.append(Coins(master=self, x=550, y=300,value=400,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 10))
+        self.coin_list.append(Coins(master=self, x=950, y=350,value=200,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 0))
+        self.coin_list.append(Coins(master=self, x=750, y=350,value=200,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 0))
+        self.coin_list.append(Coins(master=self, x=300, y=250,value=200,frame_rate_ms=200, p_scale=0.4, delay_time_coin = 0))
         self.number_of_stars = len(self.coin_list)
         # TIMER
         self.minuto_juego = TIME_GAME_MINUTES
@@ -71,15 +70,15 @@ class FormGameLevel2(Form):
         self.pb_lives.value = self.player_1.lives
         # TRAMPAS
         self.list_trap=[]
-        self.list_trap.append(Trap(x=200,y=600,p_scale=1, frame_rate_ms=200))
+        self.list_trap.append(Trap(x=400,y=600,p_scale=1, frame_rate_ms=200))
         self.list_trap.append(Trap(x=600,y=600,p_scale=1, frame_rate_ms=200))
         # ENEMIGOS
         self.enemy_list = []
         self.enemy_list.append (Enemy(master=self,x=50,y=400,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=10))
         self.enemy_list.append (Enemy(master=self,x=700,y=400,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=20))
-        self.enemy_list.append (Enemy(master=self,x=1250,y=500,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=True, steps=10))
-        self.enemy_list.append (Enemy(master=self,x=800,y=100,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=10))
-        self.enemy_list.append (Enemy(master=self,x=859,y=200,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=30))
+        # self.enemy_list.append (Enemy(master=self,x=1250,y=500,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=True, steps=10))
+        # self.enemy_list.append (Enemy(master=self,x=800,y=100,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=10))
+        # self.enemy_list.append (Enemy(master=self,x=859,y=200,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=30))
         
         self.plataform_list = []
 
@@ -236,7 +235,7 @@ class FormGameLevel2(Form):
                        (self.enemy_list[indice_enemigo].direction == 0 and self.player_1.direction == 1):
                     self.enemy_shoot(indice_enemigo)
 
-            if enemy_element.lives == 0:
+            if enemy_element.lives <= 0:
                 enemy_element.animation = enemy_element.die_r
                 enemy_element.alive = False
                 print('LA QUEDO EL MONSTRUO')
@@ -262,6 +261,7 @@ class FormGameLevel2(Form):
         self.player_1.label_coins.update()
         # CAMBIO DE NIVEL
         if self.player_1.coins == self.number_of_stars:
+            save_data_player(self.player_1.score, self.player_1.lives)
             self.active = False
             self.set_active('form_game_L3')
         # CAMBIO A GAME OVER

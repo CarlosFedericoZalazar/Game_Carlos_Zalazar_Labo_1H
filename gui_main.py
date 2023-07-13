@@ -10,6 +10,7 @@ from gui_form_menu_game_l1 import FormGameLevel1
 from gui_form_menu_game_l2 import FormGameLevel2
 from gui_form_menu_game_l3 import FormGameLevel3
 from gui_form_game_over import FormGameOver
+from gui_form_game_win import FormGameWin
 from class_file import File
 
 flags = DOUBLEBUF 
@@ -32,7 +33,7 @@ form_menu_C = FormMenuC(name="form_menu_C",master_surface = screen,x=0,y=0,w=ANC
 
 # FORM GAME OVER
 form_game_over = FormGameOver(name="form_game_over",master_surface = screen,x=0,y=0,w=ANCHO_VENTANA,h=ALTO_VENTANA,color_background=(0,0,0),color_border=(255,0,255),active=False)
-
+form_game_win = FormGameWin(name="form_game_win",master_surface = screen,x=0,y=0,w=ANCHO_VENTANA,h=ALTO_VENTANA,color_background=(0,0,0),color_border=(255,0,255),active=False)
 form_game_L1 = FormGameLevel1(name="form_game_L1",master_surface = screen,x=0,y=0,w=ANCHO_VENTANA,h=ALTO_VENTANA,color_background=(0,255,255),color_border=(255,0,255),active=False)
 form_game_L2 = FormGameLevel2(name="form_game_L2",master_surface = screen,x=0,y=0,w=ANCHO_VENTANA,h=ALTO_VENTANA,color_background=(0,255,255),color_border=(255,0,255),active=False)
 form_game_L2 = FormGameLevel3(name="form_game_L3",master_surface = screen,x=0,y=0,w=ANCHO_VENTANA,h=ALTO_VENTANA,color_background=(0,255,255),color_border=(255,0,255),active=False)

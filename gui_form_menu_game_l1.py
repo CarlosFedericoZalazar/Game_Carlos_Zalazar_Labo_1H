@@ -18,11 +18,12 @@ from class_life import Life
 from class_trap import Trap
 import random
 from auxiliar_player import save_data_player
+from nivel import level_1
 
 class FormGameLevel1(Form):
     def __init__(self,name,master_surface,x,y,w,h,color_background,color_border,active):
         super().__init__(name,master_surface,x,y,w,h,color_background,color_border,active)
-
+        #dict_level_1 = level_1()
         # --- GUI WIDGET --- 
         self.boton1 = Button(master=self,x=0,y=0,w=140,h=50,color_background=None,color_border=None,image_background="images\gui\Gui\Buttom.png",on_click=self.on_click_boton1,on_click_param="form_menu_B",text="RESET",font="Verdana",font_size=30,font_color=C_WHITE)
         self.boton2 = Button(master=self,x=200,y=0,w=140,h=50,color_background=None,color_border=None,image_background="images\gui\Gui\Buttom.png",on_click=self.on_click_boton1,on_click_param="form_menu_B",text="PAUSE",font="Verdana",font_size=30,font_color=C_WHITE)
@@ -57,12 +58,12 @@ class FormGameLevel1(Form):
         self.pb_lives.value = self.player_1.lives
         # TRAMPAS
         self.list_trap=[]
-        self.list_trap.append(Trap(x=200,y=600,p_scale=1, frame_rate_ms=200))
+        self.list_trap.append(Trap(x=400,y=600,p_scale=1, frame_rate_ms=200))
         self.list_trap.append(Trap(x=600,y=600,p_scale=1, frame_rate_ms=200))
         # ENEMIGOS
         self.enemy_list = []
         self.enemy_list.append (Enemy(master=self,x=30,y=400,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=20))
-        self.enemy_list.append (Enemy(master=self,x=1250,y=500,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=True, steps=10))
+        #self.enemy_list.append (Enemy(master=self,x=1250,y=500,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=True, steps=10))
         self.enemy_list.append (Enemy(master=self,x=700,y=100,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=50))
         self.enemy_list.append (Enemy(master=self,x=859,y=200,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=30))
         
@@ -71,58 +72,58 @@ class FormGameLevel1(Form):
         # PLATAFORMAS
         # PLATAFORMA SUELO
         for aux in range(0,1400,50):
-            self.plataform_list.append(Plataform(x=aux,y=650,width=50,height=50,type=1))        
+            self.plataform_list.append(Plataform(x=aux,y=650,width=50,height=50,type=1, style_tile='dark_forest'))        
         # PLATAFORMA 1
-        self.plataform_list.append(Plataform(x=0,y=500,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=50,y=500,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=100,y=500,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=150,y=500,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=200,y=500,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=250,y=500,width=50,height=50,type=14))
+        self.plataform_list.append(Plataform(x=0,y=500,width=50,height=50,type=13, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=50,y=500,width=50,height=50,type=13, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=100,y=500,width=50,height=50,type=13, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=150,y=500,width=50,height=50,type=13, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=200,y=500,width=50,height=50,type=13, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=250,y=500,width=50,height=50,type=14, style_tile='dark_forest'))
         # PLATAFORMA 2
-        self.plataform_list.append(Plataform(x=350,y=550,width=50,height=50,type=12))
-        self.plataform_list.append(Plataform(x=400,y=550,width=50,height=50,type=14))
+        self.plataform_list.append(Plataform(x=350,y=550,width=50,height=50,type=12, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=400,y=550,width=50,height=50,type=14, style_tile='dark_forest'))
         # PLATAFORMA 3
-        self.plataform_list.append(Plataform(x=700,y=500,width=50,height=50,type=12))
-        self.plataform_list.append(Plataform(x=750,y=500,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=800,y=500,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=850,y=500,width=50,height=50,type=14)) 
+        self.plataform_list.append(Plataform(x=700,y=500,width=50,height=50,type=12, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=750,y=500,width=50,height=50,type=13, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=800,y=500,width=50,height=50,type=13, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=850,y=500,width=50,height=50,type=14, style_tile='dark_forest')) 
         # PLATAFORMA 4
-        self.plataform_list.append(Plataform(x=1000,y=550,width=50,height=50,type=12))
-        self.plataform_list.append(Plataform(x=1050,y=550,width=50,height=50,type=14))
+        self.plataform_list.append(Plataform(x=1000,y=550,width=50,height=50,type=12, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=1050,y=550,width=50,height=50,type=14, style_tile='dark_forest'))
         # PLATAFORMA 5
-        self.plataform_list.append(Plataform(x=1350,y=500,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=1300,y=500,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=1250,y=500,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=1200,y=500,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=1150,y=500,width=50,height=50,type=12))
+        self.plataform_list.append(Plataform(x=1350,y=500,width=50,height=50,type=13, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=1300,y=500,width=50,height=50,type=13, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=1250,y=500,width=50,height=50,type=13, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=1200,y=500,width=50,height=50,type=13, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=1150,y=500,width=50,height=50,type=12, style_tile='dark_forest'))
         # PLATAFORMA 6
-        self.plataform_list.append(Plataform(x=0,y=350,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=50,y=350,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=100,y=350,width=50,height=50,type=14))
+        self.plataform_list.append(Plataform(x=0,y=350,width=50,height=50,type=13, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=50,y=350,width=50,height=50,type=13, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=100,y=350,width=50,height=50,type=14, style_tile='dark_forest'))
         # PLATAFORMA 7
-        self.plataform_list.append(Plataform(x=250,y=350,width=50,height=50,type=12))
-        self.plataform_list.append(Plataform(x=300,y=350,width=50,height=50,type=14))
+        self.plataform_list.append(Plataform(x=250,y=350,width=50,height=50,type=12, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=300,y=350,width=50,height=50,type=14, style_tile='dark_forest'))
         # PLATAFORMA 8
-        self.plataform_list.append(Plataform(x=400,y=400,width=50,height=50,type=12))
-        self.plataform_list.append(Plataform(x=450,y=400,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=500,y=400,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=550,y=400,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=600,y=400,width=50,height=50,type=14))
+        self.plataform_list.append(Plataform(x=400,y=400,width=50,height=50,type=12, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=450,y=400,width=50,height=50,type=13, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=500,y=400,width=50,height=50,type=13, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=550,y=400,width=50,height=50,type=13, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=600,y=400,width=50,height=50,type=14, style_tile='dark_forest'))
         # PLATAFORMA 9
-        self.plataform_list.append(Plataform(x=750,y=250,width=50,height=50,type=12))
-        self.plataform_list.append(Plataform(x=800,y=250,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=850,y=250,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=900,y=250,width=50,height=50,type=14))
+        self.plataform_list.append(Plataform(x=750,y=250,width=50,height=50,type=12, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=800,y=250,width=50,height=50,type=13, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=850,y=250,width=50,height=50,type=13, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=900,y=250,width=50,height=50,type=14, style_tile='dark_forest'))
         # PLATAFORMA 10
-        self.plataform_list.append(Plataform(x=1350,y=350,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=1300,y=350,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=1250,y=350,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=1200,y=350,width=50,height=50,type=12))
+        self.plataform_list.append(Plataform(x=1350,y=350,width=50,height=50,type=13, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=1300,y=350,width=50,height=50,type=13, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=1250,y=350,width=50,height=50,type=13, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=1200,y=350,width=50,height=50,type=12, style_tile='dark_forest'))
         # PLATAFORMA 11
-        self.plataform_list.append(Plataform(x=400,y=250,width=50,height=50,type=12))
-        self.plataform_list.append(Plataform(x=450,y=250,width=50,height=50,type=13))
-        self.plataform_list.append(Plataform(x=500,y=250,width=50,height=50,type=14))
+        self.plataform_list.append(Plataform(x=400,y=250,width=50,height=50,type=12, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=450,y=250,width=50,height=50,type=13, style_tile='dark_forest'))
+        self.plataform_list.append(Plataform(x=500,y=250,width=50,height=50,type=14, style_tile='dark_forest'))
 
 
         self.bullet_list = []
@@ -186,10 +187,10 @@ class FormGameLevel1(Form):
             self.player_1.sides['bottom'].y = INIT_POSITION_PLAYER_Y + self.player_1.rect.height - GROUND_COLLIDE_H
             self.player_1.sides['bottom'].height = GROUND_COLLIDE_H
             
-            self.enemy_list.append (Enemy(master=self,x=30,y=400,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=20))
-            self.enemy_list.append (Enemy(master=self,x=1250,y=500,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.3,interval_time_jump=300, shoot=True, steps=10))
-            self.enemy_list.append (Enemy(master=self,x=700,y=100,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=50))
-            self.enemy_list.append (Enemy(master=self,x=859,y=200,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=30))
+            #self.enemy_list.append (Enemy(master=self,x=30,y=400,speed_walk=3,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=30,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=20))
+            # self.enemy_list.append (Enemy(master=self,x=1250,y=500,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.3,interval_time_jump=300, shoot=True, steps=10))
+            # self.enemy_list.append (Enemy(master=self,x=700,y=100,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=50))
+            # self.enemy_list.append (Enemy(master=self,x=859,y=200,speed_walk=6,speed_run=5,gravity=14,jump_power=30,frame_rate_ms=150,move_rate_ms=50,jump_height=140,p_scale=0.08,interval_time_jump=300, shoot=False, steps=30))
         
             self.restart = False    
     
@@ -227,7 +228,7 @@ class FormGameLevel1(Form):
                        (self.enemy_list[indice_enemigo].direction == 0 and self.player_1.direction == 1):
                     self.enemy_shoot(indice_enemigo)
 
-            if enemy_element.lives == 0:
+            if enemy_element.lives <= 0:
                 enemy_element.animation = enemy_element.die_r
                 enemy_element.alive = False
                 print('LA QUEDO EL MONSTRUO')
@@ -277,10 +278,12 @@ class FormGameLevel1(Form):
 
         for enemy_element in self.enemy_list:
             enemy_element.draw(self.surface)
-            enemy_element.energy_bar.draw()            
+            enemy_element.energy_bar.draw()
+
             if not enemy_element.alive and enemy_element.frame == 0:               
                 self.enemy_list.pop(self.enemy_list.index(enemy_element))
                 self.player_1.score += 100
+                
 
         for bullet_element in self.bullet_list:
             bullet_element.draw(self.surface)

@@ -29,38 +29,23 @@ class Trap():
                 self.frame = 0
 
     def drop(self,delta_ms, plataforma_list):
-        var_aux = 2
+        var_aux = 4
         for plataforma in plataforma_list:
             if self.rect.colliderect(plataforma.rect) or self.rect.y == GROUND_COLLIDE_H - self.rect.height:
                 self.rect.y = plataforma.rect.y - self.rect.height
-                print('PERSONAJE POSADO EN PLATAFORMA')
+                #print('TRAMPA POSADA EN PLATAFORMA')
                 break
         else:
             self.tiempo_drop += delta_ms
             if self.tiempo_drop >= 100:
                 self.tiempo_drop = 0
                 self.change_move += 2
-                if self.change_move >= 6:
-                    self.change_move = 0
+                if self.change_move <= 250 and self.rect.x > 30:
                     var_aux *= -1
+                elif self.change_move >= 500 or self.rect.x > 1370:
+                    self.change_move = 0
                 self.rect.x += var_aux        
-                self.rect.y += 1
-
-
-        # for plataforma in plataforma_list:
-        #     if not self.rect.colliderect(plataforma.rect) or self.rect.y == GROUND_COLLIDE_H - self.rect.height:
-        #         var_aux = 2
-        #         self.tiempo_drop += delta_ms
-        #         if self.tiempo_drop >= 1000:
-        #             self.tiempo_drop = 0
-        #             self.change_move += 2
-        #             if self.change_move >= 6:
-        #                 self.change_move = 0
-        #                 var_aux *= -1
-        #             self.rect.x += var_aux        
-        #             self.rect.y += 1
-        #     else:
-        #         print('TRAMPA POSADA EN PLATAFORMA')
+                self.rect.y += 3
 
     def update(self, delta_ms):
         self.do_animation(delta_ms)

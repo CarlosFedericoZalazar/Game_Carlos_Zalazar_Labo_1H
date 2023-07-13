@@ -21,6 +21,16 @@ class Boss(Player):
         self.time_hurt = 0
         self.lives = 10
         self.coraza = 0
+        self.steps = 40
+        # MODIFICAMOS RECTANGULOS LATERALES AL BOSS
+        self.sides['main'].height += 40
+        self.sides['main'].width += 50
+        self.sides['main'].x += 20
+        self.sides['left'].top -= 40
+        self.sides['left'].height += 90
+        self.sides['right'].x += 100
+        self.sides['right'].top -= 40
+        self.sides['right'].height += 90
 
         # RECTANGULO PERSONAJE
         # self.rect = self.image.get_rect()
@@ -71,13 +81,15 @@ class Boss(Player):
             else:
                 self.is_fall = False
                 self.change_x(self.move_x)
-                if self.contador <= 40: # CANTIDAD DE PASOS DEL MONSTRUO
+                if self.contador <= self.steps and self.rect.x > 30: # CANTIDAD DE PASOS DEL MONSTRUO
                     self.move_x = -self.speed_walk
                     self.animation = self.walk_l
-                    self.contador += 1 
-                elif self.contador <= 80:
+                    self.contador += 1
+                    print('CAMINA IZQUIERDA') 
+                elif self.contador <= self.steps * 2 and self.rect.x < ANCHO_VENTANA - self.rect.width:
                     self.move_x = self.speed_walk
                     self.animation = self.walk_r
+                    print('CAMINA DERECHA') 
                     self.contador += 1
                 else:
                     self.contador = 0

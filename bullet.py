@@ -67,16 +67,17 @@ class Bullet():
             else:
                 for aux_enemy in enemy_list:
                     if(self.is_active and self.owner != aux_enemy and self.rect.colliderect(aux_enemy.rect)):
-                        #print("IMPACTO ENEMIGO")
+                        print("IMPACTO ENEMIGO")
                         self.is_active = False
                         aux_enemy.receive_shoot()#enemy_list.index(aux_enemy))
                         self.list_efect.append(Impact(aux_enemy.rect.x, aux_enemy.rect.y - 40, 'blood', p_scale=1.5))
                         #enemy_list.pop(enemy_list.index(aux_enemy))
-        if(self.is_active and self.owner != boss and self.rect.colliderect(boss.rect)):
-            print("IMPACTO AL BOSS")
-            self.is_active = False
-            self.list_efect.append(Impact(boss.rect.x, boss.rect.y - 40, 'blood', p_scale=1.5))
-            boss.receive_shoot()               
+        if boss != None:
+            if(self.is_active and self.owner != boss and self.rect.colliderect(boss.rect)):
+                print("IMPACTO AL BOSS")
+                self.is_active = False
+                self.list_efect.append(Impact(boss.rect.x, boss.rect.y - 40, 'blood', p_scale=1.5))
+                boss.receive_shoot()               
                         
 
     def update(self,delta_ms,plataform_list,enemy_list,player, boss = None):

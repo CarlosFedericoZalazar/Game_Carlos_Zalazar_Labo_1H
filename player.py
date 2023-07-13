@@ -4,6 +4,7 @@ from auxiliar import Auxiliar
 from gui_label import Label
 from auxiliar_player import obtener_rectangulo
 from bullet import Bullet
+from class_impact import Impact
 
 class Player:
     def __init__(self, master, x,y,speed_walk,speed_run,gravity,jump_power,frame_rate_ms,move_rate_ms,jump_height,p_scale=1,interval_time_jump=100) -> None:
@@ -70,6 +71,13 @@ class Player:
         self.interval_time_jump = interval_time_jump
         # DISPARO
         self.bullet_list = []
+        self.list_efect = []
+
+        #SONIDO
+        self.sound_jump = pygame.mixer.Sound('audio\jump.wav')
+        self.sound_take_star = pygame.mixer.Sound('audio\Coin.wav')
+        self.sound_take_life = pygame.mixer.Sound('audio\sound_life.mp3')
+        self.sound_golpe_player = pygame.mixer.Sound('audio\pisoton.wav')
 
 
     def walk(self,direction, plataform_list):
@@ -101,6 +109,7 @@ class Player:
     def receive_shoot(self):
         if not self.atack:            
             self.lives -= 1
+            self.sound_golpe_player.play()
         else:
             print('ATAJASTE EL CUETASO')
             self.score += 5
@@ -116,40 +125,29 @@ class Player:
                     self.animation = self.knife_l      
 
     def verify_collide(self, some_enemy, power_rebound):
-        if(self.sides['right'].colliderect(some_enemy.sides['main']) or 
-                self.sides['left'].colliderect(some_enemy.sides['main'])):
-            if self.atack:
-                some_enemy.lives -= 1
-                print('LO CORTASTE TODO AL MOSNTRUO')
-            else:
-                self.lives -= 1
-                if self.direction == DIRECTION_R:
-                    self.rebound('left',power_rebound)
+        if not some_enemy == None:
+            if(self.sides['right'].colliderect(some_enemy.sides['main']) or 
+                    self.sides['left'].colliderect(some_enemy.sides['main'])):
+                if self.atack:
+                    some_enemy.lives -= 1
+                    self.list_efect.append(Impact(some_enemy.rect.x, some_enemy.rect.y - 30, 'blood', p_scale=1.5))
+                    print('LO CORTASTE TODO AL MOSNTRUO')
                 else:
-                    self.rebound('right',power_rebound)
-
-            if self.direction == DIRECTION_R:
-                some_enemy.rebound('right',power_rebound)
-            else:
-                some_enemy.rebound('left',power_rebound)
+                    self.lives -= 1
+                    self.sound_golpe_player.play()
+                    if self.direction == DIRECTION_R:
+                        self.rebound('left',power_rebound)
+                    else:
+                        self.rebound('right',power_rebound)
+                if self.direction == DIRECTION_R:
+                    some_enemy.rebound('right',power_rebound)                
+                else:
+                    some_enemy.rebound('left',power_rebound)
     
     def contact(self, enemy_list, boss):
         for enemy_element in  enemy_list:
             self.verify_collide(enemy_element, 60)
-            # if(self.sides['right'].colliderect(enemy_element.sides['main']) or
-            #       self.sides['left'].colliderect(enemy_element.sides['main'])):
-            #     if self.atack:
-            #         enemy_element.lives -= 1
-            #         print('LO CORTASTE TODO AL MOSNTRUO')
-            #     else:
-            #         self.lives -= 1
-            #     if self.direction == DIRECTION_R:
-            #         enemy_element.rebound('right',60)
-            #     else:
-            #         enemy_element.rebound('left',60)
-        self.verify_collide(boss, 60)
-
-
+        self.verify_collide(boss, 70)
 
     def rebound(self, direction, power_rebound):
         """ Realiza un efecto rebote en el personaje y sus rectangulos dependiendo el parametro
@@ -238,22 +236,24 @@ class Player:
                 if self.atack:
                     self.score += ELIMINAR_TRAMPA 
                     list_trap.pop(list_trap.index(trap))
-                    print('ELIMINASTE LA TRAMPA')
+                    print('DELETE TRAMPA')
                 else:
                     self.lives -= 1
+                    self.sound_golpe_player.play()
                 if self.direction == DIRECTION_R:
                     self.rebound('left',40)
                 else:
                     self.rebound('right',40)
             elif self.sides['bottom'].colliderect(trap.rect):
-                print('PISASTE AL BICHO')
-                list_trap.pop(list_trap.index(trap))
-                print('ELIMINASTE LA TRAMPA')
-                self.score += ELIMINAR_TRAMPA               
-                if self.direction == DIRECTION_R:
-                    self.rebound('right',60)
-                else:
-                    self.rebound('left',60)
+                    
+                    print('PISASTE AL BICHO')
+                    list_trap.pop(list_trap.index(trap))
+                    print('ELIMINASTE LA TRAMPA')
+                    self.score += ELIMINAR_TRAMPA               
+                    if self.direction == DIRECTION_R:
+                        self.rebound('right',60)
+                    else:
+                        self.rebound('left',60)
 
     def is_on_plataform(self,plataform_list):
         retorno = False
@@ -271,6 +271,7 @@ class Player:
     def take_coin(self, coin_list):
         for coin in coin_list:
             if(self.rect.colliderect(coin.rect)):
+                self.sound_take_star.play()
                 self.score += coin.coin_value
                 self.coins += 1
                 print('AGARRASTE LA MONEDA!!!')
@@ -280,6 +281,7 @@ class Player:
     def take_life(self, life_list):
         for life in life_list:
             if(self.rect.colliderect(life.rect)):
+                self.sound_take_life.play()
                 self.lives += life.value
                 life_list.pop(life_list.index(life))
 
@@ -293,7 +295,7 @@ class Player:
             else: 
                 self.frame = 0
  
-    def update(self,delta_ms,plataform_list, coins_list,life_list, enemy_list, list_trap, number_of_stars, boss):
+    def update(self,delta_ms,plataform_list, coins_list,life_list, enemy_list, list_trap, number_of_stars, boss = None):
 
         self.do_movement(delta_ms,plataform_list, coins_list)
         self.do_animation(delta_ms)
@@ -304,6 +306,12 @@ class Player:
         for bullet_element in self.bullet_list:
             bullet_element.update(delta_ms,plataform_list,enemy_list,self)
         self.take_life(life_list)
+        # EFECT0 INMPACTO
+        for efect in self.list_efect:
+            efect.update(delta_ms)
+        for efect in self.list_efect:
+            if efect.end_animation:
+                self.list_efect.pop(self.list_efect.index(efect)) 
     
     def draw(self,screen):
         
@@ -320,7 +328,10 @@ class Player:
            
         
         self.image = self.animation[self.frame]
-        screen.blit(self.image,self.rect)
+        screen.blit(self.image,self.rect)        
+        # DIBUJAMOS EFECTO IMPACTO EN PANTALLA
+        for efect in self.list_efect:
+            efect.draw(screen)
             
 
     def events(self,delta_ms,keys, plataform_list):
@@ -340,6 +351,7 @@ class Player:
         if(keys[pygame.K_SPACE]):
             if((self.tiempo_transcurrido - self.tiempo_last_jump) > self.interval_time_jump):
                 self.jump(True)
+                self.sound_jump.play()
                 self.tiempo_last_jump = self.tiempo_transcurrido
 
         if(not keys[pygame.K_a]):

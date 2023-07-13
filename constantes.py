@@ -51,4 +51,4 @@ PATH_COINS = 'images\coins\\'
 PATH_DATA_SCORE = 'data_score\\'
 
 # PUNTAJES
-ELIMINAR_TRAMPA = 20
+ELIMINAR_TRAMPA = 30

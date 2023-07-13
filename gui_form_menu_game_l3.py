@@ -18,10 +18,7 @@ from class_file import File
 from class_life import Life
 from class_trap import Trap
 import random
-from auxiliar_player import save_data_player, read_auxiliar_file_player
-
-#from auxiliar_plataforma import pltaforma_level_1
-
+from auxiliar_player import delete_file_auxiliar_player, read_auxiliar_file_player
 
 
 class FormGameLevel3(Form):
@@ -138,7 +135,6 @@ class FormGameLevel3(Form):
         self.bullet_list = []
 
 
-
     def on_click_boton1(self, parametro):
         self.set_active(parametro)
 
@@ -168,11 +164,12 @@ class FormGameLevel3(Form):
                 self.bullet_list.append(Bullet(self.player_1, self.player_1.rect.centerx, self.player_1.rect.centery, ANCHO_VENTANA , self.player_1.rect.centery,20,path="images\caracters\players\caballero\SHOOT\SHOOT.png",frame_rate_ms=100,move_rate_ms=20,width=20,height=20))
             else:
                 self.bullet_list.append(Bullet(self.player_1, self.player_1.rect.centerx, self.player_1.rect.centery, 0 , self.player_1.rect.centery,20,path="images\caracters\players\caballero\SHOOT\SHOOT.png",frame_rate_ms=100,move_rate_ms=20,width=20,height=20))
-    
+    # REINICIAMOS TODAS LAS VARIABLES
     def restart_all_list(self):
         self.enemy_list.clear()
         self.coin_list.clear()
         self.list_lifes.clear()
+        print('SE VACIARON TODAS LAS LISTAS PARA REINICIAR NIVEL')
 
     
     def restart_game(self):
@@ -210,7 +207,7 @@ class FormGameLevel3(Form):
 
         # GENERAMOS TRAMPAS ALEATORIAS
         self.tiempo_caida_trap += delta_ms
-        if self.tiempo_caida_trap >= 1000 * 10:
+        if self.tiempo_caida_trap >= 1000 * 5:
             self.tiempo_caida_trap = 0
             coordenada_auxiliar = random.randrange(30, 1371, 30)
             self.list_trap.append(Trap(x=coordenada_auxiliar,y=5,p_scale=1, frame_rate_ms=200, trap_drope=True))
@@ -275,13 +272,16 @@ class FormGameLevel3(Form):
         self.player_1.label_score.update()
         self.player_1.label_coins.update()
         # CAMBIO DE NIVEL
-        # if self.player_1.coins == self.number_of_stars:
-        #     self.active = False
-        #     self.set_active('form_game_over')
+        if self.player_1.coins == self.number_of_stars:
+            self.active = False
+            self.set_active('form_game_win')
         # CAMBIO A GAME OVER
         if self.player_1.lives == 0 or self.tiempo_juego.lavel_timer._text == '0:00':
             self.active = False
             self.file_game_score.add_data_reg(self.player_1.score)
+            print('SE AGREFO SCORE DEL PLAYER A LA TABLA SCORE')
+            delete_file_auxiliar_player()
+            print('SE ELIMINO ARCHIVO AUXILIAR PLAYER')
             self.restart = True
             #del self.enemy_list
             #self.enemy_list.clear()

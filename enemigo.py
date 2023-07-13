@@ -16,14 +16,14 @@ class Enemy(Player):
         self.hurt_l = Auxiliar.getSurfaceFromSeparateFiles("images/caracters/enemies/ork_sword/HURT/HURT_00{0}.png",0,7,flip=True,scale=p_scale)
         # ATRIBUTOS PROPIOS DEL MONSTRUO
         self.time_hurt = 0
-        self.lives = 15
+        self.lives = 5
         self.can_shoot = shoot
         self.steps = steps        
 
         self.contador = 0
 
         self.sides['bottom'].y = y + self.rect.height - GROUND_COLLIDE_H + 10
-        self.energy_bar = ProgressBar(master=master,x=x,y=y,w=35,h=20,color_background=None,color_border=None,image_background="images\gui\Gui\Bar_Background01.png",image_progress="images\gui\Gui\Bar_Segment05.png",value = 5, value_max=15)
+        self.energy_bar = ProgressBar(master=master,x=x,y=y,w=35,h=20,color_background=None,color_border=None,image_background="images\gui\Gui\Bar_Background01.png",image_progress="images\gui\Gui\Bar_Segment05.png",value = 5, value_max=5)
         self.energy_bar.value = self.lives
 
 
@@ -122,4 +122,5 @@ class Enemy(Player):
         else:
             self.animation = self.hurt_r
         self.lives -= 1
+        print('UNA VIDA MENOS PARA EL MONSTRUO')
         
